@@ -34,8 +34,10 @@ export interface TezosAccount {
   publicKey: string;
 }
 
-export interface TezosWallet extends WalletProvider {
-  authorise: (request: RequestPermissionInput) => Promise<TezosAccount>;
+export interface TezosWallet {
+  connect: (
+    request: RequestPermissionInput
+  ) => Promise<[TezosAccount, WalletProvider]>;
 }
 
 export const activate =
@@ -44,8 +46,8 @@ export const activate =
     dispatch(connectAction.started(undefined));
     const library = new TezosToolkit(request.network?.rpcUrl || '');
     library.addExtension(new Tzip16Module());
-    const account = await wallet.authorise(request);
-    library.setWalletProvider(wallet);
+    const [account, provider] = await wallet.connect(request);
+    library.setWalletProvider(provider);
     library.setSignerProvider(fakeSigner(account.address, account.publicKey));
     dispatch(
       connectAction.done({

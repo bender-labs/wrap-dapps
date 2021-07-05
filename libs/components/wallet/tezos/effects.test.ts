@@ -3,14 +3,14 @@ import {
   TezosToolkit,
   WalletDelegateParams,
   WalletOriginateParams,
+  WalletProvider,
   WalletTransferParams,
 } from '@taquito/taquito';
 import { connectAction } from './state';
 import { NetworkType } from '@airgap/beacon-sdk';
 
 function aTezosWallet(account: string, publicKey: string): TezosWallet {
-  return {
-    authorise: jest.fn(() => Promise.resolve({ address: account, publicKey })),
+  const provider: WalletProvider = {
     getPKH(): Promise<string> {
       return Promise.resolve('');
     },
@@ -32,6 +32,12 @@ function aTezosWallet(account: string, publicKey: string): TezosWallet {
     sendOperations(params: any[]): Promise<string> {
       return Promise.resolve('');
     },
+  };
+
+  return {
+    connect: jest.fn(() =>
+      Promise.resolve([{ address: account, publicKey }, provider])
+    ),
   };
 }
 
@@ -70,7 +76,7 @@ test('should dispatch tezos account if everything goes well', async () => {
       },
     })
   );
-  expect(wallet.authorise).toHaveBeenCalledWith(request);
+  expect(wallet.connect).toHaveBeenCalledWith(request);
   const action = dispatch.mock.calls[1][0];
   const {
     result: { tezosToolkit },
