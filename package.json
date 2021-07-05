@@ -1,22 +1,17 @@
 {
-  "name": "wrap-dapp-nft",
-  "version": "0.1.0",
+  "name": "wrap-dapps",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "nft": "yarn workspace @wrap-dapps/nft",
+    "components": "yarn workspace @wrap-dapps/components"
   },
-  "dependencies": {
-    "next": "11.0.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
-  },
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
   "devDependencies": {
-    "@types/react": "17.0.13",
-    "eslint": "7.29.0",
-    "eslint-config-next": "11.0.1",
-    "typescript": "4.3.5"
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2",
+    "ts-jest": "^27.0.3"
   }
 }
