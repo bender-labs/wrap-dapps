@@ -7,6 +7,7 @@ export function beaconTezosWallet(name: string): TezosWallet {
   const wallet = new BeaconWallet({ name });
 
   return {
+    disconnect: wallet.clearActiveAccount,
     async connect(
       request: RequestPermissionInput
     ): Promise<[TezosAccount, WalletProvider]> {

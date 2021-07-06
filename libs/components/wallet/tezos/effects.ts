@@ -2,7 +2,7 @@ import { AnyAction } from 'typescript-fsa';
 import { Dispatch } from 'react';
 import { TezosToolkit, WalletProvider } from '@taquito/taquito';
 import { RequestPermissionInput } from '@airgap/beacon-sdk';
-import { connectAction } from './state';
+import { connectAction, disconnectAction } from './state';
 import { Tzip16Module } from '@taquito/tzip16';
 
 // noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols,ES6ShorthandObjectProperty
@@ -38,6 +38,7 @@ export interface TezosWallet {
   connect: (
     request: RequestPermissionInput
   ) => Promise<[TezosAccount, WalletProvider]>;
+  disconnect: () => Promise<void>;
 }
 
 export const activate =
@@ -46,16 +47,28 @@ export const activate =
     dispatch(connectAction.started(undefined));
     const library = new TezosToolkit(request.network?.rpcUrl || '');
     library.addExtension(new Tzip16Module());
-    const [account, provider] = await wallet.connect(request);
-    library.setWalletProvider(provider);
-    library.setSignerProvider(fakeSigner(account.address, account.publicKey));
-    dispatch(
-      connectAction.done({
-        result: {
-          account: account.address, //account!.address,
-          tezosToolkit: library,
-          network: request.network!.type, //request!.network!.type,
-        },
-      })
-    );
+    try {
+      const [account, provider] = await wallet.connect(request);
+      library.setWalletProvider(provider);
+      library.setSignerProvider(fakeSigner(account.address, account.publicKey));
+      dispatch(
+        connectAction.done({
+          result: {
+            account: account.address,
+            tezosToolkit: library,
+            network: request.network!.type,
+          },
+        })
+      );
+    } catch (e) {
+      dispatch(connectAction.failed({ error: e.message }));
+    }
   };
+
+export const deactivate = async (
+  dispatch: Dispatch<AnyAction>,
+  wallet: TezosWallet
+) => {
+  await wallet.disconnect();
+  dispatch(disconnectAction());
+};

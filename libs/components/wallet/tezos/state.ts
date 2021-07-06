@@ -46,9 +46,11 @@ type ConnectResult = {
   network: NetworkType;
 };
 
-export const connectAction = actionCreator.async<undefined, ConnectResult>(
-  'CONNECT'
-);
+export const connectAction = actionCreator.async<
+  undefined,
+  ConnectResult,
+  string
+>('CONNECT');
 
 export const disconnectAction = actionCreator('DISCONNECT');
 
