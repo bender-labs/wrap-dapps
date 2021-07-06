@@ -105,7 +105,7 @@ describe('activate function', () => {
 
 describe('deactivate function', () => {
   test('should dispatch disconnect', async () => {
-    await deactivate(dispatch, aTezosWallet('nop', "don't care"));
+    await deactivate(dispatch, aTezosWallet('nop', "don't care"))();
 
     expect(dispatch).toHaveBeenCalledWith(disconnectAction());
   });
@@ -113,7 +113,7 @@ describe('deactivate function', () => {
   test('should disconnect current wallet', () => {
     const aWallet = aTezosWallet('nop', "don't care");
 
-    deactivate(dispatch, aWallet);
+    deactivate(dispatch, aWallet)();
 
     expect(aWallet.disconnect).toHaveBeenCalled();
   });

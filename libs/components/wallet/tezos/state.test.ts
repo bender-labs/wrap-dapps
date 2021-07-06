@@ -37,7 +37,7 @@ test('should transition to connected on connection success', () => {
 });
 
 test('should transition to not connected on error', () => {
-  const action = connectAction.failed({ error: {} });
+  const action = connectAction.failed({ error: '' });
 
   const newState = reducer(TezosState.connecting(), action);
 

@@ -65,10 +65,8 @@ export const activate =
     }
   };
 
-export const deactivate = async (
-  dispatch: Dispatch<AnyAction>,
-  wallet: TezosWallet
-) => {
-  await wallet.disconnect();
-  dispatch(disconnectAction());
-};
+export const deactivate =
+  (dispatch: Dispatch<AnyAction>, wallet: TezosWallet) => async () => {
+    await wallet.disconnect();
+    dispatch(disconnectAction());
+  };
