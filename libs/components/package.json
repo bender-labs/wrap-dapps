@@ -25,5 +25,8 @@
   },
   "scripts": {
     "test": "jest"
+  },
+  "volta": {
+    "extends": "../../package.json"
   }
 }
