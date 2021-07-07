@@ -13,6 +13,7 @@
     "@taquito/taquito": "^9.2.0",
     "@taquito/tzip16": "^9.2.0",
     "constate": "^3.3.0",
+    "notistack": "^1.0.9",
     "react": "^17.0.2",
     "typescript-fsa": "^3.0.0",
     "typescript-fsa-reducers": "^1.2.2",

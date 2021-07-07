@@ -8,7 +8,7 @@ import {
 } from '@taquito/taquito';
 import { connectAction, disconnectAction } from './state';
 import { NetworkType } from '@airgap/beacon-sdk';
-import { NotificationLevel, Notify } from '../../notification';
+import { NotificationLevel, Notify } from '../../notification/types';
 
 function aTezosWallet(account: string, publicKey: string): TezosWallet {
   const provider: WalletProvider = {

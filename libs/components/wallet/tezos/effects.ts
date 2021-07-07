@@ -4,7 +4,7 @@ import { TezosToolkit, WalletProvider } from '@taquito/taquito';
 import { RequestPermissionInput } from '@airgap/beacon-sdk';
 import { connectAction, disconnectAction } from './state';
 import { Tzip16Module } from '@taquito/tzip16';
-import { NotificationLevel, Notify } from '../../notification';
+import { NotificationLevel, Notify } from '../../notification/types';
 
 // noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols,ES6ShorthandObjectProperty
 const fakeSigner = (account: string, publicKey: string) => ({
