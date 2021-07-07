@@ -1,4 +1,4 @@
-import { activate, deactivate, TezosWallet } from './effects';
+import { activate, deactivate, initialise, TezosWallet } from './effects';
 import {
   TezosToolkit,
   WalletDelegateParams,
@@ -40,6 +40,8 @@ function aTezosWallet(account: string, publicKey: string): TezosWallet {
       Promise.resolve([{ address: account, publicKey }, provider])
     ),
     disconnect: jest.fn(),
+    initialise: () =>
+      Promise.resolve([{ address: account, publicKey }, provider]),
   };
 }
 
@@ -122,5 +124,34 @@ describe('deactivate function', () => {
     deactivate(dispatch, aWallet)();
 
     expect(aWallet.disconnect).toHaveBeenCalled();
+  });
+});
+
+describe('reactivate function', () => {
+  test('should do nothing if no account if found', async () => {
+    const aWallet = aTezosWallet('nop', "don't care");
+    aWallet.initialise = () => Promise.resolve(undefined);
+    const doInitialise = initialise(dispatch, aWallet);
+
+    await doInitialise();
+
+    expect(dispatch).not.toHaveBeenCalled();
+  });
+
+  test.skip('should dispatch if account if found', async () => {
+    const aWallet = aTezosWallet('wonderful account', "don't care");
+    const doInitialise = initialise(dispatch, aWallet);
+
+    await doInitialise();
+
+    expect(dispatch).toBeCalledWith(
+      connectAction.done({
+        result: {
+          account: 'wonderful account',
+          tezosToolkit: expect.any(TezosToolkit),
+          network: NetworkType.GRANADANET,
+        },
+      })
+    );
   });
 });

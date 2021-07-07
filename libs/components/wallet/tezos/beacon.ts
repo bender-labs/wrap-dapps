@@ -21,5 +21,6 @@ export function beaconTezosWallet(name: string): TezosWallet {
         wallet,
       ];
     },
+    initialise: () => Promise.resolve(undefined),
   };
 }

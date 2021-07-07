@@ -40,7 +40,25 @@ export interface TezosWallet {
     request: RequestPermissionInput
   ) => Promise<[TezosAccount, WalletProvider]>;
   disconnect: () => Promise<void>;
+  initialise: () => Promise<[TezosAccount, WalletProvider] | undefined>;
 }
+
+export const initialise =
+  (dispatch: Dispatch<AnyAction>, wallet: TezosWallet) => async () => {
+    const existingAccount = await wallet.initialise();
+    /*if (existingAccount) {
+      const [account, provider] = existingAccount;
+      dispatch(
+        connectAction.done({
+          result: {
+            account: account.address,
+            tezosToolkit: library,
+            network: request.network!.type,
+          },
+        })
+      );
+    }*/
+  };
 
 export const activate =
   (dispatch: Dispatch<AnyAction>, wallet: TezosWallet, notify: Notify) =>
