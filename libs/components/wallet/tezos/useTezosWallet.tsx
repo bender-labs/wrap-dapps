@@ -20,7 +20,7 @@ export function useTezosWallet({ name }: Props) {
     scopes: [PermissionScope.SIGN, PermissionScope.OPERATION_REQUEST],
   };
   const doDeactivate = deactivate(dispatch, beaconWallet);
-  const doActivate = () => activate(dispatch, beaconWallet)(request);
+  const doActivate = () => activate(dispatch, beaconWallet, () => {})(request);
 
   return { state, activate: doActivate, deactivate: doDeactivate };
 }

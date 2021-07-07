@@ -4,6 +4,7 @@ import { TezosToolkit, WalletProvider } from '@taquito/taquito';
 import { RequestPermissionInput } from '@airgap/beacon-sdk';
 import { connectAction, disconnectAction } from './state';
 import { Tzip16Module } from '@taquito/tzip16';
+import { NotificationLevel, Notify } from '../../notification';
 
 // noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols,ES6ShorthandObjectProperty
 const fakeSigner = (account: string, publicKey: string) => ({
@@ -42,7 +43,7 @@ export interface TezosWallet {
 }
 
 export const activate =
-  (dispatch: Dispatch<AnyAction>, wallet: TezosWallet) =>
+  (dispatch: Dispatch<AnyAction>, wallet: TezosWallet, notify: Notify) =>
   async (request: RequestPermissionInput) => {
     dispatch(connectAction.started(undefined));
     const library = new TezosToolkit(request.network?.rpcUrl || '');
@@ -61,6 +62,7 @@ export const activate =
         })
       );
     } catch (e) {
+      notify(NotificationLevel.ERROR, 'Could not connect to your wallet');
       dispatch(connectAction.failed({ error: e.message }));
     }
   };

@@ -8,6 +8,7 @@ import {
 } from '@taquito/taquito';
 import { connectAction, disconnectAction } from './state';
 import { NetworkType } from '@airgap/beacon-sdk';
+import { NotificationLevel, Notify } from '../../notification';
 
 function aTezosWallet(account: string, publicKey: string): TezosWallet {
   const provider: WalletProvider = {
@@ -43,11 +44,12 @@ function aTezosWallet(account: string, publicKey: string): TezosWallet {
 }
 
 const dispatch = jest.fn();
+const notify = jest.fn();
 
 describe('activate function', () => {
   test('should dispatch connection is starting', async () => {
     const wallet = aTezosWallet('nop', "don't care");
-    const doActivate = activate(dispatch, wallet);
+    const doActivate = activate(dispatch, wallet, notify);
 
     await doActivate({
       network: { type: NetworkType.GRANADANET, rpcUrl: '' },
@@ -60,7 +62,7 @@ describe('activate function', () => {
 
   test('should dispatch tezos account if everything goes well', async () => {
     const wallet = aTezosWallet('wonderful account', 'publicKey');
-    const doActivate = activate(dispatch, wallet);
+    const doActivate = activate(dispatch, wallet, notify);
     const request = {
       network: { type: NetworkType.GRANADANET, rpcUrl: 'zeUrl' },
       scopes: [],
@@ -89,7 +91,7 @@ describe('activate function', () => {
   test('should dispatch connection fail', async () => {
     const wallet = aTezosWallet('wonderful account', 'publicKey');
     wallet.connect = () => Promise.reject(new Error('nop'));
-    const doActivate = activate(dispatch, wallet);
+    const doActivate = activate(dispatch, wallet, notify);
     const request = {
       network: { type: NetworkType.GRANADANET, rpcUrl: 'zeUrl' },
       scopes: [],
@@ -99,6 +101,10 @@ describe('activate function', () => {
 
     expect(dispatch).toHaveBeenCalledWith(
       connectAction.failed({ error: 'nop' })
+    );
+    expect(notify).toHaveBeenCalledWith(
+      NotificationLevel.ERROR,
+      'Could not connect to your wallet'
     );
   });
 });
