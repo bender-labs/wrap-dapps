@@ -43,11 +43,25 @@ export interface TezosWallet {
   initialise: () => Promise<[TezosAccount, WalletProvider] | undefined>;
 }
 
+const toolkit = (
+  rpcUrl: string,
+  provider: WalletProvider,
+  account: TezosAccount
+) => {
+  const result = new TezosToolkit(rpcUrl);
+  result.setWalletProvider(provider);
+  result.addExtension(new Tzip16Module());
+  result.setSignerProvider(fakeSigner(account.address, account.publicKey));
+  return result;
+};
+
 export const initialise =
-  (dispatch: Dispatch<AnyAction>, wallet: TezosWallet) => async () => {
+  (dispatch: Dispatch<AnyAction>, wallet: TezosWallet) =>
+  async (request: RequestPermissionInput) => {
     const existingAccount = await wallet.initialise();
-    /*if (existingAccount) {
+    if (existingAccount) {
       const [account, provider] = existingAccount;
+      const library = toolkit(request.network?.rpcUrl || '', provider, account);
       dispatch(
         connectAction.done({
           result: {
@@ -57,19 +71,18 @@ export const initialise =
           },
         })
       );
-    }*/
+    }
   };
 
 export const activate =
   (dispatch: Dispatch<AnyAction>, wallet: TezosWallet, notify: Notify) =>
   async (request: RequestPermissionInput) => {
     dispatch(connectAction.started(undefined));
-    const library = new TezosToolkit(request.network?.rpcUrl || '');
-    library.addExtension(new Tzip16Module());
+
     try {
       const [account, provider] = await wallet.connect(request);
-      library.setWalletProvider(provider);
-      library.setSignerProvider(fakeSigner(account.address, account.publicKey));
+      const library = toolkit(request.network?.rpcUrl || '', provider, account);
+
       dispatch(
         connectAction.done({
           result: {

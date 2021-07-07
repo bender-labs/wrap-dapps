@@ -21,6 +21,14 @@ export function beaconTezosWallet(name: string): TezosWallet {
         wallet,
       ];
     },
-    initialise: () => Promise.resolve(undefined),
+    initialise: async () => {
+      const account = await wallet.client.getActiveAccount();
+      if (account) {
+        return [
+          { address: account.address, publicKey: account.publicKey },
+          wallet,
+        ];
+      }
+    },
   };
 }

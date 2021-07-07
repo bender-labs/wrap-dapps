@@ -1,36 +1,24 @@
 import { activate, deactivate, initialise, TezosWallet } from './effects';
-import {
-  TezosToolkit,
-  WalletDelegateParams,
-  WalletOriginateParams,
-  WalletProvider,
-  WalletTransferParams,
-} from '@taquito/taquito';
+import { TezosToolkit, WalletProvider } from '@taquito/taquito';
 import { connectAction, disconnectAction } from './state';
 import { NetworkType } from '@airgap/beacon-sdk';
-import { NotificationLevel, Notify } from '../../notification/types';
+import { NotificationLevel } from '../../notification/types';
 
 function aTezosWallet(account: string, publicKey: string): TezosWallet {
   const provider: WalletProvider = {
     getPKH(): Promise<string> {
       return Promise.resolve('');
     },
-    mapDelegateParamsToWalletParams(
-      params: WalletDelegateParams
-    ): Promise<any> {
+    mapDelegateParamsToWalletParams(): Promise<any> {
       return Promise.resolve(undefined);
     },
-    mapOriginateParamsToWalletParams(
-      params: WalletOriginateParams
-    ): Promise<any> {
+    mapOriginateParamsToWalletParams(): Promise<any> {
       return Promise.resolve(undefined);
     },
-    mapTransferParamsToWalletParams(
-      params: WalletTransferParams
-    ): Promise<any> {
+    mapTransferParamsToWalletParams(): Promise<any> {
       return Promise.resolve(undefined);
     },
-    sendOperations(params: any[]): Promise<string> {
+    sendOperations(): Promise<string> {
       return Promise.resolve('');
     },
   };
@@ -133,16 +121,22 @@ describe('reactivate function', () => {
     aWallet.initialise = () => Promise.resolve(undefined);
     const doInitialise = initialise(dispatch, aWallet);
 
-    await doInitialise();
+    await doInitialise({
+      network: { type: NetworkType.GRANADANET, rpcUrl: '' },
+      scopes: [],
+    });
 
     expect(dispatch).not.toHaveBeenCalled();
   });
 
-  test.skip('should dispatch if account if found', async () => {
+  test('should dispatch if account if found', async () => {
     const aWallet = aTezosWallet('wonderful account', "don't care");
     const doInitialise = initialise(dispatch, aWallet);
 
-    await doInitialise();
+    await doInitialise({
+      network: { type: NetworkType.GRANADANET, rpcUrl: '' },
+      scopes: [],
+    });
 
     expect(dispatch).toBeCalledWith(
       connectAction.done({
