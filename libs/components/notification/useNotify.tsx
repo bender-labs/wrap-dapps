@@ -1,6 +1,6 @@
 import { useSnackbar } from 'notistack';
 import { Notify } from './types';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 export function useNotify() {
   const { enqueueSnackbar } = useSnackbar();

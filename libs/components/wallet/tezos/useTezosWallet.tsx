@@ -9,15 +9,17 @@ import { Notify } from '../../notification/types';
 type Props = {
   name: string;
   notify: Notify;
+  rpcUrl: string;
+  networkType: NetworkType;
 };
 
-function useTezosWallet({ name, notify }: Props) {
+function useTezosWallet({ name, notify, rpcUrl, networkType }: Props) {
   const beaconWallet = useMemo(() => beaconTezosWallet(name), [name]);
   const [state, dispatch] = useReducer(reducer, TezosState.notConnected());
   const request = {
     network: {
-      type: NetworkType.FLORENCENET,
-      rpcUrl: 'https://florencenet.smartpy.io/',
+      type: networkType,
+      rpcUrl: rpcUrl,
     },
     scopes: [PermissionScope.SIGN, PermissionScope.OPERATION_REQUEST],
   };
