@@ -1,31 +1,27 @@
-import '../styles/globals.css';
-import type { AppProps } from 'next/app';
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Home from './pages/Home';
 import { TezosWalletProvider } from '@wrap-dapps/components/wallet/tezos/useTezosWallet';
 import { useNotify } from '@wrap-dapps/components/notification/useNotify';
-import { SnackbarProvider } from 'notistack';
 import { NetworkType } from '@airgap/beacon-sdk';
+import NavBar from './components/NavBar';
 
-function InnerContainer({ Component, pageProps }: AppProps) {
+const App = () => {
   const notify = useNotify();
   return (
     <TezosWalletProvider
-      name={'Wonderful Dapp'}
+      name={'Wonderfull Dapp'}
       notify={notify}
       rpcUrl={'https://florencenet.smartpy.io/'}
       networkType={NetworkType.FLORENCENET}
     >
-      <Component {...pageProps} />
+      <NavBar />
+
+      <Switch>
+        <Route exact path="/" component={Home} />
+      </Switch>
     </TezosWalletProvider>
   );
-}
+};
 
-function MyApp(props: AppProps) {
-  return (
-    <SnackbarProvider>
-      <InnerContainer {...props} />
-    </SnackbarProvider>
-  );
-}
-
-export default MyApp;
+export default App;
