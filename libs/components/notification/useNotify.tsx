@@ -1,11 +1,14 @@
-import { useSnackbar } from 'notistack';
-import { Notify } from './types';
-import { useCallback, useMemo } from 'react';
+import { NotificationLevel, Notify } from './types';
+import { useCallback } from 'react';
+import { toast } from 'react-toastify';
 
 export function useNotify() {
-  const { enqueueSnackbar } = useSnackbar();
   const notify: Notify = (level, message) => {
-    enqueueSnackbar(message, { variant: 'error' });
+    switch (level) {
+      case NotificationLevel.ERROR:
+        toast.error(message);
+        break;
+    }
   };
-  return useCallback(notify, [enqueueSnackbar]);
+  return useCallback(notify, [toast]);
 }

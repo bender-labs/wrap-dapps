@@ -1,6 +1,7 @@
 import { Web3Provider } from '@ethersproject/providers';
-import actionCreatorFactory, { AnyAction } from 'typescript-fsa';
+import actionCreatorFactory from 'typescript-fsa';
 import { ellipsizeAddress } from '../address';
+import { reducerWithInitialState } from 'typescript-fsa-reducers';
 
 export enum EthereumStateType {
   NOT_CONNECTED,
@@ -54,6 +55,15 @@ export const connectAction = actionCreator.async<
 
 export const disconnectAction = actionCreator('DISCONNECT');
 
-export const reducer = (state: EthereumState, action: AnyAction) => {
-  return state;
-};
+export const reducer = reducerWithInitialState<EthereumState>(
+  EthereumState.notConnected()
+)
+  .case(connectAction.started, () => EthereumState.connecting())
+  .case(
+    connectAction.done,
+    (s, { result: { account, ethereumToolkit, network } }) =>
+      EthereumState.connected(account, ethereumToolkit, network)
+  )
+  .case(connectAction.failed, () => EthereumState.notConnected())
+  .case(disconnectAction, () => EthereumState.notConnected())
+  .default((s) => s);

@@ -3,6 +3,9 @@ import { FortmaticConnector } from '@web3-react/fortmatic-connector';
 import { PortisConnector } from '@web3-react/portis-connector';
 import { EthereumConfig } from './types';
 import { AbstractConnector } from '@web3-react/abstract-connector';
+import fortmatic from './fortmaticIcon.png';
+import metamask from './metamask.png';
+import portis from './portisIcon.png';
 
 export type EthConnector = {
   name: string;
@@ -29,7 +32,7 @@ export default function connectorsFactory({
       connector: new InjectedConnector({
         supportedChainIds: [networkId],
       }),
-      iconName: isMetamask ? 'metamask.png' : 'arrow-right.svg',
+      iconName: isMetamask ? metamask : 'arrow-right.svg',
     },
     fortmatic: {
       name: 'Fortmatic',
@@ -37,7 +40,7 @@ export default function connectorsFactory({
         apiKey: formaticApiKey,
         chainId: networkId,
       }),
-      iconName: 'fortmaticIcon.png',
+      iconName: fortmatic,
     },
     portis: {
       name: 'Portis',
@@ -45,7 +48,7 @@ export default function connectorsFactory({
         dAppId: portisDAppId,
         networks: [networkId],
       }),
-      iconName: 'portisIcon.png',
+      iconName: portis,
     },
   };
 }
