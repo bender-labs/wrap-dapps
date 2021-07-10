@@ -1,7 +1,7 @@
 {
   "name": "@wrap-dapps/components",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "license": "MIT",
   "private": true,
   "files": [
@@ -11,6 +11,7 @@
     "@taquito/beacon-wallet": "^9.2.0",
     "@taquito/taquito": "^9.2.0",
     "@taquito/tzip16": "^9.2.0",
+    "@theme-ui/color": "^0.10.0",
     "@web3-react/core": "^6.1.9",
     "@web3-react/fortmatic-connector": "^6.1.6",
     "@web3-react/injected-connector": "^6.0.7",

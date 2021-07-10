@@ -1,9 +1,7 @@
-import TezosConnectionButton from '@wrap-dapps/components/wallet/tezos/TezosConnectionButton';
-import React from 'react';
-import { EthereumConnectionButton } from '@wrap-dapps/components/wallet/ethereum/EthereumConnectionButton';
-import { Flex, NavLink, Box } from 'theme-ui';
+import React, { PropsWithChildren } from 'react';
+import { Box, Flex, NavLink } from 'theme-ui';
 
-export default function NavBar() {
+export default function NavBar({ children }: PropsWithChildren<{}>) {
   return (
     <Flex as="nav" sx={{ justifyContent: 'space-between' }} p={2}>
       <Flex sx={{ alignItems: 'center' }}>
@@ -28,10 +26,15 @@ export default function NavBar() {
           Blog
         </NavLink>
       </Flex>
-      <Flex sx={{ justifyContent: 'space-between' }}>
-        <TezosConnectionButton />
-        <EthereumConnectionButton />
-      </Flex>
+      <Box
+        sx={{
+          '& > :first-child': {
+            mr: 2,
+          },
+        }}
+      >
+        {children}
+      </Box>
     </Flex>
   );
 }

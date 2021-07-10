@@ -1,12 +1,19 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
-import { TezosWalletProvider } from '@wrap-dapps/components/wallet/tezos/useTezosWallet';
-import { EthereumWalletProvider } from '@wrap-dapps/components/wallet/ethereum/useEthereumWallet';
-import { useNotify } from '@wrap-dapps/components/notification/useNotify';
+import { useNotify } from '@wrap-dapps/components/notification';
 import { NetworkType } from '@airgap/beacon-sdk';
-import NavBar from './components/NavBar';
+import { NavBar } from '@wrap-dapps/components';
 import { EthereumConfig } from '@wrap-dapps/components/wallet/ethereum/types';
+import { Themed } from 'theme-ui';
+import {
+  TezosConnectionButton,
+  TezosWalletProvider,
+} from '@wrap-dapps/components/wallet/tezos';
+import {
+  EthereumConnectionButton,
+  EthereumWalletProvider,
+} from '@wrap-dapps/components/wallet/ethereum';
 
 const App = () => {
   const notify = useNotify();
@@ -25,8 +32,11 @@ const App = () => {
       networkType={NetworkType.FLORENCENET}
     >
       <EthereumWalletProvider config={eth}>
-        <NavBar />
-
+        <NavBar>
+          <TezosConnectionButton />
+          <EthereumConnectionButton />
+        </NavBar>
+        <Themed.h1>Hello</Themed.h1>
         <Switch>
           <Route exact path="/" component={Home} />
         </Switch>

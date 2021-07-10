@@ -4,26 +4,7 @@ import React, { PropsWithChildren, useState } from 'react';
 import { EthereumStateType } from './state';
 import { EthConnector, EthConnectors } from './connectorsFactory';
 import { Button } from 'theme-ui';
-
-function Modal({
-  show,
-  children,
-}: PropsWithChildren<{ show: boolean; onClose: () => void }>) {
-  return (
-    <>
-      {show ? (
-        <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              {children}
-            </div>
-          </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
-    </>
-  );
-}
+import { Modal } from '../../modal';
 
 type SelectorProps = {
   providers: EthConnectors;
@@ -42,7 +23,7 @@ function ConnectFlow({ providers, activate }: SelectorProps) {
       <Button variant={'white'} onClick={() => setShow(true)}>
         Connect
       </Button>
-      <Modal show={show} onClose={() => setShow(false)}>
+      <Modal isOpen={show} onClose={() => setShow(false)}>
         <ul>
           {Object.entries(providers).map(([key, value]) => (
             <li
@@ -60,7 +41,7 @@ function ConnectFlow({ providers, activate }: SelectorProps) {
   );
 }
 
-export function EthereumConnectionButton() {
+export default function EthereumConnectionButton() {
   const context = useEthereumWalletContext();
   switch (context.state.type) {
     case EthereumStateType.NOT_CONNECTED:

@@ -3,9 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { Web3ReactProvider } from '@web3-react/core';
 import React from 'react';
 import { hydrate } from 'react-dom';
-import './global.css';
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
-import ThemeProvider from '@wrap-dapps/components/theme/ThemeProvider';
+import { ThemeProvider } from '@wrap-dapps/components';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

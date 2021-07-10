@@ -30,7 +30,6 @@
     "postcss": "^8.3.5",
     "razzle": "^4.0.5",
     "razzle-dev-utils": "^4.0.5",
-    "tailwindcss": "^2.2.4",
     "webpack": "^4.44.1",
     "webpack-dev-server": "^3.11.2"
   },
