@@ -1,3 +1,1 @@
-import { useNotify } from './useNotify';
-
-export { useNotify };
+export * from './useNotify';

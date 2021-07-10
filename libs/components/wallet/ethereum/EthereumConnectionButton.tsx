@@ -1,10 +1,11 @@
 import { useEthereumWalletContext } from './useEthereumWallet';
 
-import React, { PropsWithChildren, useState } from 'react';
+import React, { useState } from 'react';
 import { EthereumStateType } from './state';
 import { EthConnector, EthConnectors } from './connectorsFactory';
-import { Button } from 'theme-ui';
-import { Modal } from '../../modal';
+import { Button, Flex, Image, Paragraph } from 'theme-ui';
+import { Dialog } from '../../Dialog';
+import { List, ListHeader, ListItem } from '../../List';
 
 type SelectorProps = {
   providers: EthConnectors;
@@ -23,20 +24,25 @@ function ConnectFlow({ providers, activate }: SelectorProps) {
       <Button variant={'white'} onClick={() => setShow(true)}>
         Connect
       </Button>
-      <Modal isOpen={show} onClose={() => setShow(false)}>
-        <ul>
+      <Dialog isOpen={show} onClose={() => setShow(false)}>
+        <List>
+          <ListHeader text="Select your wallet" />
           {Object.entries(providers).map(([key, value]) => (
-            <li
+            <ListItem
               key={key}
+              button
               onClick={() => {
                 handleSelect(key);
               }}
             >
-              {value.name}
-            </li>
+              <Flex sx={{ justifyContent: 'space-between' }}>
+                <Paragraph>{value.name}</Paragraph>
+                <Image src={value.iconName} variant="medium" />
+              </Flex>
+            </ListItem>
           ))}
-        </ul>
-      </Modal>
+        </List>
+      </Dialog>
     </>
   );
 }

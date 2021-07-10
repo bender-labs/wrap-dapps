@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { Box, Flex, NavLink } from 'theme-ui';
 
-export default function NavBar({ children }: PropsWithChildren<{}>) {
+export function NavBar({ children }: PropsWithChildren<{}>) {
   return (
     <Flex as="nav" sx={{ justifyContent: 'space-between' }} p={2}>
       <Flex sx={{ alignItems: 'center' }}>
@@ -20,11 +20,12 @@ export default function NavBar({ children }: PropsWithChildren<{}>) {
           </NavLink>
         </div>
         <NavLink href="#!" p={2}>
-          Docs
+          Wrap
         </NavLink>
         <NavLink href="#!" p={2}>
-          Blog
+          History
         </NavLink>
+        <NavLink>Farming</NavLink>
       </Flex>
       <Box
         sx={{

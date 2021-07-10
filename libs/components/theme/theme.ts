@@ -36,10 +36,20 @@ const theme: Theme = {
   },
   colors: {
     text: '#FFF',
-    background: '#000',
+    background: '#191919',
     primary: '#FFD000',
     secondary: '#000',
     muted: '#B1B1B1',
+    yellow: '#FFD000',
+    grey: '#444444',
+    red: '#FF0000',
+  },
+  radii: {
+    none: '0',
+    sm: '0.125rem',
+    default: '0.25rem',
+    md: '0.375rem',
+    lg: '0.5rem',
   },
   styles: {
     root: {
@@ -127,6 +137,12 @@ const theme: Theme = {
     },
   },
   buttons,
+  images: {
+    medium: {
+      width: 32,
+      height: 32,
+    },
+  },
 };
 
 export default theme;
