@@ -1,15 +1,14 @@
 import { createTheme } from '@material-ui/core';
 
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#FFD000',
-    },
-    secondary: {
-      main: '#000000',
-    },
-  },
   components: {
+    MuiAppBar: {
+      defaultProps: {
+        position: 'static',
+        color: 'transparent',
+        elevation: 0,
+      },
+    },
     MuiDialog: {
       styleOverrides: {
         paper: {
