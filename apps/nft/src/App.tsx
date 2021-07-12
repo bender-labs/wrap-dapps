@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import { NetworkType } from '@airgap/beacon-sdk';
-import { Heading } from 'theme-ui';
 import {
   EthereumConfig,
   EthereumConnectionButton,
@@ -34,7 +33,6 @@ const App = () => {
           <TezosConnectionButton />
           <EthereumConnectionButton />
         </NavBar>
-        <Heading>Hello</Heading>
         <Switch>
           <Route exact path="/" component={Home} />
         </Switch>

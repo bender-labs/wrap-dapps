@@ -3,9 +3,16 @@ import { useEthereumWalletContext } from './useEthereumWallet';
 import React, { useState } from 'react';
 import { EthereumStateType } from './state';
 import { EthConnector, EthConnectors } from './connectorsFactory';
-import { Button, Flex, Image, Paragraph } from 'theme-ui';
-import { Dialog } from '../../Dialog';
-import { List, ListHeader, ListItem } from '../../List';
+import {
+  Box,
+  Button,
+  Dialog,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+} from '@material-ui/core';
 
 type SelectorProps = {
   providers: EthConnectors;
@@ -21,12 +28,15 @@ function ConnectFlow({ providers, activate }: SelectorProps) {
   };
   return (
     <>
-      <Button variant={'inverted'} onClick={() => setShow(true)}>
-        Connect
-      </Button>
-      <Dialog isOpen={show} onClose={() => setShow(false)}>
-        <List>
-          <ListHeader text="Select your wallet" />
+      <Button onClick={() => setShow(true)}>Connect</Button>
+      <Dialog open={show} onClose={() => setShow(false)}>
+        <List
+          subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              Select your wallet
+            </ListSubheader>
+          }
+        >
           {Object.entries(providers).map(([key, value]) => (
             <ListItem
               key={key}
@@ -35,10 +45,14 @@ function ConnectFlow({ providers, activate }: SelectorProps) {
                 handleSelect(key);
               }}
             >
-              <Flex sx={{ justifyContent: 'space-between' }}>
-                <Paragraph>{value.name}</Paragraph>
-                <Image src={value.iconName} variant="medium" />
-              </Flex>
+              <ListItemText primary={value.name} />
+              <ListItemIcon>
+                <Box
+                  component="img"
+                  sx={{ width: '37px', height: '37px' }}
+                  src={value.iconName}
+                />
+              </ListItemIcon>
             </ListItem>
           ))}
         </List>
