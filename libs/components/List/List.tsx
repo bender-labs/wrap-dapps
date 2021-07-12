@@ -9,7 +9,7 @@ export function List({ children }: PropsWithChildren<Props>) {
       as="ul"
       p={0}
       sx={{
-        borderRadius: 'lg',
+        borderRadius: 'md',
         listStyleType: 'none',
         backgroundColor: 'background',
         color: 'text',

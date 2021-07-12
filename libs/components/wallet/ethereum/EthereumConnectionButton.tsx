@@ -21,7 +21,7 @@ function ConnectFlow({ providers, activate }: SelectorProps) {
   };
   return (
     <>
-      <Button variant={'white'} onClick={() => setShow(true)}>
+      <Button variant={'inverted'} onClick={() => setShow(true)}>
         Connect
       </Button>
       <Dialog isOpen={show} onClose={() => setShow(false)}>
@@ -61,7 +61,7 @@ export default function EthereumConnectionButton() {
       return <p>Connecting</p>;
     case EthereumStateType.CONNECTED:
       return (
-        <Button variant={'primary'} onClick={context.deactivate}>
+        <Button onClick={context.deactivate}>
           {context.state.ethereumAccount}
         </Button>
       );

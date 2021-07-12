@@ -7,8 +7,8 @@ export default function TezosConnectionButton() {
   switch (state.type) {
     case TezosStateType.NOT_CONNECTED:
       return (
-        <Button variant={'white'} onClick={activate}>
-          CONNECT
+        <Button variant={'inverted'} onClick={activate}>
+          Connect
         </Button>
       );
     case TezosStateType.CONNECTING:

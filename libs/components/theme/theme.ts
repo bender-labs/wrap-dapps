@@ -1,16 +1,22 @@
 import { Theme } from 'theme-ui';
+import { darken } from '@theme-ui/color';
 
 const buttons = {
   primary: {
     color: 'background',
-    bg: 'primary',
+    cursor: 'pointer',
+    borderRadius: 'lg',
+    transition: 'background-color 150ms',
     '&:hover': {
-      bg: 'text',
+      bg: darken('primary', 0.1),
     },
   },
-  white: {
+  inverted: {
     color: 'background',
+    borderRadius: 'lg',
+    cursor: 'pointer',
     bg: 'text',
+    transition: 'background-color 150ms',
     '&:hover': {
       bg: 'primary',
     },
@@ -49,7 +55,7 @@ const theme: Theme = {
     sm: '0.125rem',
     default: '0.25rem',
     md: '0.375rem',
-    lg: '0.5rem',
+    lg: '25px',
   },
   styles: {
     root: {
