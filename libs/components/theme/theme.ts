@@ -23,6 +23,7 @@ const theme = createTheme({
         color: 'primary',
         variant: 'contained',
       },
+      styleOverrides: {},
     },
   },
 });

@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "nft": "yarn workspace @wrap-dapps/nft",
-    "components": "yarn workspace @wrap-dapps/components"
+    "components": "yarn workspace @wrap-dapps/components",
+    "api": "yarn workspace @wrap-dapps/api"
   },
   "workspaces": [
     "apps/*",

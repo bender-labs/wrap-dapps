@@ -1,0 +1,16 @@
+{
+  "name": "@wrap-dapps/api",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
