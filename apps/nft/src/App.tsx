@@ -1,6 +1,6 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import Home from './pages/Home';
+// import { Route, Switch } from 'react-router-dom';
+// import Home from './pages/Home';
 import { NetworkType } from '@airgap/beacon-sdk';
 import {
   EthereumConfig,
@@ -10,6 +10,7 @@ import {
   TezosConnectionButton,
   TezosWalletProvider,
   useNotify,
+  MainContainer
 } from '@wrap-dapps/components';
 
 const App = () => {
@@ -29,13 +30,12 @@ const App = () => {
       networkType={NetworkType.FLORENCENET}
     >
       <EthereumWalletProvider config={eth}>
+
         <NavBar>
           <TezosConnectionButton />
           <EthereumConnectionButton />
         </NavBar>
-        <Switch>
-          <Route exact path="/" component={Home} />
-        </Switch>
+        <MainContainer />
       </EthereumWalletProvider>
     </TezosWalletProvider>
   );

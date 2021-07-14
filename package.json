@@ -17,5 +17,9 @@
   "volta": {
     "node": "14.17.3",
     "yarn": "1.22.10"
+  },
+  "dependencies": {
+    "@material-ui/core": "^5.0.0-beta.0",
+    "@material-ui/icons": "^4.11.2"
   }
 }

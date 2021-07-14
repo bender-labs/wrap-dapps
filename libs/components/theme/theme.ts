@@ -16,15 +16,30 @@ const theme = createTheme({
         position: 'static',
         color: 'transparent',
         elevation: 0,
+        sx: {
+          padding: 2
+        }
+      },
+    },
+    MuiToolbar: {
+      defaultProps: {
+        sx: {
+          ml: 'auto',
+        }
       },
     },
     MuiButton: {
       defaultProps: {
         color: 'primary',
         variant: 'contained',
+        sx: {
+          borderRadius: 25,
+          mx: 1,
+        }
       },
       styleOverrides: {},
     },
+
   },
 });
 
