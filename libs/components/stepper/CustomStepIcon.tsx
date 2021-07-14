@@ -1,11 +1,11 @@
-// @ts-ignore
-import {makeStyles} from '@material-ui/core/styles';
-import {StepIconProps} from '@material-ui/core';
+import { createStyles, StepIconProps, makeStyles } from '@material-ui/core';
 import React from 'react';
 import CheckIcon from '@material-ui/icons/Check';
 import clsx from 'clsx';
+import theme from '../theme/theme';
 
-const useCustomStepIconStyles = makeStyles((theme) => ({
+const useCustomStepIconStyles = makeStyles() =>
+  createStyles({
   root: {
     backgroundColor: '#FFFFFF',
     zIndex: 1,
@@ -24,7 +24,7 @@ const useCustomStepIconStyles = makeStyles((theme) => ({
   completed: {
     backgroundColor: theme.palette.primary.main,
   },
-}));
+});
 
 export default function CustomStepIcon(props: StepIconProps) {
   const classes = useCustomStepIconStyles();

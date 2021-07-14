@@ -10,7 +10,7 @@ import {
   TezosConnectionButton,
   TezosWalletProvider,
   useNotify,
-  MainContainer
+  WrapContainer
 } from '@wrap-dapps/components';
 
 const App = () => {
@@ -35,7 +35,7 @@ const App = () => {
           <TezosConnectionButton />
           <EthereumConnectionButton />
         </NavBar>
-        <MainContainer />
+        <WrapContainer />
       </EthereumWalletProvider>
     </TezosWalletProvider>
   );

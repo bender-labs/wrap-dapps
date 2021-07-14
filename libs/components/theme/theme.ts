@@ -39,6 +39,17 @@ const theme = createTheme({
       },
       styleOverrides: {},
     },
+    MuiTypography: {
+      defaultProps: {
+        sx: {
+          display: 'flex',
+          width: '50%',
+          m: 'auto',
+          justifyContent: 'center',
+        }
+      }
+    }
+
 
   },
 });

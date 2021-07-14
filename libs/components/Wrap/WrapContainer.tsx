@@ -1,13 +1,13 @@
 import { Box, Container, Typography } from '@material-ui/core';
-// import { Card } from './Card'
+import { AmountToInputCard, DropDownCard, ReceiveCard } from './Cards';
 import { EthereumConnectionButton, TezosConnectionButton } from '../wallet';
 import MultiConnect from '../wallet/MultiConnect';
 
-export type MainContainerProps = {
+export type WrapContainerProps = {
   connected: boolean;
 }
 
-export const MainContainer = ({connected}: MainContainerProps) => {
+export const WrapContainer = ({connected}: WrapContainerProps) => {
   connected = false
   return (
     <Container
@@ -16,16 +16,12 @@ export const MainContainer = ({connected}: MainContainerProps) => {
         backgroundColor: 'yellow',
       }}
     >
-      <Box sx={{
-        justifyContent: 'center',
-        backgroundColor: 'white',
-        width: 300,
-        height: 300
-      }}>
-        <MultiConnect/>
+      <MultiConnect/>
+      <DropDownCard/>
+      <AmountToInputCard/>
+      <ReceiveCard/>
 
 
-      </Box>
 
     </Container>
   )
