@@ -48,6 +48,24 @@ const theme = createTheme({
           justifyContent: 'center',
         }
       }
+    },
+    MuiContainer: {
+      defaultProps: {
+        maxWidth: 'xs',
+        sx: {
+          backgroundColor: 'yellow'
+        }
+      }
+    },
+    MuiCard: {
+      defaultProps: {
+        sx: {
+          padding: '10px',
+          '&:first-child': {
+            backgroundColor: 'pink'
+          }
+        }
+      }
     }
 
 

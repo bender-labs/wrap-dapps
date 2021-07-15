@@ -3,9 +3,9 @@ import { FortmaticConnector } from '@web3-react/fortmatic-connector';
 import { PortisConnector } from '@web3-react/portis-connector';
 import { EthereumConfig } from './types';
 import { AbstractConnector } from '@web3-react/abstract-connector';
-import fortmatic from './fortmaticIcon.png';
-import metamask from './metamask.png';
-import portis from './portisIcon.png';
+import fortmatic from './images/fortmaticIcon.png';
+import metamask from './images/metamask.png';
+import portis from './images/portisIcon.png';
 
 export type EthConnector = {
   name: string;

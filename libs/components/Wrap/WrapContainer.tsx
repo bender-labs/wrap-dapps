@@ -10,19 +10,11 @@ export type WrapContainerProps = {
 export const WrapContainer = ({connected}: WrapContainerProps) => {
   connected = false
   return (
-    <Container
-      maxWidth={'xs'}
-      sx={{
-        backgroundColor: 'yellow',
-      }}
-    >
+    <Container>
       <MultiConnect/>
       <DropDownCard/>
       <AmountToInputCard/>
       <ReceiveCard/>
-
-
-
     </Container>
   )
 }

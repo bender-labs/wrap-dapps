@@ -1,9 +1,9 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box, Card, Typography } from '@material-ui/core';
 
 
 export const DropDownCard = () => {
   return (
-    <>
+    <Card>
       <Box sx={{
         backgroundColor: 'red',
         display: 'flex',
@@ -12,13 +12,13 @@ export const DropDownCard = () => {
           Drop Down Card
         </Typography>
       </Box>
-    </>
+    </Card>
   )
 }
 
 export const AmountToInputCard = () => {
   return (
-    <>
+    <Card>
         <Box sx={{
           display: 'flex',
           backgroundColor: 'white',
@@ -28,13 +28,13 @@ export const AmountToInputCard = () => {
           </Typography>
 
       </Box>
-    </>
+    </Card>
   )
 }
 
 export const ReceiveCard = () => {
   return (
-    <>
+    <Card>
       <Box sx={{
         display: 'flex',
         backgroundColor: 'blue'
@@ -44,7 +44,7 @@ export const ReceiveCard = () => {
         </Typography>
 
       </Box>
-    </>
+    </Card>
   )
 }
 

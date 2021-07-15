@@ -1,5 +1,5 @@
 import { useEthereumWalletContext } from './useEthereumWallet';
-
+import Icon from './Icon'
 import React, { useState } from 'react';
 import { EthereumStateType } from './state';
 import { EthConnector, EthConnectors } from './connectorsFactory';
@@ -72,11 +72,11 @@ export default function EthereumConnectionButton() {
         />
       );
     case EthereumStateType.CONNECTING:
-      return <p>Connecting</p>;
+      return <p><Icon/>Connecting</p>;
     case EthereumStateType.CONNECTED:
       return (
         <Button onClick={context.deactivate}>
-          {context.state.ethereumAccount}
+          <Icon/>{context.state.ethereumAccount}
         </Button>
       );
   }
