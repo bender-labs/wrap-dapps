@@ -1,4 +1,16 @@
 import { Box, Card, Typography } from '@material-ui/core';
+import AmountToWrapInput from '../form/AmountToWrapInput';
+import BigNumber from 'bignumber.js';
+
+type AmountInputProps = {
+  balance: BigNumber;
+  decimals: number;
+  symbol: string;
+  onChange: (amount: BigNumber) => void;
+  amountToWrap: BigNumber;
+  balanceLoading: boolean;
+  disabled?: boolean;
+};
 
 
 export const DropDownCard = () => {
@@ -7,6 +19,8 @@ export const DropDownCard = () => {
       <Box sx={{
         backgroundColor: 'red',
         display: 'flex',
+        minHeight: 100,
+
       }}>
         <Typography>
           Drop Down Card
@@ -16,16 +30,34 @@ export const DropDownCard = () => {
   )
 }
 
-export const AmountToInputCard = () => {
+export function AmountToInputCard({balance,
+                                    amountToWrap,
+                                    decimals,
+                                    symbol,
+                                    onChange,
+                                    balanceLoading,
+                                    disabled}: AmountInputProps) {
+
+  const handleOnChange = () => {
+
+  }
   return (
     <Card>
         <Box sx={{
           display: 'flex',
           backgroundColor: 'white',
+          justifyContent: 'center',
         }}>
-          <Typography>
-            Amount to input card
-          </Typography>
+          <AmountToWrapInput
+            balance={new BigNumber(123123)}
+            balanceLoading={true}
+            onChange={onChange}
+            symbol={symbol}
+            decimals={0}
+            amountToWrap={new BigNumber(123123)}
+
+
+          />
 
       </Box>
     </Card>
@@ -37,7 +69,8 @@ export const ReceiveCard = () => {
     <Card>
       <Box sx={{
         display: 'flex',
-        backgroundColor: 'blue'
+        backgroundColor: 'blue',
+        minHeight: 60
       }}>
         <Typography>
           Receive card
@@ -49,5 +82,19 @@ export const ReceiveCard = () => {
 }
 
 export const NextCard = () => {
+  return (
+    <Card>
+      <Box sx={{
+        display: 'flex',
+        backgroundColor: 'green',
+        minHeight: 60
+      }}>
+        <Typography>
+          Next Card
+        </Typography>
+
+      </Box>
+    </Card>
+    )
 
 }

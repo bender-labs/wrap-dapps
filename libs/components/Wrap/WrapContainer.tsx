@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from '@material-ui/core';
-import { AmountToInputCard, DropDownCard, ReceiveCard } from './Cards';
+import { AmountToInputCard, DropDownCard, NextCard, ReceiveCard } from './Cards';
 import { EthereumConnectionButton, TezosConnectionButton } from '../wallet';
 import MultiConnect from '../wallet/MultiConnect';
 
@@ -15,6 +15,7 @@ export const WrapContainer = ({connected}: WrapContainerProps) => {
       <DropDownCard/>
       <AmountToInputCard/>
       <ReceiveCard/>
+      <NextCard />
     </Container>
   )
 }

@@ -53,7 +53,8 @@ const theme = createTheme({
       defaultProps: {
         maxWidth: 'xs',
         sx: {
-          backgroundColor: 'yellow'
+          backgroundColor: '#e5e5e5',
+          minHeight: 600
         }
       }
     },

@@ -28,7 +28,7 @@ function ConnectFlow({ providers, activate }: SelectorProps) {
   };
   return (
     <>
-      <Button onClick={() => setShow(true)}>Connect</Button>
+      <Button onClick={() => setShow(true)}><Icon/><span style={{padding: '4px'}}></span>Connect</Button>
       <Dialog open={show} onClose={() => setShow(false)}>
         <List
           subheader={
@@ -76,7 +76,7 @@ export default function EthereumConnectionButton() {
     case EthereumStateType.CONNECTED:
       return (
         <Button onClick={context.deactivate}>
-          <Icon/>{context.state.ethereumAccount}
+          <Icon/><span style={{padding: '4px'}}></span>{context.state.ethereumAccount}
         </Button>
       );
   }

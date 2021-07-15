@@ -12,6 +12,7 @@ import {
   useNotify,
   WrapContainer
 } from '@wrap-dapps/components';
+import { CssBaseline } from '@material-ui/core';
 
 const App = () => {
   const notify = useNotify();
@@ -30,12 +31,12 @@ const App = () => {
       networkType={NetworkType.FLORENCENET}
     >
       <EthereumWalletProvider config={eth}>
-
+        <CssBaseline />
         <NavBar>
           <TezosConnectionButton />
           <EthereumConnectionButton />
         </NavBar>
-        <WrapContainer />
+        <WrapContainer connected />
       </EthereumWalletProvider>
     </TezosWalletProvider>
   );
