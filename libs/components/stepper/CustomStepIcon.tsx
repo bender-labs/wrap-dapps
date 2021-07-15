@@ -1,12 +1,11 @@
-import { createStyles, StepIconProps, makeStyles } from '@material-ui/core';
+import { createStyles, StepIconProps } from '@material-ui/core';
 import React from 'react';
 import CheckIcon from '@material-ui/icons/Check';
 import clsx from 'clsx';
 import theme from '../theme/theme';
 
-const useCustomStepIconStyles = makeStyles() =>
-  createStyles({
-  root: {
+
+  const root =  {
     backgroundColor: '#FFFFFF',
     zIndex: 1,
     color: '#000',
@@ -17,17 +16,17 @@ const useCustomStepIconStyles = makeStyles() =>
     borderRadius: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  active: {
+  };
+
+  const active = {
     backgroundColor: '#FFFFFF',
-  },
+  };
+
   completed: {
-    backgroundColor: theme.palette.primary.main,
-  },
-});
+    backgroundColor: theme.palette.primary.main
+  };
 
 export default function CustomStepIcon(props: StepIconProps) {
-  const classes = useCustomStepIconStyles();
   const {active, completed} = props;
 
   const icons: { [index: string]: React.ReactElement } = {
@@ -37,9 +36,9 @@ export default function CustomStepIcon(props: StepIconProps) {
 
   return (
     <div
-      className={clsx(classes.root, {
-        [classes.active]: active,
-        [classes.completed]: completed,
+      className={clsx(root, {
+        'active': active,
+        'completed': completed,
       })}
     >
       {icons[String(props.icon)]}
