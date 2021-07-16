@@ -8,7 +8,7 @@ alternativeLabel: {
         top: 14,
     },
     active: {
-        '& $line': {
+        line: {
             backgroundColor: ${theme.palette.primary.main},
         },
     },

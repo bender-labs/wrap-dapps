@@ -71,7 +71,11 @@ export function AmountToInputCard({
 
 export const ReceiveCard = () => {
   return (
-    <Card>
+    <Card sx={{
+      color: 'white',
+      backgroundColor: '#343434'
+    }
+    }>
       <CardContent>
         Receive card
       </CardContent>
@@ -81,7 +85,7 @@ export const ReceiveCard = () => {
 
 export const NextCard = () => {
   return (
-    <Card>
+    <Card sx={{borderRadius: '0 0 15px 15px'}}>
       <CardContent>
         Next Card
       </CardContent>

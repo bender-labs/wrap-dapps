@@ -68,8 +68,11 @@ const theme = createTheme({
     },
     MuiStepConnector: {
       styleOverrides: {
+        active: {
+          borderColor: "none"
+        },
         line: {
-          color: 'pink'
+          color: '#ffd000'
         },
       }
     },
