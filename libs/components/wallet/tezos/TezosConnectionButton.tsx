@@ -20,7 +20,7 @@ export default function TezosConnectionButton() {
       );
     case TezosStateType.CONNECTED:
       return (
-        <Button onClick={deactivate} startIcon={<TezosIcon />}>
+        <Button color={'primary'} onClick={deactivate} startIcon={<TezosIcon />}>
           {state.tezosAccount}
         </Button>
       );

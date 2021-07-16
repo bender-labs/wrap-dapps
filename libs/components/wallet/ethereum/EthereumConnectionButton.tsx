@@ -81,7 +81,7 @@ export default function EthereumConnectionButton() {
       );
     case EthereumStateType.CONNECTED:
       return (
-        <Button onClick={context.deactivate} startIcon={<Icon />}>
+        <Button color={'primary'} onClick={context.deactivate} startIcon={<Icon />}>
           {context.state.ethereumAccount}
         </Button>
       );

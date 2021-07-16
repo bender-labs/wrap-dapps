@@ -9,6 +9,9 @@ const theme = createTheme({
     primary: {
       main: yellow,
     },
+    secondary: {
+      main: white,
+    },
     background: {
       default: black,
     },
@@ -44,10 +47,11 @@ const theme = createTheme({
         },
       },
       defaultProps: {
-        color: 'primary',
+        color: 'secondary',
         variant: 'contained',
 
       },
+
     },
     MuiCard: {
       styleOverrides: {
@@ -66,16 +70,6 @@ const theme = createTheme({
           justifyContent: 'center',
         },
       },
-    },
-    MuiStepConnector: {
-      styleOverrides: {
-        active: {
-          borderColor: "none"
-        },
-        line: {
-          color: '#ffd000'
-        },
-      }
     },
 
     MuiContainer: {
