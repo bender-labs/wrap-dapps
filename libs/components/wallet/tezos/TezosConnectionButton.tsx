@@ -7,10 +7,22 @@ export default function TezosConnectionButton() {
   const { state, activate, deactivate } = useTezosWalletContext();
   switch (state.type) {
     case TezosStateType.NOT_CONNECTED:
-      return <Button onClick={activate}><TezosIcon/><span style={{padding: '4px'}}></span>Connect</Button>;
+      return (
+        <Button onClick={activate} startIcon={<TezosIcon />}>
+          Connect
+        </Button>
+      );
     case TezosStateType.CONNECTING:
-      return <div>Connecting...</div>;
+      return (
+        <Button disabled startIcon={<TezosIcon />}>
+          Connecting...
+        </Button>
+      );
     case TezosStateType.CONNECTED:
-      return <Button onClick={deactivate}><TezosIcon/><span style={{padding: '4px'}}></span>{state.tezosAccount}</Button>;
+      return (
+        <Button onClick={deactivate} startIcon={<TezosIcon />}>
+          {state.tezosAccount}
+        </Button>
+      );
   }
 }

@@ -1,12 +1,15 @@
 import { createTheme } from '@material-ui/core/styles';
 
+const yellow = '#FFD000';
+const black = '#000000';
+
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#FFD000',
+      main: yellow,
     },
     background: {
-      default: '#000000',
+      default: black,
     },
   },
   components: {
@@ -61,16 +64,6 @@ const theme = createTheme({
       },
       defaultProps: {
         maxWidth: 'xs',
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          padding: 10,
-          '&:first-child': {
-            backgroundColor: '#FF69B4',
-          },
-        },
       },
     },
   },
