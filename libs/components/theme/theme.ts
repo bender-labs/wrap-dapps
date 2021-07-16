@@ -11,65 +11,68 @@ const theme = createTheme({
   },
   components: {
     MuiAppBar: {
+      styleOverrides: {
+        root: {
+          padding: 2,
+        },
+      },
       defaultProps: {
         variant: 'outlined',
         position: 'static',
         color: 'transparent',
         elevation: 0,
-        sx: {
-          padding: 2
-        }
       },
     },
     MuiToolbar: {
-      defaultProps: {
-        sx: {
-          ml: 'auto',
-        }
+      styleOverrides: {
+        root: {
+          marginLeft: 'auto',
+        },
       },
     },
     MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 25,
+          textTransform: 'none',
+        },
+      },
       defaultProps: {
         color: 'primary',
         variant: 'contained',
-        sx: {
-          borderRadius: 25,
-          mx: 1,
-        }
       },
-      styleOverrides: {},
     },
-    MuiTypography: {
-      defaultProps: {
-        sx: {
+    MuiCardHeader: {
+      styleOverrides: {
+        content: {
           display: 'flex',
           width: '50%',
           m: 'auto',
           justifyContent: 'center',
-        }
-      }
+        },
+      },
     },
+
     MuiContainer: {
+      styleOverrides: {
+        root: {
+          minHeight: 600,
+        },
+      },
       defaultProps: {
         maxWidth: 'xs',
-        sx: {
-          backgroundColor: '#e5e5e5',
-          minHeight: 600
-        }
-      }
+      },
     },
     MuiCard: {
-      defaultProps: {
-        sx: {
-          padding: '10px',
+      styleOverrides: {
+        root: {
+          padding: 10,
           '&:first-child': {
-            backgroundColor: 'pink'
-          }
-        }
-      }
-    }
-
-
+            backgroundColor: '#FF69B4',
+          },
+        },
+      },
+    },
   },
 });
 
