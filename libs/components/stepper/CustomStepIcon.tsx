@@ -24,8 +24,8 @@ export default function CustomStepIcon(props: StepIconProps) {
           borderRadius: '50%',
           justifyContent: 'center',
           alignItems: 'center',
-          '.MuiStepIcon-active': {...active&&{backgroundColor: '#FFFFFF'}},
-          '.MuiStepIcon-completed': {...completed&&{backgroundColor: theme.palette.primary.main}}
+          ...active&&{backgroundColor: '#FFFFFF'},
+          ...completed&&{backgroundColor: theme.palette.primary.main}
         }}
     >
       {icons[String(props.icon)]}

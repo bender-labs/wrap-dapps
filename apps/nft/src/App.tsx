@@ -32,10 +32,7 @@ const App = () => {
     >
       <EthereumWalletProvider config={eth}>
         <CssBaseline />
-        <NavBar>
-          <TezosConnectionButton />
-          <EthereumConnectionButton />
-        </NavBar>
+        <NavBar/>
         <WrapContainer connected />
       </EthereumWalletProvider>
     </TezosWalletProvider>

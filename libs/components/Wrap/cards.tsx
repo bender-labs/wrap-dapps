@@ -18,17 +18,24 @@ type AmountInputProps = {
   disabled?: boolean;
 };
 
+export const TabsCard = () => {
+  return (
+      <Card>
+        <CardContent>
+          tabs
+        </CardContent>
+      </Card>
+    )
+
+}
+
 export const DropDownCard = () => {
   return (
     <Card>
       <CardHeader title={'Drop Down Card'} />
-      <Box
-        sx={{
-          backgroundColor: 'red',
-          display: 'flex',
-          minHeight: 100,
-        }}
-      ></Box>
+      <CardContent>
+
+      </CardContent>
     </Card>
   );
 };
@@ -45,22 +52,19 @@ export function AmountToInputCard({
   const handleOnChange = () => {};
   return (
     <Card>
-      <Box
-        sx={{
-          display: 'flex',
-          backgroundColor: 'white',
-          justifyContent: 'center',
-        }}
-      >
-        <AmountToWrapInput
-          balance={new BigNumber(123123)}
-          balanceLoading={true}
-          onChange={onChange}
-          symbol={symbol}
-          decimals={0}
-          amountToWrap={new BigNumber(123123)}
-        />
-      </Box>
+      <CardContent>
+        <Box>
+          <AmountToWrapInput
+            balance={new BigNumber(123123)}
+            balanceLoading={true}
+            onChange={onChange}
+            symbol={symbol}
+            decimals={0}
+            amountToWrap={new BigNumber(123123)}
+          />
+        </Box>
+
+      </CardContent>
     </Card>
   );
 }
@@ -68,15 +72,9 @@ export function AmountToInputCard({
 export const ReceiveCard = () => {
   return (
     <Card>
-      <Box
-        sx={{
-          display: 'flex',
-          backgroundColor: 'blue',
-          minHeight: 60,
-        }}
-      >
-        <Typography>Receive card</Typography>
-      </Box>
+      <CardContent>
+        Receive card
+      </CardContent>
     </Card>
   );
 };
@@ -84,15 +82,9 @@ export const ReceiveCard = () => {
 export const NextCard = () => {
   return (
     <Card>
-      <Box
-        sx={{
-          display: 'flex',
-          backgroundColor: 'green',
-          minHeight: 60,
-        }}
-      >
-        <Typography>Next Card</Typography>
-      </Box>
+      <CardContent>
+        Next Card
+      </CardContent>
     </Card>
   );
 };

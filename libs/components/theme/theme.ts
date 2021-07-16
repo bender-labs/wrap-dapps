@@ -27,6 +27,8 @@ const theme = createTheme({
       },
     },
     MuiToolbar: {
+
+
       styleOverrides: {
         root: {
           marginLeft: 'auto',
@@ -43,6 +45,15 @@ const theme = createTheme({
       defaultProps: {
         color: 'primary',
         variant: 'contained',
+
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#e5e5e5',
+          borderRadius: '0px'
+        }
       },
     },
     MuiCardHeader: {
@@ -54,6 +65,13 @@ const theme = createTheme({
           justifyContent: 'center',
         },
       },
+    },
+    MuiStepConnector: {
+      styleOverrides: {
+        line: {
+          color: 'pink'
+        },
+      }
     },
 
     MuiContainer: {

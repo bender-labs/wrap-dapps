@@ -3,7 +3,7 @@ import {
   AmountToInputCard,
   DropDownCard,
   NextCard,
-  ReceiveCard,
+  ReceiveCard, TabsCard
 } from './cards';
 import { EthereumConnectionButton, TezosConnectionButton } from '../wallet';
 import MultiConnect from '../wallet/MultiConnect';
@@ -16,6 +16,7 @@ export const WrapContainer = ({ connected }: WrapContainerProps) => {
   connected = false;
   return (
     <Container>
+      <TabsCard />
       <MultiConnect />
       <DropDownCard />
       <AmountToInputCard />

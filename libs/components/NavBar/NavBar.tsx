@@ -1,10 +1,19 @@
-import React, { PropsWithChildren } from 'react';
-import { AppBar, Toolbar } from '@material-ui/core';
+import React from 'react';
+import { AppBar, Box, Toolbar } from '@material-ui/core';
+import { EthereumConnectionButton, TezosConnectionButton } from '../wallet';
 
-export function NavBar({ children }: PropsWithChildren<{}>) {
+export function NavBar() {
   return (
     <AppBar>
-      <Toolbar>{children}</Toolbar>
+      <Toolbar>
+        <Box style={{padding: "25px"}}>
+          <TezosConnectionButton />
+        </Box>
+        <Box>
+          <EthereumConnectionButton />
+        </Box>
+
+      </Toolbar>
     </AppBar>
   );
 }
