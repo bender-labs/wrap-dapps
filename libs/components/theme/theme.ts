@@ -1,7 +1,8 @@
 import { createTheme } from '@material-ui/core/styles';
 
-const yellow = '#FFD000';
-const black = '#000000';
+export const yellow = '#FFD000';
+export const black = '#000000';
+export const white = '#FFFFFF';
 
 const theme = createTheme({
   palette: {
@@ -87,6 +88,28 @@ const theme = createTheme({
         maxWidth: 'xs',
       },
     },
+    MuiStepConnector:{
+    styleOverrides:{
+      alternativeLabel: {
+        top: 14,
+      },
+      line: {
+        height: 3,
+        border: 0,
+        backgroundColor: white,
+        borderRadius: 1,
+      },
+      root: {
+      '& .MuiActive': {
+        backgroundColor: yellow,
+        '&> .MuiStepConnector-line': {
+          backgroundColor: yellow,
+        }
+      }
+      },
+
+      }
+    }
   },
 });
 
