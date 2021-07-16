@@ -6,10 +6,10 @@ import {
   CardContent,
   Step,
   StepLabel,
-  Stepper,
-  StepConnector
+  Stepper
 } from '@material-ui/core';
 import CustomStepIcon from '../stepper/CustomStepIcon';
+import CustomConnector from '../stepper/CustomConnector';
 import { TezosStateType } from './tezos/state';
 import { EthereumStateType } from './ethereum/state';
 
@@ -47,7 +47,7 @@ export default function MultiConnect() {
             }}
             alternativeLabel
             activeStep={activeStep()}
-            connector={<StepConnector />}
+            connector={<CustomConnector />}
           >
             <Step>
               <StepLabel StepIconComponent={CustomStepIcon}>
