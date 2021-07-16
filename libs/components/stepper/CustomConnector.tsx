@@ -12,11 +12,6 @@ const customConnector = styled(StepConnector)(({theme}) => ({
       backgroundColor: theme.palette.primary.main
     },
   },
-  [`&.${stepConnectorClasses.completed}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      borderColor: '#784af4',
-    },
-  },
   [`& .${stepConnectorClasses.line}`]: {
     height: 3,
     border: 0,
