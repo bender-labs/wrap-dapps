@@ -1,6 +1,6 @@
 import { StepIconProps, Box } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
-import theme from "../theme/theme";
+import theme, {white, yellow} from "../theme/theme";
 
 
 export default function CustomStepIcon(props: StepIconProps) {
@@ -24,8 +24,8 @@ export default function CustomStepIcon(props: StepIconProps) {
           borderRadius: '50%',
           justifyContent: 'center',
           alignItems: 'center',
-          ...active&&{backgroundColor: '#FFFFFF'},
-          ...completed&&{backgroundColor: theme.palette.primary.main}
+          ...active&&{backgroundColor: white},
+          ...completed&&{backgroundColor: yellow}
         }}
     >
       {icons[String(props.icon)]}
