@@ -3,10 +3,12 @@ import {
   Card,
   CardContent,
   CardHeader,
+    Button,
   Typography,
 } from '@material-ui/core';
 import AmountToWrapInput from '../form/AmountToWrapInput';
 import BigNumber from 'bignumber.js';
+import { yellow } from '@material-ui/core/colors';
 
 type AmountInputProps = {
   balance: BigNumber;
@@ -88,6 +90,33 @@ export const NextCard = () => {
     <Card sx={{borderRadius: '0 0 15px 15px'}}>
       <CardContent>
         Next Card
+          <Button
+              variant={'contained'}
+              color={'primary'}
+              disabled
+              sx={{
+                  color: 'black',
+                  backgroundColor: '#ffffff',
+                  width: '40%',
+                  borderRadius: '25px',
+                  float: 'right',
+                  boxShadow: 'none',
+                  textTransform: 'none',
+                  fontWeight: 900,
+                  '&:active': {
+                      boxShadow: 'none',
+                  },
+                  '&:hover': {
+                      backgroundColor: yellow,
+                      boxShadow: 'none',
+                  },
+                  '&:disabled': {
+                      backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                  },
+              }}
+          >
+              Next →
+          </Button>
       </CardContent>
     </Card>
   );
