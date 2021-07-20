@@ -51,6 +51,7 @@ export const WrapContainer = ({ connected }: WrapContainerProps) => {
       thumbnailUri: 'https://info.tzwrap.com/icons/WRAP.png',
     },
   };
+
   return (
     <Container>
       <HalfCard>

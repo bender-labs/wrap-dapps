@@ -49,6 +49,7 @@ const theme = createTheme({
         variant: 'contained',
       },
     },
+
     MuiCard: {
       styleOverrides: {
         root: {
@@ -57,6 +58,7 @@ const theme = createTheme({
         },
       },
     },
+
     MuiCardHeader: {
       styleOverrides: {
         content: {
@@ -64,6 +66,23 @@ const theme = createTheme({
           width: '50%',
           m: 'auto',
           justifyContent: 'center',
+        },
+      },
+    },
+
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          margin: 20,
+
+        },
+
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          paddingTop: 20,
         },
       },
     },
