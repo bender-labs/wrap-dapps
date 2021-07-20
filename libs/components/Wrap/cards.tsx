@@ -5,18 +5,27 @@ import {
   CardHeader,
   Typography,
 } from '@material-ui/core';
-import AmountToWrapInput from '../form/AmountToWrapInput';
-import BigNumber from 'bignumber.js';
+// import BigNumber from 'bignumber.js';
+// import { SupportedBlockchain } from '../wallet/blockchain';
+// import { TokenMetadata } from '../token/type';
 
-type AmountInputProps = {
-  balance: BigNumber;
-  decimals: number;
-  symbol: string;
-  onChange: (amount: BigNumber) => void;
-  amountToWrap: BigNumber;
-  balanceLoading: boolean;
-  disabled?: boolean;
-};
+// type AmountInputProps = {
+//   balance: BigNumber;
+//   decimals: number;
+//   symbol: string;
+//   onChange: (amount: BigNumber) => void;
+//   amountToWrap: BigNumber;
+//   balanceLoading: boolean;
+//   disabled?: boolean;
+// };
+//
+//
+// type TokenSelectionProps = {
+//   token: TokenMetadata;
+//   onTokenSelect: (token: string) => void;
+//   blockchainTarget: SupportedBlockchain;
+//   tokens: Record<string, TokenMetadata>;
+// };
 
 export const TabsCard = () => {
   return (
@@ -29,45 +38,45 @@ export const TabsCard = () => {
 
 }
 
-export const DropDownCard = () => {
-  return (
-    <Card>
-      <CardHeader title={'Drop Down Card'} />
-      <CardContent>
+// const DropDownCard = () => {
+//   return (
+//     <Card>
+//       <CardHeader title={'Drop Down Card'} />
+//       <CardContent>
+//
+//       </CardContent>
+//     </Card>
+//   );
+// };
 
-      </CardContent>
-    </Card>
-  );
-};
 
-export function AmountToInputCard({
-  balance,
-  amountToWrap,
-  decimals,
-  symbol,
-  onChange,
-  balanceLoading,
-  disabled,
-}: AmountInputProps) {
-  const handleOnChange = () => {};
-  return (
-    <Card>
-      <CardContent>
-        <Box>
-          <AmountToWrapInput
-            balance={new BigNumber(123123)}
-            balanceLoading={true}
-            onChange={onChange}
-            symbol={symbol}
-            decimals={0}
-            amountToWrap={new BigNumber(123123)}
-          />
-        </Box>
 
-      </CardContent>
-    </Card>
-  );
-}
+// function AmountToInputCard({
+//   balance,
+//   amountToWrap,
+//   decimals,
+//   symbol,
+//   onChange,
+//   balanceLoading,
+//   disabled,
+// }: AmountInputProps) {
+//   return (
+//         <Box>
+//           <AmountToWrapInput
+//             balance={balance}
+//             balanceLoading={balanceLoading}
+//             onChange={onChange}
+//             symbol={symbol}
+//             decimals={decimals}
+//             amountToWrap={amountToWrap}
+//           />
+//         </Box>
+//
+//
+//   );
+// }
+
+
 
 export const ReceiveCard = () => {
   return (
