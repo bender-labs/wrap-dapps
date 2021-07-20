@@ -3,13 +3,13 @@ import StepConnector, {
   stepConnectorClasses,
 } from '@material-ui/core/StepConnector';
 
-const customConnector = styled(StepConnector)(({theme}) => ({
+const CustomConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 14,
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      backgroundColor: theme.palette.primary.main
+      backgroundColor: theme.palette.primary.main,
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
@@ -20,4 +20,4 @@ const customConnector = styled(StepConnector)(({theme}) => ({
   },
 }));
 
-export default customConnector;
+export default CustomConnector;

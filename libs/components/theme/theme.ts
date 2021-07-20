@@ -7,47 +7,46 @@ export const white = '#FFFFFF';
 const theme = createTheme({
   palette: {
     primary: {
-      main: yellow
+      main: yellow,
     },
     secondary: {
       main: white,
     },
     background: {
-      default: black
-    }
+      default: black,
+    },
   },
   components: {
     MuiAppBar: {
       styleOverrides: {
         root: {
-          padding: 2
-        }
+          padding: 2,
+        },
       },
       defaultProps: {
         variant: 'outlined',
         position: 'static',
         color: 'transparent',
-        elevation: 0
-      }
+        elevation: 0,
+      },
     },
     MuiToolbar: {
       styleOverrides: {
         root: {
-          marginLeft: 'auto'
-        }
-      }
+          marginLeft: 'auto',
+        },
+      },
     },
     MuiButton: {
       styleOverrides: {
         root: {
           borderRadius: 25,
-          textTransform: 'none'
-        }
+          textTransform: 'none',
+        },
       },
       defaultProps: {
         color: 'secondary',
         variant: 'contained',
-
       },
     },
     MuiCard: {
@@ -55,8 +54,8 @@ const theme = createTheme({
         root: {
           backgroundColor: '#e5e5e5',
           borderRadius: '0px',
-        }
-      }
+        },
+      },
     },
     MuiCardHeader: {
       styleOverrides: {
@@ -71,14 +70,14 @@ const theme = createTheme({
     MuiContainer: {
       styleOverrides: {
         root: {
-          minHeight: 600
-        }
+          minHeight: 600,
+        },
       },
       defaultProps: {
-        maxWidth: 'xs'
-      }
-    }
-  }
+        maxWidth: 'xs',
+      },
+    },
+  },
 });
 
 export default theme;
