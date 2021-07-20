@@ -1,8 +1,8 @@
-import { Container } from '@material-ui/core';
+import { CardContent, Container } from '@material-ui/core';
 import MultiConnect from '../wallet/MultiConnect';
 import { Token } from '../token/type';
 import { HalfCard } from '../Card';
-import InputCard from './Cards/InputCard';
+import EthereumTokenSelection from './Cards/EthereumTokenSelection';
 
 export type WrapContainerProps = {
   connected: boolean;
@@ -54,13 +54,15 @@ export const WrapContainer = ({ connected }: WrapContainerProps) => {
   return (
     <Container>
       <HalfCard>
-        <MultiConnect />
-        <InputCard
-          connected={true}
-          onTokenChange={() => {}}
-          token={tokens['SOR']}
-          tokens={tokens}
-        />
+        <CardContent>
+          <MultiConnect />
+
+          <EthereumTokenSelection
+            onTokenChange={() => {}}
+            token={tokens['SOR']}
+            tokens={tokens}
+          />
+        </CardContent>
       </HalfCard>
     </Container>
   );
