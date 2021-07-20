@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader } from '@material-ui/core';
-import { SupportedBlockchain } from '../wallet/blockchain';
-import { TokenMetadata } from '../token/type';
-import TokenSelection from '../token/TokenSelection';
+import { Card, CardContent } from '@material-ui/core';
+import { SupportedBlockchain } from '../../wallet/blockchain';
+import { TokenMetadata } from '../../token/type';
+import TokenSelection from '../../token/TokenSelection';
 
 type InputCardProps = {
   token: TokenMetadata;
@@ -16,7 +16,6 @@ export default function InputCard({
   tokens }: InputCardProps) {
   return (
     <Card>
-      <CardHeader title={'Input Card'}/>
       <CardContent>
         <TokenSelection
           token={token.ethereumSymbol}
