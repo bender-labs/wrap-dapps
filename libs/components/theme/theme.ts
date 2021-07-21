@@ -1,7 +1,10 @@
 import { createTheme } from '@material-ui/core/styles';
 
 export const yellow = '#FFD000';
+export const shadeOfYellow = '#F7CB16';
+export const opaqueYellow = 'rgba(247,203,22,0.29)';
 export const black = '#000000';
+export const shadeOfBlack = '#191919';
 export const white = '#FFFFFF';
 export const pink = '#DF318F';
 
@@ -98,6 +101,21 @@ const theme = createTheme({
         maxWidth: 'xs',
       },
     },
+    MuiLinearProgress:{
+      styleOverrides:{
+        barColorPrimary:{
+          backgroundColor: shadeOfYellow,
+          opacity: '1',
+          height: '8px',
+          borderRadius: '12px',
+        },
+        colorPrimary:{
+          backgroundColor: opaqueYellow,
+          height: '8px',
+          borderRadius: '12px',
+        }
+      }
+    }
   },
 });
 

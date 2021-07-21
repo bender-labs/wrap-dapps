@@ -6,7 +6,8 @@ import { Token } from '../token/type';
 import { HalfCard } from '../Card';
 import EthereumTokenSelection from './Cards/EthereumTokenSelection';
 import Gallery from '../gallery/Gallery';
-import { white } from '../theme/theme';
+import { CircularProgressWithLabel } from '../progress/CircularProgressWithLabel';
+
 
 export type WrapContainerProps = {
   connected: boolean;
@@ -79,6 +80,7 @@ export const WrapContainer = ({ connected, disabled }: WrapContainerProps) => {
               token={tokens['SOR']}
               tokens={tokens}
             />
+            <CircularProgressWithLabel label={'waiting for confirmations'} />
           </CardContent>
         </HalfCard>
       </Container>
