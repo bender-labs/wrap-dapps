@@ -28,7 +28,7 @@ export default function LoadableButton({
 
     const handleOnClick = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
-        onClick();
+        //onClick();
     };
 
     return (
