@@ -6,6 +6,7 @@ import { Token } from '../token/type';
 import { HalfCard } from '../Card';
 import EthereumTokenSelection from './Cards/EthereumTokenSelection';
 import Gallery from '../gallery/Gallery';
+import { white } from '../theme/theme';
 
 export type WrapContainerProps = {
   connected: boolean;
@@ -15,7 +16,7 @@ export type WrapContainerProps = {
 
 
 export const WrapContainer = ({ connected, disabled }: WrapContainerProps) => {
-  connected = true;
+  connected = false;
   if(!connected) {
     disabled = true;
   }
@@ -64,13 +65,13 @@ export const WrapContainer = ({ connected, disabled }: WrapContainerProps) => {
 
   return (
     <div>
-
-
       <Container sx={{ paddingBottom: 3 }}>
 
         <HalfCard>
           <CardContent>
-            <MultiConnect />
+            {!connected && (
+              <MultiConnect />
+            )}
 
             <EthereumTokenSelection
               disabled={disabled}
@@ -81,7 +82,7 @@ export const WrapContainer = ({ connected, disabled }: WrapContainerProps) => {
           </CardContent>
         </HalfCard>
       </Container>
-      <Container maxWidth={'lg'} sx={{ padding: 3, backgroundColor: 'white'}}>
+      <Container maxWidth={'lg'} sx={{ padding: 3 }}>
         <Gallery />
       </Container>
     </div>
