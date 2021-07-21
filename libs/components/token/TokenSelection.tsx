@@ -9,6 +9,7 @@ import TezosTokenIcon from './tezos/TezosTokenIcon';
 type Props = {
   token: string;
   onTokenSelect: (token: string) => void;
+  disabled: boolean;
   blockchainTarget: SupportedBlockchain;
   tokens: Record<string, TokenMetadata>;
 };
@@ -46,6 +47,7 @@ function orderTokens(
 export default function TokenSelection({
                                          token,
                                          tokens,
+  disabled,
                                          blockchainTarget,
                                          onTokenSelect,
                                        }: Props) {
@@ -60,6 +62,7 @@ export default function TokenSelection({
     <FormControl fullWidth variant={'filled'}>
       <Select
         fullWidth
+        disabled={disabled}
         value={token}
         onChange={handleTokenSelect}
         displayEmpty

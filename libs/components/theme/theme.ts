@@ -54,7 +54,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: '#e5e5e5',
-          borderRadius: '0px',
+
         },
       },
     },
@@ -89,7 +89,8 @@ const theme = createTheme({
     MuiContainer: {
       styleOverrides: {
         root: {
-          minHeight: 600,
+          minHeight: 250,
+
         },
       },
       defaultProps: {

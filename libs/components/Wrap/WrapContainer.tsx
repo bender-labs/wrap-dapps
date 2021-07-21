@@ -5,18 +5,26 @@ import LoadableButton from '../button/LoadableButton';
 import { Token } from '../token/type';
 import { HalfCard } from '../Card';
 import EthereumTokenSelection from './Cards/EthereumTokenSelection';
+import Gallery from '../gallery/Gallery';
 
 export type WrapContainerProps = {
   connected: boolean;
+  disabled: boolean;
 };
 
-export const WrapContainer = ({ connected }: WrapContainerProps) => {
-  connected = false;
+
+
+export const WrapContainer = ({ connected, disabled }: WrapContainerProps) => {
+  connected = true;
+  if(!connected) {
+    disabled = true;
+  }
+
   const tokens: Record<string, Token> = {
     SOR: {
       token: 'SOR',
       type: 'ERC721',
-      ethereumName: 'blabla',
+      ethereumName: 'SORARE',
       ethereumSymbol: 'SOR',
       ethereumContractAddress: 'address',
       decimals: 1,
@@ -55,18 +63,27 @@ export const WrapContainer = ({ connected }: WrapContainerProps) => {
   };
 
   return (
-    <Container>
-      <HalfCard>
-        <CardContent>
-          <MultiConnect />
+    <div>
 
-          <EthereumTokenSelection
-            onTokenChange={() => {}}
-            token={tokens['SOR']}
-            tokens={tokens}
-          />
-        </CardContent>
-      </HalfCard>
-    </Container>
+
+      <Container sx={{ paddingBottom: 3 }}>
+
+        <HalfCard>
+          <CardContent>
+            <MultiConnect />
+
+            <EthereumTokenSelection
+              disabled={disabled}
+              onTokenChange={() => {}}
+              token={tokens['SOR']}
+              tokens={tokens}
+            />
+          </CardContent>
+        </HalfCard>
+      </Container>
+      <Container maxWidth={'lg'} sx={{ padding: 3, backgroundColor: 'white'}}>
+        <Gallery />
+      </Container>
+    </div>
   );
-};
+}
