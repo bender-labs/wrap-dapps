@@ -3,6 +3,7 @@ import { createTheme } from '@material-ui/core/styles';
 export const yellow = '#FFD000';
 export const black = '#000000';
 export const white = '#FFFFFF';
+export const pink = '#DF318F';
 
 const theme = createTheme({
   palette: {
