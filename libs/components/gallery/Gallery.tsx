@@ -30,31 +30,31 @@ export default function Gallery() {
     {
       title: "Declan Rice",
       team: "West Ham",
-      id: '1',
+      id: '5',
       imageUrl: '971283'
     },
     {
       title: "Ngolo Kante",
       team: "Chelsea",
-      id: '2',
+      id: '6',
       imageUrl: '6754'
     },
     {
       title: "Paul Pogba",
       team: "Man Utd",
-      id: '3',
+      id: '7',
       imageUrl: '7564'
     },
     {
       title: "Antoinne Griezmann",
       team: "Barcelona",
-      id: '4',
+      id: '8',
       imageUrl: '4256'
     },
   ]
   const renderCard = (p: any) => {
     return (
-      <Grid item lg={3}>
+      <Grid item lg={3} key={p.id}>
         <NFTCard>
           <CardContent>
             <Typography>

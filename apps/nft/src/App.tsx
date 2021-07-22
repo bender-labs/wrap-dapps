@@ -1,13 +1,9 @@
 import React from 'react';
-// import { Route, Switch } from 'react-router-dom';
-// import Home from './pages/Home';
 import { NetworkType } from '@airgap/beacon-sdk';
 import {
   EthereumConfig,
-  EthereumConnectionButton,
   EthereumWalletProvider,
   NavBar,
-  TezosConnectionButton,
   TezosWalletProvider,
   useNotify,
   WrapContainer
@@ -33,7 +29,7 @@ const App = () => {
       <EthereumWalletProvider config={eth}>
         <CssBaseline />
         <NavBar/>
-        <WrapContainer connected />
+        <WrapContainer />
       </EthereumWalletProvider>
     </TezosWalletProvider>
   );

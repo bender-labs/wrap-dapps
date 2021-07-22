@@ -55,7 +55,8 @@ export const connectAction = actionCreator.async<
 
 export const disconnectAction = actionCreator('DISCONNECT');
 
-export const reducer = reducerWithInitialState<TezosState>(
+export const
+  reducer = reducerWithInitialState<TezosState>(
   TezosState.notConnected()
 )
   .case(connectAction.started, () => TezosState.connecting())

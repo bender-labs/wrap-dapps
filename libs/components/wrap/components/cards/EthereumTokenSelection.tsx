@@ -1,6 +1,6 @@
-import { SupportedBlockchain } from '../../wallet/blockchain';
-import { TokenMetadata } from '../../token/type';
-import TokenSelection from '../../token/TokenSelection';
+import { SupportedBlockchain } from '../../../wallet/blockchain';
+import { TokenMetadata } from '../../../token/type';
+import TokenSelection from '../../../token/TokenSelection';
 
 type EthereumTokenSelectionProps = {
   token: TokenMetadata;
