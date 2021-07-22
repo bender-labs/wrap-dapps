@@ -1,68 +1,220 @@
 import { NFTCard } from './nftcard';
-import { Button, CardActions, CardContent, Grid, Typography } from '@material-ui/core';
+import { Button, CardActions, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
 
 export default function Gallery() {
 
   const playerCards = [{
-      title: "David Beckham",
-      team: "PSG",
+      name: "David Beckham",
+      description: "",
+      image: "../../static/img/Beckham.jpg",
+      attributes: [
+        {
+          "trait_type": "team",
+          "value": "PSG"
+        },
+        {
+            "trait_type": "scarcity",
+            "value": "Rare"
+        },
+        {
+            "trait_type": "position",
+            "value": "Midfielder"
+        },
+        {
+            "trait_type": "jersey",
+            "value": "home"
+        },
+      ],
       id: '1',
-      imageUrl: '971283'
     },
     {
-      title: "Kylian Mbappe",
-      team: "PSG",
+      name: "Kylian Mbappe",
+      description: "",
+      image: "",
+      attributes: [
+        {
+          "trait_type": "team",
+          "value": "PSG"
+        },
+        {
+          "trait_type": "scarcity",
+          "value": "Rare"
+        },
+        {
+          "trait_type": "position",
+          "value": "Forward"
+        },
+        {
+          "trait_type": "jersey",
+          "value": "home"
+        },
+      ],
       id: '2',
-      imageUrl: '6754'
     },
     {
-      title: "Thierry Henry",
-      team: "Arsenal",
+      name: "Thierry Henry",
+      description: "",
+      image: "",
+      attributes: [
+        {
+          "trait_type": "team",
+          "value": "Arsenal"
+        },
+        {
+          "trait_type": "scarcity",
+          "value": "Super Rare"
+        },
+        {
+          "trait_type": "position",
+          "value": "Forward"
+        },
+        {
+          "trait_type": "jersey",
+          "value": "Home"
+        },
+      ],
       id: '3',
-      imageUrl: '7564'
     },
     {
-      title: "Aubameyang",
-      team: "Arsenal",
+      name: "Aubameyang",
+      description: "",
+      image: "",
+      attributes: [
+        {
+          "trait_type": "team",
+          "value": "Arsenal"
+        },
+        {
+          "trait_type": "scarcity",
+          "value": "Normal"
+        },
+        {
+          "trait_type": "position",
+          "value": "Forward"
+        },
+        {
+          "trait_type": "jersey",
+          "value": "away"
+        },
+      ],
       id: '4',
-      imageUrl: '4256'
     },
     {
-      title: "Declan Rice",
-      team: "West Ham",
+      name: "Declan Rice",
+      description: "",
+      image: "",
+      attributes: [
+        {
+          "trait_type": "team",
+          "value": "West Ham"
+        },
+        {
+          "trait_type": "scarcity",
+          "value": "Normal"
+        },
+        {
+          "trait_type": "position",
+          "value": "Midfielder"
+        },
+        {
+          "trait_type": "jersey",
+          "value": "away"
+        },
+      ],
       id: '5',
-      imageUrl: '971283'
     },
     {
-      title: "Ngolo Kante",
-      team: "Chelsea",
+      name: "Ngolo Kante",
+      description: "",
+      image: "",
+      attributes: [
+        {
+          "trait_type": "team",
+          "value": "Chelsea"
+        },
+        {
+          "trait_type": "scarcity",
+          "value": "Rare"
+        },
+        {
+          "trait_type": "position",
+          "value": "Midfielder"
+        },
+        {
+          "trait_type": "jersey",
+          "value": "away"
+        },
+      ],
       id: '6',
-      imageUrl: '6754'
     },
     {
-      title: "Paul Pogba",
-      team: "Man Utd",
+      name: "Paul Pogba",
+      description: "",
+      image: "",
+      attributes: [
+        {
+          "trait_type": "team",
+          "value": "Man United"
+        },
+        {
+          "trait_type": "scarcity",
+          "value": "Rare"
+        },
+        {
+          "trait_type": "position",
+          "value": "Midfielder"
+        },
+        {
+          "trait_type": "jersey",
+          "value": "home"
+        },
+      ],
       id: '7',
-      imageUrl: '7564'
     },
     {
-      title: "Antoinne Griezmann",
-      team: "Barcelona",
+      name: "Antoinne Griezmann",
+      description: "",
+      image: "",
+      attributes: [
+        {
+          "trait_type": "team",
+          "value": "Barcelona"
+        },
+        {
+          "trait_type": "scarcity",
+          "value": "Normal"
+        },
+        {
+          "trait_type": "position",
+          "value": "Forward"
+        },
+        {
+          "trait_type": "jersey",
+          "value": "away"
+        },
+      ],
       id: '8',
-      imageUrl: '4256'
     },
   ]
+  console.log(playerCards[0].attributes[0].value)
   const renderCard = (p: any) => {
     return (
       <Grid item lg={3} key={p.id}>
         <NFTCard>
           <CardContent>
             <Typography>
-              {p.title}
+              {p.name}
             </Typography>
             <Typography>
-              {p.team}
+              {p.attributes[0].value}
             </Typography>
+            <CardMedia sx={{
+                height: 0,
+                paddingTop: '56.7%',
+              }}
+              image={p.image}
+              title={p.name + "'s Sorare card"}
+            />
           </CardContent>
           <CardActions>
             <Button>
