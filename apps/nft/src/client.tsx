@@ -8,6 +8,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from '@wrap-dapps/components';
+import './main.css';
 
 function getLibrary(provider: ExternalProvider): Web3Provider {
   const library = new Web3Provider(provider);

@@ -1,22 +1,26 @@
-import {FormControl, FormHelperText, MenuItem, Select,} from '@material-ui/core';
+import {
+  FormControl,
+  FormHelperText,
+  MenuItem,
+  Select,
+} from '@material-ui/core';
 import React from 'react';
-import {TokenMetadata} from './type';
-import {SupportedBlockchain} from '../../components/wallet/blockchain';
+import { SupportedBlockchain } from '../wallet/blockchain';
 import EthereumTokenIcon from './ethereum/EthereumTokenIcon';
 import TezosTokenIcon from './tezos/TezosTokenIcon';
-
+import { Token } from '@wrap-dapps/api';
 
 type Props = {
   token: string;
   onTokenSelect: (token: string) => void;
   disabled: boolean;
   blockchainTarget: SupportedBlockchain;
-  tokens: Record<string, TokenMetadata>;
+  tokens: Record<string, Token>;
 };
 
 const itemLabel = (
   blockchainTarget: SupportedBlockchain,
-  tokenMetadata: TokenMetadata
+  tokenMetadata: Token
 ) =>
   blockchainTarget === SupportedBlockchain.Ethereum
     ? `${tokenMetadata.ethereumName} (${tokenMetadata.ethereumSymbol})`
@@ -24,20 +28,16 @@ const itemLabel = (
 
 const itemIcon = (
   blockchainTarget: SupportedBlockchain,
-  tokenMetadata: TokenMetadata
+  tokenMetadata: Token
 ) =>
   blockchainTarget === SupportedBlockchain.Ethereum ? (
-    <EthereumTokenIcon
-      tokenMetadata={tokenMetadata}
-    />
+    <EthereumTokenIcon tokenMetadata={tokenMetadata} />
   ) : (
-    <TezosTokenIcon tokenMetadata={tokenMetadata}/>
+    <TezosTokenIcon tokenMetadata={tokenMetadata} />
   );
 
-function orderTokens(
-  tokens: Record<string, TokenMetadata>
-): [string, TokenMetadata][] {
-  return Object.entries(tokens).sort(([key1, metadata1], [key2, metadata2]) => {
+function orderTokens(tokens: Record<string, Token>): [string, Token][] {
+  return Object.entries(tokens).sort(([key1, metadata1], [, metadata2]) => {
     if (metadata1.ethereumName > metadata2.ethereumName) return 1;
     if (metadata1.ethereumName < metadata2.ethereumName) return -1;
     return 0;
@@ -45,12 +45,12 @@ function orderTokens(
 }
 
 export default function TokenSelection({
-                                         token,
-                                         tokens,
+  token,
+  tokens,
   disabled,
-                                         blockchainTarget,
-                                         onTokenSelect,
-                                       }: Props) {
+  blockchainTarget,
+  onTokenSelect,
+}: Props) {
   const tokenList = orderTokens(tokens);
 
   const handleTokenSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -67,7 +67,7 @@ export default function TokenSelection({
         onChange={handleTokenSelect}
         displayEmpty
         inputProps={{
-          name: 'token',
+          name: 'ethereumSymbol',
           id: 'token-selector',
         }}
       >
@@ -82,7 +82,3 @@ export default function TokenSelection({
     </FormControl>
   );
 }
-
-
-
-

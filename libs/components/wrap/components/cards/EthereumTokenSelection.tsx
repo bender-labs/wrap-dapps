@@ -1,12 +1,12 @@
 import { SupportedBlockchain } from '../../../wallet/blockchain';
-import { TokenMetadata } from '../../../token/type';
 import TokenSelection from '../../../token/TokenSelection';
+import { Token } from '@wrap-dapps/api';
 
 type EthereumTokenSelectionProps = {
-  token: TokenMetadata;
+  token: Token;
   onTokenChange: (t: string) => void;
   disabled: boolean;
-  tokens: Record<string, TokenMetadata>;
+  tokens: Record<string, Token>;
 };
 
 export default function EthereumTokenSelection({
