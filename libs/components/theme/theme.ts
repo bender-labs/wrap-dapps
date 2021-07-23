@@ -4,7 +4,6 @@ export const yellow = '#FFD000';
 export const shadeOfYellow = '#F7CB16';
 export const opaqueYellow = 'rgba(247,203,22,0.29)';
 export const black = '#000000';
-export const shadeOfBlack = '#191919';
 export const white = '#FFFFFF';
 export const pink = '#DF318F';
 
@@ -83,6 +82,7 @@ const theme = createTheme({
 
       },
     },
+
     MuiFormControl: {
       styleOverrides: {
         root: {
@@ -90,6 +90,7 @@ const theme = createTheme({
         },
       },
     },
+
     MuiContainer: {
       styleOverrides: {
         root: {
@@ -101,6 +102,7 @@ const theme = createTheme({
         maxWidth: 'xs',
       },
     },
+
     MuiLinearProgress:{
       styleOverrides:{
         barColorPrimary:{
@@ -115,7 +117,8 @@ const theme = createTheme({
           borderRadius: '12px',
         }
       }
-    }
+    },
+
   },
 });
 
