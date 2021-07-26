@@ -40,7 +40,7 @@ export const EthereumState = {
   connected: (account: string, toolkit: Web3Provider, network: string) =>
     ({
       type: EthereumStateType.CONNECTED,
-      ethereumAccount: ellipsizeAddress(account),
+      ethereumAccount: account,
       ethereumToolkit: toolkit,
       network,
     } as Connected),

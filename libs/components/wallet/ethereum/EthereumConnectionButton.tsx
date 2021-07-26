@@ -13,6 +13,7 @@ import {
   ListItemText,
   ListSubheader,
 } from '@material-ui/core';
+import { ellipsizeAddress } from '../address';
 
 type SelectorProps = {
   providers: EthConnectors;
@@ -82,7 +83,7 @@ export default function EthereumConnectionButton() {
     case EthereumStateType.CONNECTED:
       return (
         <Button color={'primary'} onClick={context.deactivate} startIcon={<Icon />}>
-          {context.state.ethereumAccount}
+          {ellipsizeAddress(context.state.ethereumAccount)}
         </Button>
       );
   }
