@@ -1,14 +1,16 @@
 import React from 'react';
 import { NetworkType } from '@airgap/beacon-sdk';
 import {
+  ConfigProvider,
   EthereumConfig,
   EthereumWalletProvider,
   NavBar,
   TezosWalletProvider,
   useNotify,
-  WrapContainer
+  WrapContainer,
 } from '@wrap-dapps/components';
 import { CssBaseline } from '@material-ui/core';
+import TestComponent from './feature/nft/TestComponent';
 
 const App = () => {
   const notify = useNotify();
@@ -20,18 +22,21 @@ const App = () => {
     rpcUrl: 'https://rinkeby.infura.io/v3/1915fb285d0747d9af84c7e106fdb443',
   };
   return (
-    <TezosWalletProvider
-      name={'Wonderfull Dapp'}
-      notify={notify}
-      rpcUrl={'https://florencenet.smartpy.io/'}
-      networkType={NetworkType.FLORENCENET}
-    >
-      <EthereumWalletProvider config={eth}>
-        <CssBaseline />
-        <NavBar/>
-        <WrapContainer />
-      </EthereumWalletProvider>
-    </TezosWalletProvider>
+    <ConfigProvider>
+      <TezosWalletProvider
+        name={'Wonderfull Dapp'}
+        notify={notify}
+        rpcUrl={'https://florencenet.smartpy.io/'}
+        networkType={NetworkType.FLORENCENET}
+      >
+        <EthereumWalletProvider config={eth}>
+          <CssBaseline />
+          <NavBar />
+          <TestComponent />
+          <WrapContainer />
+        </EthereumWalletProvider>
+      </TezosWalletProvider>
+    </ConfigProvider>
   );
 };
 

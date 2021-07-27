@@ -10,4 +10,4 @@ interface Props {
   address: string;
 }
 
-export function useUserNtfBalance(props: Props) {}
+export function useClientNtfBalance(props: Props) {}
