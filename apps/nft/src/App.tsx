@@ -2,37 +2,46 @@ import React from 'react';
 import { NetworkType } from '@airgap/beacon-sdk';
 import {
   ConfigProvider,
-  EthereumConfig,
   EthereumWalletProvider,
   NavBar,
   TezosWalletProvider,
   useNotify,
-  WrapContainer,
+  WrapContainer
 } from '@wrap-dapps/components';
 import { CssBaseline } from '@material-ui/core';
-import TestComponent from './feature/nft/TestComponent';
+
+function initialConfig() {
+  return {
+    environmentName: process.env.RAZZLE_WRAP_ENVIRONMENT!,
+    indexerUrl: process.env.RAZZLE_INDEXER!,
+    statisticsUrl: process.env.RAZZLE_STATISTICS!,
+    ethereum: {
+      rpcUrl: process.env.RAZZLE_ETH_RPC!,
+      networkId: +process.env.RAZZLE_ETH_NETWORK_ID!,
+      networkName: process.env.RAZZLE_ETH_NETWORK_NAME!,
+      formaticApiKey: process.env.RAZZLE_FORTMATIC_API_KEY!,
+      portisDAppId: process.env.RAZZLE_PORTIS_DAPP_ID!
+    },
+    tezos: {
+      rpcUrl: process.env.RAZZLE_TZ_RPC!,
+      networkId: process.env.RAZZLE_TZ_NETWORK_ID! as NetworkType,
+      networkName: process.env.RAZZLE_TZ_NETWORK_NAME!
+    }
+  };
+}
 
 const App = () => {
   const notify = useNotify();
-  const eth: EthereumConfig = {
-    formaticApiKey: 'pk_test_BF45BDB36222B03F',
-    networkId: 4,
-    networkName: 'Rinkeby',
-    portisDAppId: '6853a134-1ca9-458d-8b96-df6e25277781',
-    rpcUrl: 'https://rinkeby.infura.io/v3/1915fb285d0747d9af84c7e106fdb443',
-  };
+  const initConfig = initialConfig();
   return (
-    <ConfigProvider>
+    <ConfigProvider initConfig={initConfig}>
       <TezosWalletProvider
         name={'Wonderfull Dapp'}
         notify={notify}
-        rpcUrl={'https://florencenet.smartpy.io/'}
-        networkType={NetworkType.FLORENCENET}
       >
-        <EthereumWalletProvider config={eth}>
+        <EthereumWalletProvider>
           <CssBaseline />
           <NavBar />
-          <TestComponent />
           <WrapContainer />
         </EthereumWalletProvider>
       </TezosWalletProvider>

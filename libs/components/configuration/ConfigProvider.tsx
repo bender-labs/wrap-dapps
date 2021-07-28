@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from 'react';
-import { Config, initialConfig } from './types';
-import { createIndexerApi, FungibleToken, TokenType } from '@wrap-dapps/api';
+import { Config, InitialConfig } from './types';
+import { createIndexerApi, FungibleToken, NonFungibleToken, TokenType } from '@wrap-dapps/api';
 import { Box, Typography } from '@material-ui/core';
 
 type ContextValue = undefined | Config;
@@ -13,17 +13,34 @@ export function useConfig() {
   return config;
 }
 
+export function useTezosConfig() {
+  const { tezos } = useConfig();
+  return tezos;
+}
+
+export function useEthereumConfig() {
+  const { ethereum } = useConfig();
+  return ethereum;
+}
+
+export function useNonFungibleTokens() {
+  const { nonFungibleTokens } = useConfig();
+  return nonFungibleTokens;
+}
+
 export function useIndexerApi() {
   const { indexerUrl } = useConfig();
   return useMemo(() => createIndexerApi(indexerUrl), [indexerUrl]);
 }
 
-export function ConfigProvider({ children }: PropsWithChildren<{}>) {
+type Props = {
+  initConfig: InitialConfig
+}
+
+export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props>) {
   const [config, setConfig] = useState<ContextValue>();
 
   useEffect(() => {
-    const initConfig = initialConfig;
-
     const indexerApi = createIndexerApi(initConfig.indexerUrl);
 
     const loadConfig = async () => {
@@ -48,6 +65,15 @@ export function ConfigProvider({ children }: PropsWithChildren<{}>) {
           .filter((t) => t.type === TokenType.ERC20)
           .reduce<Record<string, FungibleToken>>((acc, e) => {
             if (e.type !== TokenType.ERC20) {
+              return acc;
+            }
+            acc[e.ethereumSymbol] = e;
+            return acc;
+          }, {}),
+        nonFungibleTokens: indexerConfig.tokens
+          .filter((t) => t.type === TokenType.ERC721)
+          .reduce<Record<string, NonFungibleToken>>((acc, e) => {
+            if (e.type !== TokenType.ERC721) {
               return acc;
             }
             acc[e.ethereumSymbol] = e;

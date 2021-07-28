@@ -7,47 +7,15 @@ import { useEthereumWalletContext, useTezosWalletContext } from '../../wallet';
 import { useEffect, useState } from 'react';
 import { TezosStateType } from '../../wallet/tezos/state';
 import { EthereumStateType } from '../../wallet/ethereum/state';
-import { Token, TokenType } from '@wrap-dapps/api';
-
-const tokens: Record<string, Token> = {
-  SOR: {
-    type: TokenType.ERC721,
-    ethereumName: 'SORARE',
-    ethereumSymbol: 'SOR',
-    ethereumContractAddress: 'address',
-    tezosWrappingContract: 'string',
-    tezosSymbol: 'string',
-    tezosName: 'string',
-    thumbnailUri: 'https://info.tzwrap.com/icons/WRAP.png',
-  },
-  SEA: {
-    type: TokenType.ERC721,
-    ethereumName: 'SEAN IS GREAT',
-    ethereumSymbol: 'SEA',
-    ethereumContractAddress: 'address',
-    tezosWrappingContract: 'string',
-    tezosSymbol: 'string',
-    tezosName: 'string',
-    thumbnailUri: 'https://info.tzwrap.com/icons/WRAP.png',
-  },
-  SIN: {
-    type: TokenType.ERC721,
-    ethereumName: 'SINAZO IS GREAT',
-    ethereumSymbol: 'SIN',
-    ethereumContractAddress: 'address',
-    tezosWrappingContract: 'string',
-    tezosSymbol: 'string',
-    tezosName: 'string',
-    thumbnailUri: 'https://info.tzwrap.com/icons/WRAP.png',
-  },
-};
+import { useNonFungibleTokens } from '../../configuration';
 
 export const WrapContainer = () => {
   const { state: tzState } = useTezosWalletContext();
   const { state: ethState } = useEthereumWalletContext();
+  const nonFungibleTokens = useNonFungibleTokens();
   const [connected, setConnected] = useState(false);
 
-  const [selectedToken, setSelectedToken] = useState(tokens['SOR']);
+  const [selectedToken, setSelectedToken] = useState(nonFungibleTokens[Object.keys(nonFungibleTokens)[0]]);
 
   useEffect(() => {
     setConnected(
@@ -73,10 +41,10 @@ export const WrapContainer = () => {
             <EthereumTokenSelection
               disabled={!connected}
               onTokenChange={(tokenId) => {
-                setSelectedToken(tokens[tokenId]);
+                setSelectedToken(nonFungibleTokens[tokenId]);
               }}
               token={selectedToken}
-              tokens={tokens}
+              tokens={nonFungibleTokens}
             />
           </CardContent>
         </HalfCard>

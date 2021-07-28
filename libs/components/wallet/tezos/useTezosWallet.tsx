@@ -5,21 +5,21 @@ import { beaconTezosWallet } from './beacon';
 import { NetworkType, PermissionScope } from '@airgap/beacon-sdk';
 import constate from 'constate';
 import { Notify } from '../../notification/types';
+import { useTezosConfig } from '../../configuration';
 
 type Props = {
   name: string;
   notify: Notify;
-  rpcUrl: string;
-  networkType: NetworkType;
 };
 
-function useTezosWallet({ name, notify, rpcUrl, networkType }: Props) {
+function useTezosWallet({ name, notify }: Props) {
+  const tezosConfig = useTezosConfig();
   const beaconWallet = useMemo(() => beaconTezosWallet(name), [name]);
   const [state, dispatch] = useReducer(reducer, TezosState.notConnected());
   const request = {
     network: {
-      type: networkType,
-      rpcUrl: rpcUrl,
+      type: tezosConfig.networkId,
+      rpcUrl: tezosConfig.rpcUrl,
     },
     scopes: [PermissionScope.SIGN, PermissionScope.OPERATION_REQUEST],
   };

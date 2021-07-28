@@ -7,18 +7,15 @@ import {
   reducer,
 } from './state';
 import { useWeb3React } from '@web3-react/core';
-import { EthereumConfig } from './types';
 import constate from 'constate';
 import { InjectedConnector } from '@web3-react/injected-connector';
+import { useEthereumConfig } from '../../configuration';
 
-type Props = {
-  config: EthereumConfig;
-};
-
-function useEthereumWallet({ config }: Props) {
+function useEthereumWallet() {
+  const ethereumConfig = useEthereumConfig();
   const { activate, account, library, deactivate } = useWeb3React();
   const [state, dispatch] = useReducer(reducer, EthereumState.notConnected());
-  const connectors = useMemo(() => connectorsFactory(config), [config]);
+  const connectors = useMemo(() => connectorsFactory(ethereumConfig), [ethereumConfig]);
 
   const doActivate = useCallback(async (connector: EthConnector) => {
     dispatch(connectAction.started(undefined));
