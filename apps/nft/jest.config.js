@@ -9,4 +9,5 @@ module.exports = {
   collectCoverage: false,
   coverageDirectory: "coverage",
   testEnvironment: "jsdom",
+  testTimeout: 30000,
 };

@@ -4,3 +4,4 @@ export * from './notification';
 export * from './wallet';
 export * from './wrap';
 export * from './configuration';
+export * from './Card';

@@ -1,4 +1,4 @@
-import { NFTCard } from './nftcard';
+import { NFTCard } from '@wrap-dapps/components/gallery/nftcard';
 import { Button, CardActions, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
 
 export default function Gallery() {

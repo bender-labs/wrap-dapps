@@ -29,7 +29,8 @@ export const createNftApi: (toolkit: ethers.providers.Provider) => NftApi = (too
       );
       const tokenIds = await getTokenIds(contract, userAddress);
       const metadatas = await getTokensMetadata(contract, tokenIds);
-      const metadataContent = metadatas.map(({ metadataUrl }) => axios.get<NftInstance>(metadataUrl).then(({ data }) => data));
+      const metadataContent = metadatas
+        .map(({tokenId, metadataUrl,  }) => axios.get(metadataUrl).then(({ data }) => ({id: tokenId, name: data.name, description: data.description, thumbnailUri: data.image, attributes: [] })));
       return Promise.all(metadataContent).then(pages => ({ collection: nftAddress, results: pages }));
     }
   };

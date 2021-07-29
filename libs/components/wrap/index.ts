@@ -1,1 +1,1 @@
-export * from './components/WrapContainer';
+export { default as EthereumTokenSelection } from './components/EthereumTokenSelection';

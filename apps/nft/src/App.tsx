@@ -5,10 +5,12 @@ import {
   EthereumWalletProvider,
   NavBar,
   TezosWalletProvider,
-  useNotify,
-  WrapContainer
+  useNotify
+
 } from '@wrap-dapps/components';
+
 import { CssBaseline } from '@material-ui/core';
+import { WrapContainer } from './feature/nft/WrapContainer';
 
 function initialConfig() {
   return {

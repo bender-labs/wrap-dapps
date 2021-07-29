@@ -7,6 +7,7 @@ export interface NftInstance {
   id: string;
   thumbnailUri: string;
   name: string;
+  description: string;
   attributes: NftInstanceAttribute[];
 }
 
