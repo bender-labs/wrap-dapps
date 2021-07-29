@@ -13,13 +13,32 @@ import Gallery from './Gallery';
 import { useEffect, useState } from 'react';
 import { useClientNtfBalance } from './hook/useClientNtfBalance';
 import { ethers } from 'ethers';
+import { createNftApi } from './api/NftApi';
+import { NftInstance } from './api/types';
 
 type ConnectedWrapContainerProps = {
   ethereumToolkit: ethers.providers.Provider;
   userAddress: string
 }
 
+// async function getData() {
+//   const userAddressWithTokens = '0x7d86457D26205b7DCA5C4ab5d83FBf3A91C6e30d';
+//   const jbIsTopDogContractAddress = '0x55cb8f57363a0549899696e17d716a2654680db1';
+//   const rpcProvider = new ethers.providers.JsonRpcProvider(process.env.RAZZLE_ETH_RPC!);
+//   // console.log(`rpcProvider : ${rpcProvider}`)
+//
+//   const nftApi = createNftApi(rpcProvider);
+//   // console.log(`nftApi: ${JSON.stringify(nftApi)}`);
+//
+//   const result = await nftApi.fetchUserNftInstances(jbIsTopDogContractAddress, userAddressWithTokens);
+//   // console.log(`result: ${JSON.stringify(result)}`
+//   const { results } = result;
+//   console.log(results);
+//   return results;
+// }
+
 function ConnectedWrapContainer(props: ConnectedWrapContainerProps) {
+  // let data = getData()
   const nonFungibleTokens = useNonFungibleTokens();
   const [selectedToken, setSelectedToken] = useState(nonFungibleTokens[Object.keys(nonFungibleTokens)[0]]);
   const userTokens = useClientNtfBalance({
@@ -27,6 +46,9 @@ function ConnectedWrapContainer(props: ConnectedWrapContainerProps) {
     nftAddress: selectedToken.ethereumContractAddress,
     ethereumToolkit: props.ethereumToolkit
   });
+  // console.log(data)
+
+
   return <>
     <EthereumTokenSelection
       onTokenChange={(tokenId) => {
