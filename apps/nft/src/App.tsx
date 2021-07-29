@@ -36,7 +36,7 @@ const App = () => {
   return (
     <ConfigProvider initConfig={initConfig}>
       <TezosWalletProvider
-        name={'Wonderfull Dapp'}
+        name={'Wonderful dApp'}
         notify={notify}
       >
         <EthereumWalletProvider>
