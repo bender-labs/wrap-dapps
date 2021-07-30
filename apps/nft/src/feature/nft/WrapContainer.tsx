@@ -13,8 +13,6 @@ import Gallery from './Gallery';
 import { useEffect, useState } from 'react';
 import { useClientNtfBalance } from './hook/useClientNtfBalance';
 import { ethers } from 'ethers';
-import { createNftApi } from './api/NftApi';
-import { NftInstance } from './api/types';
 
 type ConnectedWrapContainerProps = {
   ethereumToolkit: ethers.providers.Provider;

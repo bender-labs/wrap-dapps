@@ -16,10 +16,15 @@ export interface NftPage {
   results: NftInstance[];
 }
 
+export interface Cursor {
+  limit: number;
+  offset: number;
+}
+
 export interface NftApi {
   fetchUserNftInstances(
     collection: string,
     address: string,
-    cursor?: string
+    cursor?: Cursor
   ): Promise<NftPage>;
 }
