@@ -1,29 +1,49 @@
-import { Grid } from '@material-ui/core';
 import { NftInstance, NftPage } from './api/types';
-import { renderCard } from './renderCard';
-import { useEffect, useState } from 'react';
+import { NFTCard } from '@wrap-dapps/components/gallery/nftcard';
+import { Button, CardActions, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
 
-// type GalleryProps = {
-//   results: Promise<NftInstance>;
-//   data: NftInstance[];
-// }
+type GalleryProps = {
+  tokens: NftInstance[];
+}
 
-export default function Gallery() {
+const renderCard = ({name, thumbnailUri, description, id}: NftInstance) => {
+  return (
+    <Grid item lg={3} key={id}>
+      <NFTCard>
+        <CardContent>
+          <Typography>
+            {name}
+          </Typography>
+          <Typography>
+            {description}
+          </Typography>
+          <CardMedia sx={{
+            height: 0,
+            paddingTop: '56.7%',
+          }}
+                     image={thumbnailUri}
+                     title={name + "'s Sorare card"}
+          />
+        </CardContent>
+        <CardActions>
+          <Button>
+            Select to Wrap
+          </Button>
+        </CardActions>
+      </NFTCard>
+    </Grid>
+  )
+}
 
-  // const [tokenData, setTokenData] = useState(data)
-  //
-  // useEffect(() => {
-  //   console.log(tokenData)
-  //   setTokenData(data)
-  // }, [tokenData])
+export default function Gallery({tokens}: GalleryProps) {
+
 
 
   return (
     <Grid container spacing={{ xs: 6}}>
-      {/*{tokenData !== undefined  ? (*/}
-      {/*  tokenData.map((p) => renderCard(p))*/}
-      {/*) : (<div>no data</div>)*/}
-      {/*}*/}
+
+      {tokens.map((p) => renderCard(p))}
+
 
     </Grid>
     )
