@@ -1,4 +1,4 @@
-import { CardContent, Container } from '@material-ui/core';
+import { Button, CardContent, Container } from '@material-ui/core';
 import {
   MultiConnect,
   HalfCard,
@@ -23,11 +23,17 @@ type ConnectedWrapContainerProps = {
 function ConnectedWrapContainer(props: ConnectedWrapContainerProps) {
   const nonFungibleTokens = useNonFungibleTokens();
   const [selectedToken, setSelectedToken] = useState(nonFungibleTokens[Object.keys(nonFungibleTokens)[0]]);
+  const [pagination, setPagination] = useState({currentPage: 0, limitPerPage: 4});
   const userTokens = useClientNtfBalance({
     address: props.userAddress,
     nftAddress: selectedToken.ethereumContractAddress,
-    ethereumToolkit: props.ethereumToolkit
+    ethereumToolkit: props.ethereumToolkit,
+    ...pagination
   });
+
+  function nextPage() {
+    setPagination({...pagination, currentPage: pagination.currentPage + 1});
+  }
 
 
   return <>
@@ -50,6 +56,9 @@ function ConnectedWrapContainer(props: ConnectedWrapContainerProps) {
     <Container maxWidth={'lg'} sx={{ padding: 3 }}>
       <Gallery tokens={userTokens.tokens} />
     </Container>
+    <Button onClick={nextPage}>
+      Next {userTokens.totalTokens}
+    </Button>
   </>;
 }
 

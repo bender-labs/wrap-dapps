@@ -37,7 +37,7 @@ test('should get users token and metadata', async () => {
     description: 'It reveals your hidden power, and stamina. It guides, and protects you, but at the same time it reminds you to seek peace, and protect your freedom.',
     attributes: []
   }];
-  expect(result).toEqual({ collection: jbIsTopDogContractAddress, results: expected });
+  expect(result).toEqual({ collection: jbIsTopDogContractAddress, results: expected, total: 4 });
 });
 
 test('should get users token and metadata with pagination', async () => {
@@ -64,5 +64,5 @@ test('should get users token and metadata with pagination', async () => {
     attributes: []
 
   }];
-  expect(result).toEqual({ collection: jbIsTopDogContractAddress, results: expected });
+  expect(result).toEqual({ collection: jbIsTopDogContractAddress, results: expected, total: 4 });
 });

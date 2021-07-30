@@ -14,6 +14,7 @@ export interface NftInstance {
 export interface NftPage {
   collection: string;
   results: NftInstance[];
+  total: number;
 }
 
 export interface Cursor {
