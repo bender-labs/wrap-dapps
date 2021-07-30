@@ -6,8 +6,8 @@ import axios from 'axios';
 async function getTokenIds(contract: ethers.Contract, account: string, cursor?: Cursor) {
   const balance = await contract.balanceOf(account);
   const result = [];
-  let firstTokenToGet = cursor ? cursor.offset : 0;
-  let lastTokenToGet = cursor ? cursor.offset + cursor.limit : balance.toNumber();
+  const firstTokenToGet = cursor ? cursor.offset : 0;
+  const lastTokenToGet = cursor ? Math.min(cursor.offset + cursor.limit, balance.toNumber()) : balance.toNumber();
   for (let i = firstTokenToGet; i < lastTokenToGet; i++) {
     result.push((await contract.tokenOfOwnerByIndex(account, i)).toString());
   }

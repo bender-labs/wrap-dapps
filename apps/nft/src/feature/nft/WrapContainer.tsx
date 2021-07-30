@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, CardContent, Container, Typography } from '@material-ui/core';
 import Stack from '@material-ui/core/Stack';
 import Pagination from '@material-ui/core/Pagination';
@@ -25,7 +26,7 @@ type ConnectedWrapContainerProps = {
 function ConnectedWrapContainer(props: ConnectedWrapContainerProps) {
   const nonFungibleTokens = useNonFungibleTokens();
   const [selectedToken, setSelectedToken] = useState(nonFungibleTokens[Object.keys(nonFungibleTokens)[0]]);
-  const [pagination, setPagination] = useState({currentPage: 0, limitPerPage: 4});
+  const [pagination, setPagination] = useState({currentPage: 1, limitPerPage: 4});
   const userTokens = useClientNtfBalance({
     address: props.userAddress,
     nftAddress: selectedToken.ethereumContractAddress,
@@ -33,10 +34,13 @@ function ConnectedWrapContainer(props: ConnectedWrapContainerProps) {
     ...pagination
   });
 
-  function nextPage() {
-    setPagination({...pagination, currentPage: pagination.currentPage + 1});
-  }
 
+
+  const [page, setPage] = useState(1);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+    setPagination({...pagination, currentPage: value})
+  };
 
 
 
@@ -64,8 +68,9 @@ function ConnectedWrapContainer(props: ConnectedWrapContainerProps) {
       <Stack spacing={2}>
         <Pagination
           color={'primary'}
-          count={Math.floor(userTokens.totalTokens / 4)}
-          onChange={nextPage}
+          page={page}
+          count={Math.ceil(userTokens.totalTokens / 4)}
+          onChange={handleChange}
         />
       </Stack>
     </Container>
