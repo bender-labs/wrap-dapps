@@ -102,6 +102,13 @@ const theme = createTheme({
         maxWidth: 'xs',
       },
     },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          color: 'white'
+        }
+      }
+    },
 
     MuiLinearProgress:{
       styleOverrides:{

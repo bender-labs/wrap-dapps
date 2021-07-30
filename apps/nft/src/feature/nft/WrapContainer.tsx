@@ -1,4 +1,6 @@
-import { Button, CardContent, Container } from '@material-ui/core';
+import { Button, CardContent, Container, Typography } from '@material-ui/core';
+import Stack from '@material-ui/core/Stack';
+import Pagination from '@material-ui/core/Pagination';
 import {
   MultiConnect,
   HalfCard,
@@ -36,6 +38,8 @@ function ConnectedWrapContainer(props: ConnectedWrapContainerProps) {
   }
 
 
+
+
   return <>
     <Container>
       <HalfCard>
@@ -56,9 +60,19 @@ function ConnectedWrapContainer(props: ConnectedWrapContainerProps) {
     <Container maxWidth={'lg'} sx={{ padding: 3 }}>
       <Gallery tokens={userTokens.tokens} />
     </Container>
-    <Button onClick={nextPage}>
-      Next {userTokens.totalTokens}
-    </Button>
+    <Container>
+      <Stack spacing={2}>
+        <Pagination
+          color={'primary'}
+          count={Math.floor(userTokens.totalTokens / 4)}
+          onChange={nextPage}
+        />
+      </Stack>
+    </Container>
+
+    {/*<Button onClick={nextPage}>*/}
+    {/*  Next {userTokens.totalTokens}*/}
+    {/*</Button>*/}
   </>;
 }
 
