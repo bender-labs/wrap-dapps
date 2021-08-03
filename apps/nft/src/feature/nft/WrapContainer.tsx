@@ -75,9 +75,7 @@ function ConnectedWrapContainer(props: ConnectedWrapContainerProps) {
       </Stack>
     </Container>
 
-    {/*<Button onClick={nextPage}>*/}
-    {/*  Next {userTokens.totalTokens}*/}
-    {/*</Button>*/}
+
   </>;
 }
 

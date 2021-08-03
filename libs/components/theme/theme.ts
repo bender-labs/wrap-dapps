@@ -2,6 +2,7 @@ import { createTheme } from '@material-ui/core/styles';
 
 export const yellow = '#FFD000';
 export const shadeOfYellow = '#F7CB16';
+export const shadeOfBlack = '#171717';
 export const opaqueYellow = 'rgba(247,203,22,0.29)';
 export const black = '#000000';
 export const white = '#FFFFFF';
@@ -73,16 +74,6 @@ const theme = createTheme({
       },
     },
 
-    MuiCardContent: {
-      styleOverrides: {
-        root: {
-          margin: 20,
-
-        },
-
-      },
-    },
-
     MuiFormControl: {
       styleOverrides: {
         root: {
@@ -94,7 +85,7 @@ const theme = createTheme({
     MuiContainer: {
       styleOverrides: {
         root: {
-          minHeight: 250,
+          minHeight: 180,
 
         },
       },
