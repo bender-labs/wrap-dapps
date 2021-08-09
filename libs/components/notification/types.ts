@@ -1,5 +1,6 @@
 export enum NotificationLevel {
   ERROR,
+  SUCCESS
 }
 
 export interface Notify {

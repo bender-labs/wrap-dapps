@@ -1,4 +1,4 @@
-import { NftApi, NftInstance } from '../api/types';
+import { NftInstance } from '../api/types';
 import { ethers } from 'ethers';
 import { createNftApi } from '../api/NftApi';
 import { useEffect, useMemo, useState } from 'react';
@@ -25,7 +25,10 @@ export function useClientNtfBalance(props: Props) {
 
     const fetch = async () => {
       setState({ ...state, loading: true });
-      const result = await nftApi.fetchUserNftInstances(props.nftAddress, props.address, {limit: props.limitPerPage, offset: props.limitPerPage*(props.currentPage-1)});
+      const result = await nftApi.fetchUserNftInstances(props.nftAddress, props.address, {
+        limit: props.limitPerPage,
+        offset: props.limitPerPage * (props.currentPage - 1)
+      });
       setState({ loading: false, tokens: result.results, totalTokens: result.total });
     };
     // noinspection JSIgnoredPromiseFromCall

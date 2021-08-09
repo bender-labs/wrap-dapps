@@ -20,35 +20,35 @@ export type EthConnectors = {
 };
 
 export default function connectorsFactory({
-  networkId,
-  formaticApiKey,
-  portisDAppId,
-}: EthereumConfig): EthConnectors {
+                                            networkId,
+                                            formaticApiKey,
+                                            portisDAppId
+                                          }: EthereumConfig): EthConnectors {
   const { ethereum } = window as any;
   const isMetamask = ethereum && ethereum.isMetaMask;
   return {
     injected: {
       name: isMetamask ? 'Metamask' : 'Browser Extension',
       connector: new InjectedConnector({
-        supportedChainIds: [networkId],
+        supportedChainIds: [networkId]
       }),
-      iconName: isMetamask ? metamask : 'arrow-right.svg',
+      iconName: isMetamask ? metamask : 'arrow-right.svg'
     },
     fortmatic: {
       name: 'Fortmatic',
       connector: new FortmaticConnector({
         apiKey: formaticApiKey,
-        chainId: networkId,
+        chainId: networkId
       }),
-      iconName: fortmatic,
+      iconName: fortmatic
     },
     portis: {
       name: 'Portis',
       connector: new PortisConnector({
         dAppId: portisDAppId,
-        networks: [networkId],
+        networks: [networkId]
       }),
-      iconName: portis,
-    },
+      iconName: portis
+    }
   };
 }

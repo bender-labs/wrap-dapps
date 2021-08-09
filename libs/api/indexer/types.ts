@@ -56,7 +56,7 @@ export const EmptyToken: Token = {
   tezosTokenId: 0,
   tezosName: '',
   tezosSymbol: '',
-  thumbnailUri: '',
+  thumbnailUri: ''
 };
 
 export interface IndexerApi {

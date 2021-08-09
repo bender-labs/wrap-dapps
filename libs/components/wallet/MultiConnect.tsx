@@ -1,8 +1,6 @@
-import { EthereumConnectionButton, useEthereumWalletContext } from './ethereum';
-import { TezosConnectionButton, useTezosWalletContext } from './tezos';
+import { EthereumConnectionButton, EthereumStateType, useEthereumWalletContext } from './ethereum';
+import { TezosConnectionButton, TezosStateType, useTezosWalletContext } from './tezos';
 import { Box, Step, StepLabel, Stepper } from '@material-ui/core';
-import { TezosStateType } from './tezos/state';
-import { EthereumStateType } from './ethereum/state';
 import { CustomConnector, CustomStepIcon } from '../stepper';
 
 export default function MultiConnect() {
@@ -26,13 +24,13 @@ export default function MultiConnect() {
     <Box
       sx={{
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'center'
       }}
     >
       <Stepper
         sx={{
           paddingTop: 2,
-          paddingBottom: 0,
+          paddingBottom: 0
         }}
         alternativeLabel
         activeStep={activeStep()}

@@ -6,7 +6,10 @@ export function useNotify() {
   const notify: Notify = (level, message) => {
     switch (level) {
       case NotificationLevel.ERROR:
-        toast.error(message);
+        toast.error(message, {autoClose: 3000});
+        break;
+      case NotificationLevel.SUCCESS:
+        toast.success(message, {autoClose: 3000});
         break;
     }
   };

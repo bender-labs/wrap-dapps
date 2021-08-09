@@ -27,7 +27,7 @@ const fakeSigner = (account: string, publicKey: string) => ({
     sbytes: string;
   }> {
     return Promise.reject('Noop signer');
-  },
+  }
 });
 
 export interface TezosAccount {
@@ -40,7 +40,7 @@ export interface TezosWallet {
     request: RequestPermissionInput
   ) => Promise<[TezosAccount, WalletProvider]>;
   disconnect: () => Promise<void>;
-  initialise: () => Promise<[TezosAccount, WalletProvider] | undefined>;
+  initialize: () => Promise<[TezosAccount, WalletProvider] | undefined>;
 }
 
 const toolkit = (
@@ -55,51 +55,48 @@ const toolkit = (
   return result;
 };
 
-export const initialise =
-  (dispatch: Dispatch<AnyAction>, wallet: TezosWallet) =>
-  async (request: RequestPermissionInput) => {
-    const existingAccount = await wallet.initialise();
-    if (existingAccount) {
-      const [account, provider] = existingAccount;
-      const library = toolkit(request.network?.rpcUrl || '', provider, account);
-      dispatch(
-        connectAction.done({
-          result: {
-            account: account.address,
-            tezosToolkit: library,
-            network: request.network!.type,
-          },
-        })
-      );
-    }
-  };
+export const initialize =
+  (dispatch: Dispatch<AnyAction>, wallet: TezosWallet, notify: Notify) =>
+    async (request: RequestPermissionInput) => {
+      const existingAccount = await wallet.initialize();
+      if (existingAccount) {
+        const [account, provider] = existingAccount;
+        const library = toolkit(request.network?.rpcUrl || '', provider, account);
+        connectAndNotify(dispatch, notify, account, library, request);
+      }
+    };
 
 export const activate =
   (dispatch: Dispatch<AnyAction>, wallet: TezosWallet, notify: Notify) =>
-  async (request: RequestPermissionInput) => {
-    dispatch(connectAction.started(undefined));
+    async (request: RequestPermissionInput) => {
+      dispatch(connectAction.started(undefined));
 
-    try {
-      const [account, provider] = await wallet.connect(request);
-      const library = toolkit(request.network?.rpcUrl || '', provider, account);
+      try {
+        const [account, provider] = await wallet.connect(request);
+        const library = toolkit(request.network?.rpcUrl || '', provider, account);
+        connectAndNotify(dispatch, notify, account, library, request);
+      } catch (e) {
+        dispatch(connectAction.failed({ error: e.message }));
+        notify(NotificationLevel.ERROR, 'Could not connect to your Tezos wallet');
+      }
+    };
 
-      dispatch(
-        connectAction.done({
-          result: {
-            account: account.address,
-            tezosToolkit: library,
-            network: request.network!.type,
-          },
-        })
-      );
-    } catch (e) {
-      notify(NotificationLevel.ERROR, 'Could not connect to your wallet');
-      dispatch(connectAction.failed({ error: e.message }));
-    }
-  };
+const connectAndNotify = (dispatch: Dispatch<AnyAction>, notify: Notify, account: TezosAccount, library: TezosToolkit, request: RequestPermissionInput) => {
+  dispatch(
+    connectAction.done({
+      result: {
+        account: account.address,
+        tezosToolkit: library,
+        network: request.network!.type
+      }
+    })
+  );
+  notify(NotificationLevel.SUCCESS, 'Connected to your Tezos wallet');
+};
 
 export const deactivate =
-  (dispatch: Dispatch<AnyAction>, wallet: TezosWallet) => async () => {
+  (dispatch: Dispatch<AnyAction>, wallet: TezosWallet, notify: Notify) => async () => {
     await wallet.disconnect();
     dispatch(disconnectAction());
+    notify(NotificationLevel.SUCCESS, 'Disconnected from your Tezos wallet');
   };

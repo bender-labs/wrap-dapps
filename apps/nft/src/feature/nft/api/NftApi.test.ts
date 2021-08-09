@@ -47,7 +47,10 @@ test('should get users token and metadata with pagination', async () => {
 
   const nftApi = createNftApi(rpcProvider);
 
-  const result = await nftApi.fetchUserNftInstances(jbIsTopDogContractAddress, userAddressWithTokens, { offset: 1, limit: 2});
+  const result = await nftApi.fetchUserNftInstances(jbIsTopDogContractAddress, userAddressWithTokens, {
+    offset: 1,
+    limit: 2
+  });
 
   const expected = [{
     id: '28',

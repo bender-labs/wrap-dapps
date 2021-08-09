@@ -1,9 +1,4 @@
-import {
-  connectAction,
-  disconnectAction,
-  EthereumState,
-  reducer,
-} from './state';
+import { connectAction, disconnectAction, EthereumState, reducer } from './state';
 import { Web3Provider } from '@ethersproject/providers';
 import { Mock } from 'moq.ts';
 
@@ -31,8 +26,8 @@ test('should transition to connected on connection success', () => {
     result: {
       account: 'acc',
       ethereumToolkit: provider.object(),
-      network: 'network',
-    },
+      network: 'network'
+    }
   });
 
   const newState = reducer(EthereumState.connecting(), action);

@@ -1,6 +1,5 @@
 import { Web3Provider } from '@ethersproject/providers';
 import actionCreatorFactory from 'typescript-fsa';
-import { ellipsizeAddress } from '../address';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 
 export enum EthereumStateType {
@@ -9,22 +8,22 @@ export enum EthereumStateType {
   CONNECTING,
 }
 
-export interface NotConnected {
+export interface EthereumNotConnected {
   type: EthereumStateType.NOT_CONNECTED;
 }
 
-export interface Connected {
+export interface EthereumConnected {
   type: EthereumStateType.CONNECTED;
   network: string;
   ethereumAccount: string;
   ethereumToolkit: Web3Provider;
 }
 
-export interface Connecting {
+export interface EthereumConnecting {
   type: EthereumStateType.CONNECTING;
 }
 
-export type EthereumState = NotConnected | Connected | Connecting;
+export type EthereumState = EthereumNotConnected | EthereumConnected | EthereumConnecting;
 
 const actionCreator = actionCreatorFactory();
 
@@ -36,22 +35,20 @@ type ConnectResult = {
 
 export const EthereumState = {
   notConnected: () =>
-    ({ type: EthereumStateType.NOT_CONNECTED } as NotConnected),
+    ({ type: EthereumStateType.NOT_CONNECTED } as EthereumNotConnected),
   connected: (account: string, toolkit: Web3Provider, network: string) =>
     ({
       type: EthereumStateType.CONNECTED,
       ethereumAccount: account,
       ethereumToolkit: toolkit,
-      network,
-    } as Connected),
-  connecting: () => ({ type: EthereumStateType.CONNECTING } as EthereumState),
+      network
+    } as EthereumConnected),
+  connecting: () => ({ type: EthereumStateType.CONNECTING } as EthereumState)
 };
 
-export const connectAction = actionCreator.async<
-  undefined,
+export const connectAction = actionCreator.async<undefined,
   ConnectResult,
-  string
->('CONNECT');
+  string>('CONNECT');
 
 export const disconnectAction = actionCreator('DISCONNECT');
 

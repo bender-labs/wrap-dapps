@@ -9,89 +9,88 @@ export const white = '#FFFFFF';
 export const pink = '#DF318F';
 
 const theme = createTheme({
+  typography: {
+    fontFamily: 'Roboto'
+  },
   palette: {
     primary: {
-      main: yellow,
+      main: yellow
     },
     secondary: {
-      main: white,
+      main: white
     },
     background: {
-      default: black,
-    },
+      default: black
+    }
   },
   components: {
     MuiAppBar: {
       styleOverrides: {
         root: {
-          padding: 2,
-        },
+          padding: 2
+        }
       },
       defaultProps: {
         variant: 'outlined',
         position: 'static',
         color: 'transparent',
-        elevation: 0,
-      },
+        elevation: 0
+      }
     },
     MuiToolbar: {
       styleOverrides: {
         root: {
-          marginLeft: 'auto',
-        },
-      },
+          marginLeft: 'auto'
+        }
+      }
     },
     MuiButton: {
       styleOverrides: {
         root: {
           borderRadius: 25,
-          textTransform: 'none',
-        },
+          textTransform: 'none'
+        }
       },
       defaultProps: {
         color: 'secondary',
-        variant: 'contained',
-      },
+        variant: 'contained'
+      }
     },
-
     MuiCard: {
       styleOverrides: {
         root: {
-          backgroundColor: '#e5e5e5',
+          backgroundColor: '#e5e5e5'
 
-        },
-      },
+        }
+      }
     },
-
     MuiCardHeader: {
       styleOverrides: {
         content: {
           display: 'flex',
           width: '50%',
           m: 'auto',
-          justifyContent: 'center',
-        },
-      },
+          justifyContent: 'center'
+        }
+      }
     },
-
     MuiFormControl: {
       styleOverrides: {
         root: {
-          paddingTop: 20,
-        },
-      },
+          paddingTop: 20
+        }
+      }
     },
-
     MuiContainer: {
       styleOverrides: {
         root: {
-          minHeight: 180,
+          minHeight: 180
 
-        },
+        }
       },
       defaultProps: {
-        maxWidth: 'xs',
-      },
+        maxWidth: 'xs'
+      }
     },
     MuiPaginationItem: {
       styleOverrides: {
@@ -100,24 +99,22 @@ const theme = createTheme({
         }
       }
     },
-
-    MuiLinearProgress:{
-      styleOverrides:{
-        barColorPrimary:{
+    MuiLinearProgress: {
+      styleOverrides: {
+        barColorPrimary: {
           backgroundColor: shadeOfYellow,
           opacity: '1',
           height: '8px',
-          borderRadius: '12px',
+          borderRadius: '12px'
         },
-        colorPrimary:{
+        colorPrimary: {
           backgroundColor: opaqueYellow,
           height: '8px',
-          borderRadius: '12px',
+          borderRadius: '12px'
         }
       }
-    },
-
-  },
+    }
+  }
 });
 
 export default theme;

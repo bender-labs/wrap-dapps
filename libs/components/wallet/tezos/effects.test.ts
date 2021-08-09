@@ -1,4 +1,4 @@
-import { activate, deactivate, initialise, TezosWallet } from './effects';
+import { activate, deactivate, initialize, TezosWallet } from './effects';
 import { TezosToolkit, WalletProvider } from '@taquito/taquito';
 import { connectAction, disconnectAction } from './state';
 import { NetworkType } from '@airgap/beacon-sdk';
@@ -20,7 +20,7 @@ function aTezosWallet(account: string, publicKey: string): TezosWallet {
     },
     sendOperations(): Promise<string> {
       return Promise.resolve('');
-    },
+    }
   };
 
   return {
@@ -28,8 +28,8 @@ function aTezosWallet(account: string, publicKey: string): TezosWallet {
       Promise.resolve([{ address: account, publicKey }, provider])
     ),
     disconnect: jest.fn(),
-    initialise: () =>
-      Promise.resolve([{ address: account, publicKey }, provider]),
+    initialize: () =>
+      Promise.resolve([{ address: account, publicKey }, provider])
   };
 }
 
@@ -38,12 +38,12 @@ const notify = jest.fn();
 
 describe('activate function', () => {
   test('should dispatch connection is starting', async () => {
-    const wallet = aTezosWallet('nop', "don't care");
+    const wallet = aTezosWallet('nop', 'don\'t care');
     const doActivate = activate(dispatch, wallet, notify);
 
     await doActivate({
       network: { type: NetworkType.GRANADANET, rpcUrl: '' },
-      scopes: [],
+      scopes: []
     });
 
     expect(dispatch).toBeCalledTimes(2);
@@ -55,7 +55,7 @@ describe('activate function', () => {
     const doActivate = activate(dispatch, wallet, notify);
     const request = {
       network: { type: NetworkType.GRANADANET, rpcUrl: 'zeUrl' },
-      scopes: [],
+      scopes: []
     };
 
     await doActivate(request);
@@ -66,16 +66,17 @@ describe('activate function', () => {
         result: {
           account: 'wonderful account',
           tezosToolkit: expect.any(TezosToolkit),
-          network: NetworkType.GRANADANET,
-        },
+          network: NetworkType.GRANADANET
+        }
       })
     );
     expect(wallet.connect).toHaveBeenCalledWith(request);
     const action = dispatch.mock.calls[1][0];
     const {
-      result: { tezosToolkit },
+      result: { tezosToolkit }
     } = action.payload;
     expect(tezosToolkit._rpc).toEqual('zeUrl');
+    expect(notify).toHaveBeenCalledWith(NotificationLevel.SUCCESS, 'Connected to your Tezos wallet');
   });
 
   test('should dispatch connection fail', async () => {
@@ -84,32 +85,27 @@ describe('activate function', () => {
     const doActivate = activate(dispatch, wallet, notify);
     const request = {
       network: { type: NetworkType.GRANADANET, rpcUrl: 'zeUrl' },
-      scopes: [],
+      scopes: []
     };
 
     await doActivate(request);
 
-    expect(dispatch).toHaveBeenCalledWith(
-      connectAction.failed({ error: 'nop' })
-    );
-    expect(notify).toHaveBeenCalledWith(
-      NotificationLevel.ERROR,
-      'Could not connect to your wallet'
-    );
+    expect(dispatch).toHaveBeenCalledWith(connectAction.failed({ error: 'nop' }));
+    expect(notify).toHaveBeenCalledWith(NotificationLevel.ERROR, 'Could not connect to your Tezos wallet');
   });
 });
 
 describe('deactivate function', () => {
   test('should dispatch disconnect', async () => {
-    await deactivate(dispatch, aTezosWallet('nop', "don't care"))();
+    await deactivate(dispatch, aTezosWallet('nop', 'don\'t care'), notify)();
 
     expect(dispatch).toHaveBeenCalledWith(disconnectAction());
   });
 
   test('should disconnect current wallet', () => {
-    const aWallet = aTezosWallet('nop', "don't care");
+    const aWallet = aTezosWallet('nop', 'don\'t care');
 
-    deactivate(dispatch, aWallet)();
+    deactivate(dispatch, aWallet, notify)();
 
     expect(aWallet.disconnect).toHaveBeenCalled();
   });
@@ -117,25 +113,25 @@ describe('deactivate function', () => {
 
 describe('reactivate function', () => {
   test('should do nothing if no account if found', async () => {
-    const aWallet = aTezosWallet('nop', "don't care");
-    aWallet.initialise = () => Promise.resolve(undefined);
-    const doInitialise = initialise(dispatch, aWallet);
+    const aWallet = aTezosWallet('nop', 'don\'t care');
+    aWallet.initialize = () => Promise.resolve(undefined);
+    const doInitialize = initialize(dispatch, aWallet, notify);
 
-    await doInitialise({
+    await doInitialize({
       network: { type: NetworkType.GRANADANET, rpcUrl: '' },
-      scopes: [],
+      scopes: []
     });
 
     expect(dispatch).not.toHaveBeenCalled();
   });
 
   test('should dispatch if account if found', async () => {
-    const aWallet = aTezosWallet('wonderful account', "don't care");
-    const doInitialise = initialise(dispatch, aWallet);
+    const aWallet = aTezosWallet('wonderful account', 'don\'t care');
+    const doInitialize = initialize(dispatch, aWallet, notify);
 
-    await doInitialise({
+    await doInitialize({
       network: { type: NetworkType.GRANADANET, rpcUrl: '' },
-      scopes: [],
+      scopes: []
     });
 
     expect(dispatch).toBeCalledWith(
@@ -143,8 +139,8 @@ describe('reactivate function', () => {
         result: {
           account: 'wonderful account',
           tezosToolkit: expect.any(TezosToolkit),
-          network: NetworkType.GRANADANET,
-        },
+          network: NetworkType.GRANADANET
+        }
       })
     );
   });

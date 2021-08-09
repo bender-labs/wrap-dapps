@@ -7,6 +7,6 @@ module.exports = {
   preset: 'ts-jest',
   clearMocks: true,
   collectCoverage: false,
-  coverageDirectory: "coverage",
-  testEnvironment: "jsdom",
+  coverageDirectory: 'coverage',
+  testEnvironment: 'jsdom'
 };

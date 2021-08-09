@@ -52,12 +52,12 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         statisticsUrl: initConfig.statisticsUrl,
         ethereum: {
           ...initConfig.ethereum,
-          custodianContractAddress: indexerConfig.ethereumWrapContract,
+          custodianContractAddress: indexerConfig.ethereumWrapContract
         },
         tezos: {
           ...initConfig.tezos,
           minterContractAddress: indexerConfig.tezosMinterContract,
-          quorumContractAddress: indexerConfig.tezosQuorumContract,
+          quorumContractAddress: indexerConfig.tezosQuorumContract
         },
         wrapSignatureThreshold: indexerConfig.wrapRequiredSignatures,
         unwrapSignatureThreshold: indexerConfig.unwrapRequiredSignatures,
@@ -78,7 +78,7 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
             }
             acc[e.ethereumSymbol] = e;
             return acc;
-          }, {}),
+          }, {})
       };
       setConfig(config);
     };

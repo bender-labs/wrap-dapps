@@ -25,8 +25,8 @@ test('should transition to connected on connection success', () => {
     result: {
       account: 'acc',
       tezosToolkit: toolkit,
-      network: NetworkType.MAINNET,
-    },
+      network: NetworkType.MAINNET
+    }
   });
 
   const newState = reducer(TezosState.connecting(), action);

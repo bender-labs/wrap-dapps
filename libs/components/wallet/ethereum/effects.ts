@@ -13,5 +13,5 @@ export interface EthereumWallet {
     request: EthConnector
   ) => Promise<[EthereumAccount, Web3Provider]>;
   disconnect: () => Promise<void>;
-  initialise: () => Promise<[EthereumAccount, Web3Provider] | undefined>;
+  initialize: () => Promise<[EthereumAccount, Web3Provider] | undefined>;
 }

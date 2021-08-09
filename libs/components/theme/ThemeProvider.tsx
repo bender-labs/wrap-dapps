@@ -6,8 +6,10 @@ import { CssBaseline } from '@material-ui/core';
 export default function MyThemeProvider({ children }: PropsWithChildren<{}>) {
   return (
     <>
-      <CssBaseline/>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        {children}
+      </ThemeProvider>
     </>
   );
 }

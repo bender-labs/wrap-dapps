@@ -3,16 +3,7 @@ import Icon from './Icon';
 import React, { useState } from 'react';
 import { EthereumStateType } from './state';
 import { EthConnector, EthConnectors } from './connectorsFactory';
-import {
-  Box,
-  Button,
-  Dialog,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListSubheader,
-} from '@material-ui/core';
+import { Box, Button, Dialog, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@material-ui/core';
 import { ellipsizeAddress } from '../address';
 
 type SelectorProps = {
@@ -35,7 +26,7 @@ function ConnectFlow({ providers, activate }: SelectorProps) {
       <Dialog open={show} onClose={() => setShow(false)}>
         <List
           subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
+            <ListSubheader component='div' id='nested-list-subheader'>
               Select your wallet
             </ListSubheader>
           }
@@ -51,7 +42,7 @@ function ConnectFlow({ providers, activate }: SelectorProps) {
               <ListItemText primary={value.name} />
               <ListItemIcon>
                 <Box
-                  component="img"
+                  component='img'
                   sx={{ width: '37px', height: '37px' }}
                   src={value.iconName}
                 />

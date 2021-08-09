@@ -8,9 +8,9 @@ export function web3Wallet() {
       return Promise.resolve([undefined, undefined]);
     }, disconnect(): Promise<void> {
       return Promise.resolve(undefined);
-    }, initialise(): Promise<[EthereumAccount, Web3Provider] | undefined> {
+    }, initialize(): Promise<[EthereumAccount, Web3Provider] | undefined> {
       return Promise.resolve(undefined);
     }
-  }
+  };
   return wallet;
 }

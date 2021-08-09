@@ -1,16 +1,8 @@
 import React from 'react';
 import { NetworkType } from '@airgap/beacon-sdk';
-import {
-  ConfigProvider,
-  EthereumWalletProvider,
-  NavBar,
-  TezosWalletProvider,
-  useNotify
-
-} from '@wrap-dapps/components';
-
-import { CssBaseline } from '@material-ui/core';
-import { WrapContainer } from './feature/nft/WrapContainer';
+import { ConfigProvider, EthereumWalletProvider, NavBar, TezosWalletProvider } from '@wrap-dapps/components';
+import { NftWrapSelectorScreen } from './pages/NftWrapSelectorScreen';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 function initialConfig() {
   return {
@@ -33,18 +25,18 @@ function initialConfig() {
 }
 
 const App = () => {
-  const notify = useNotify();
   const initConfig = initialConfig();
+
   return (
     <ConfigProvider initConfig={initConfig}>
-      <TezosWalletProvider
-        name={'Wonderful dApp'}
-        notify={notify}
-      >
+      <TezosWalletProvider name={'Benderlabs NFT Bridge'}>
         <EthereumWalletProvider>
-          <CssBaseline />
           <NavBar />
-          <WrapContainer />
+          <Router>
+            <Switch>
+              <Route exact path={'/'} component={NftWrapSelectorScreen} />
+            </Switch>
+          </Router>
         </EthereumWalletProvider>
       </TezosWalletProvider>
     </ConfigProvider>

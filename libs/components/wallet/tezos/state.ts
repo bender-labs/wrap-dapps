@@ -10,33 +10,33 @@ export enum TezosStateType {
   CONNECTING,
 }
 
-export interface NotConnected {
+export interface TezosNotConnected {
   type: TezosStateType.NOT_CONNECTED;
 }
 
-export interface Connected {
+export interface TezosConnected {
   type: TezosStateType.CONNECTED;
   network: NetworkType;
   tezosAccount: string;
   tezosToolkit: TezosToolkit;
 }
 
-export interface Connecting {
+export interface TezosConnecting {
   type: TezosStateType.CONNECTING;
 }
 
-export type TezosState = NotConnected | Connected | Connecting;
+export type TezosState = TezosNotConnected | TezosConnected | TezosConnecting;
 
 export const TezosState = {
-  notConnected: () => ({ type: TezosStateType.NOT_CONNECTED } as NotConnected),
+  notConnected: () => ({ type: TezosStateType.NOT_CONNECTED } as TezosNotConnected),
   connected: (account: string, toolkit: TezosToolkit, network: NetworkType) =>
     ({
       type: TezosStateType.CONNECTED,
       tezosAccount: ellipsizeAddress(account),
       tezosToolkit: toolkit,
-      network,
-    } as Connected),
-  connecting: () => ({ type: TezosStateType.CONNECTING } as TezosState),
+      network
+    } as TezosConnected),
+  connecting: () => ({ type: TezosStateType.CONNECTING } as TezosState)
 };
 
 const actionCreator = actionCreatorFactory();
@@ -47,24 +47,22 @@ type ConnectResult = {
   network: NetworkType;
 };
 
-export const connectAction = actionCreator.async<
-  undefined,
+export const connectAction = actionCreator.async<undefined,
   ConnectResult,
-  string
->('CONNECT');
+  string>('CONNECT');
 
 export const disconnectAction = actionCreator('DISCONNECT');
 
 export const
   reducer = reducerWithInitialState<TezosState>(
-  TezosState.notConnected()
-)
-  .case(connectAction.started, () => TezosState.connecting())
-  .case(
-    connectAction.done,
-    (s, { result: { account, tezosToolkit, network } }) =>
-      TezosState.connected(account, tezosToolkit, network)
+    TezosState.notConnected()
   )
-  .case(connectAction.failed, () => TezosState.notConnected())
-  .case(disconnectAction, () => TezosState.notConnected())
-  .default((s) => s);
+    .case(connectAction.started, () => TezosState.connecting())
+    .case(
+      connectAction.done,
+      (s, { result: { account, tezosToolkit, network } }) =>
+        TezosState.connected(account, tezosToolkit, network)
+    )
+    .case(connectAction.failed, () => TezosState.notConnected())
+    .case(disconnectAction, () => TezosState.notConnected())
+    .default((s) => s);

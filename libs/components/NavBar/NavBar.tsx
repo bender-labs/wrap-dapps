@@ -6,13 +6,12 @@ export function NavBar() {
   return (
     <AppBar>
       <Toolbar>
-        <Box style={{padding: "25px"}}>
+        <Box>
           <TezosConnectionButton />
         </Box>
         <Box>
           <EthereumConnectionButton />
         </Box>
-
       </Toolbar>
     </AppBar>
   );

@@ -4,9 +4,6 @@
   "main": "index.ts",
   "license": "MIT",
   "private": true,
-  "devDependencies": {
-    "typescript": "^4.3.5"
-  },
   "volta": {
     "extends": "../../package.json"
   },
