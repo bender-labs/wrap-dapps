@@ -4,6 +4,9 @@
   "main": "index.ts",
   "license": "MIT",
   "private": true,
+  "files": [
+    "./"
+  ],
   "volta": {
     "extends": "../../package.json"
   },

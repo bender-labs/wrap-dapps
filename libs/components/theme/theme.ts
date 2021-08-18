@@ -1,4 +1,4 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core';
 
 export const yellow = '#FFD000';
 export const shadeOfYellow = '#F7CB16';
@@ -9,6 +9,7 @@ export const white = '#FFFFFF';
 export const pink = '#DF318F';
 
 const theme = createTheme({
+  spacing: 8,
   typography: {
     fontFamily: 'Roboto'
   },

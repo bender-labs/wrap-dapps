@@ -1,5 +1,6 @@
 import { FungibleToken, NonFungibleToken } from '@wrap-dapps/api';
 import { NetworkType } from '@airgap/beacon-sdk';
+import {Fees} from "@wrap-dapps/api";
 
 export interface EthereumConfig {
   rpcUrl: string;
@@ -28,6 +29,7 @@ export interface Config {
   unwrapSignatureThreshold: number;
   fungibleTokens: Record<string, FungibleToken>;
   nonFungibleTokens: Record<string, NonFungibleToken>;
+  fees: Fees;
 }
 
 export interface InitialConfig {

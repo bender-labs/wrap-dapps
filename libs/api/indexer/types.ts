@@ -11,20 +11,11 @@ export interface WrapConfiguration {
   fees: Fees;
 }
 
+export type Token = FungibleToken | NonFungibleToken;
+
 export enum TokenType {
   ERC20 = 'ERC20',
   ERC721 = 'ERC721',
-}
-
-export interface BaseToken {
-  type: TokenType;
-  ethereumSymbol: string;
-  ethereumName: string;
-  ethereumContractAddress: string;
-  tezosWrappingContract: string;
-  tezosSymbol: string;
-  tezosName: string;
-  thumbnailUri?: string;
 }
 
 export interface FungibleToken extends BaseToken {
@@ -37,7 +28,16 @@ export interface NonFungibleToken extends BaseToken {
   type: TokenType.ERC721;
 }
 
-export type Token = FungibleToken | NonFungibleToken;
+export interface BaseToken {
+  type: TokenType;
+  ethereumSymbol: string;
+  ethereumName: string;
+  ethereumContractAddress: string;
+  tezosWrappingContract: string;
+  tezosSymbol: string;
+  tezosName: string;
+  thumbnailUri?: string;
+}
 
 export interface Fees {
   erc20WrappingFees: number;
@@ -59,6 +59,25 @@ export const EmptyToken: Token = {
   thumbnailUri: ''
 };
 
-export interface IndexerApi {
-  getConfiguration(): Promise<WrapConfiguration>;
+export interface IndexerTokenPayload {
+  id: string;
+  source: string;
+  destination: string;
+  token: string;
+  transactionHash?: string;
+  operationHash?: string;
+  signatures: Record<string, string>;
+  confirmations: number;
+  confirmationsThreshold: number;
+  amount?: string;
+  tokenId: string;
+  status: 'asked' | 'finalized' | 'reverted';
+}
+
+export interface IndexerWrapPayload {
+  result: Array<IndexerTokenPayload>;
+}
+
+export interface IndexerUnwrapPayload {
+  result: Array<IndexerTokenPayload>;
 }

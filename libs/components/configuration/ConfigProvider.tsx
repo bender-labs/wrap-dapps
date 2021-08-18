@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { Config, InitialConfig } from './types';
-import { createIndexerApi, FungibleToken, NonFungibleToken, TokenType } from '@wrap-dapps/api';
+import { IndexerApi, FungibleToken, NonFungibleToken, TokenType } from '@wrap-dapps/api';
 import { Box, Typography } from '@material-ui/core';
 
 type ContextValue = undefined | Config;
@@ -30,7 +30,7 @@ export function useNonFungibleTokens() {
 
 export function useIndexerApi() {
   const { indexerUrl } = useConfig();
-  return useMemo(() => createIndexerApi(indexerUrl), [indexerUrl]);
+  return useMemo(() => new IndexerApi(indexerUrl), [indexerUrl]);
 }
 
 type Props = {
@@ -41,7 +41,7 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
   const [config, setConfig] = useState<ContextValue>();
 
   useEffect(() => {
-    const indexerApi = createIndexerApi(initConfig.indexerUrl);
+    const indexerApi = new IndexerApi(initConfig.indexerUrl);
 
     const loadConfig = async () => {
       const indexerConfig = await indexerApi.getConfiguration();
@@ -78,7 +78,8 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
             }
             acc[e.ethereumSymbol] = e;
             return acc;
-          }, {})
+          }, {}),
+        fees: indexerConfig.fees
       };
       setConfig(config);
     };
