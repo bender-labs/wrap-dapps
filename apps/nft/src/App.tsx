@@ -4,12 +4,11 @@ import {
   EthereumStateType,
   HalfCard,
   MultiConnect,
-  NavBar,
   TezosStateType,
   useEthereumWalletContext,
   useTezosWalletContext
 } from '@wrap-dapps/components';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { routes } from './Routes';
 import { CardContent, Container } from '@material-ui/core';
 
@@ -31,14 +30,9 @@ const App = () => {
 
   if (connected) {
     return (
-      <>
-        <NavBar routes={routes} showEthereumWallet={true} showTezosWallet={true} showOperationHistory={true} />
-        <Router>
-          <Switch>
-            {buildRoutes(routes)}
-          </Switch>
-        </Router>
-      </>
+      <Switch>
+        {buildRoutes(routes)}
+      </Switch>
     );
   } else {
     return (

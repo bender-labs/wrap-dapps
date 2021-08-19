@@ -2,13 +2,20 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Web3ReactProvider } from '@web3-react/core';
 import React from 'react';
-import { hydrate } from 'react-dom';
+import { render } from 'react-dom';
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ConfigProvider, EthereumWalletProvider, TezosWalletProvider, ThemeProvider } from '@wrap-dapps/components';
+import {
+  ConfigProvider,
+  EthereumWalletProvider,
+  NavBar,
+  TezosWalletProvider,
+  ThemeProvider
+} from '@wrap-dapps/components';
 import './main.css';
 import { NetworkType } from '@airgap/beacon-sdk';
+import { routes } from './Routes';
 
 function getLibrary(provider: ExternalProvider): Web3Provider {
   const library = new Web3Provider(provider);
@@ -34,14 +41,17 @@ const initConfig = {
   }
 };
 
-hydrate(
-  <ThemeProvider>
-    <BrowserRouter>
+render(
+  <React.StrictMode>
+    <ThemeProvider>
       <Web3ReactProvider getLibrary={getLibrary}>
         <ConfigProvider initConfig={initConfig}>
           <TezosWalletProvider name={'Benderlabs NFT Bridge'}>
             <EthereumWalletProvider>
-              <App />
+              <BrowserRouter>
+                <NavBar routes={routes} showEthereumWallet={true} showTezosWallet={true} showOperationHistory={true} />
+                <App />
+              </BrowserRouter>
             </EthereumWalletProvider>
           </TezosWalletProvider>
         </ConfigProvider>
@@ -54,8 +64,8 @@ hydrate(
           rtl={false}
         />
       </Web3ReactProvider>
-    </BrowserRouter>
-  </ThemeProvider>,
+    </ThemeProvider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

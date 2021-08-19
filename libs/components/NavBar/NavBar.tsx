@@ -94,7 +94,7 @@ export default (props: Props) => {
     setMobileOpen(!mobileOpen);
   };
 
-  const buildLinks = (routes: AppRoute[]): JSX.Element[] => {
+  const buildLinks = (routes: AppRoute[]) => {
     return routes.map((route) => (
       <Grid item key={route.path}>
         <StyledTypography variant='h6' component='h1'>
