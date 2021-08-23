@@ -13,7 +13,7 @@ import {
   wrapDone
 } from './actions';
 import BigNumber from 'bignumber.js';
-import { EthereumWrapApi, EthereumWrapApiBuilder, EthereumWrapApiFactory } from '../../ethereum/EthereumWrapApi';
+import { EthereumWrapApi, EthereumWrapApiBuilder, EthereumWrapApiFactory } from '../../ethereum';
 
 type WrapState = {
   status: WrapStatus;

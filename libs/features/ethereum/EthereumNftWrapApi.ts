@@ -1,75 +1,79 @@
 import { Web3Provider } from '@ethersproject/providers';
 import { ethers } from 'ethers';
-import ERC20_ABI from './erc20Abi';
+import ERC721_ABI from './erc721Abi';
 import CUSTODIAN_ABI from './custodianContractAbi';
+import { EthereumAddress, TezosAddress } from './EthereumWrapApi';
 import BigNumber from 'bignumber.js';
 
-export type TezosAddress = string;
-export type EthereumAddress = string;
-
-export class EthereumWrapApi {
+export class EthereumNftWrapApi {
   constructor(
-    erc20Contract: ethers.Contract,
+    erc721Contract: ethers.Contract,
     custodianContract: ethers.Contract,
     ethAccountAddress: EthereumAddress,
     tzAccountAddress: TezosAddress
   ) {
-    this.erc20Contract = erc20Contract;
+    this.erc721Contract = erc721Contract;
     this.custodianContract = custodianContract;
     this.ethAccountAddress = ethAccountAddress;
     this.tzAccountAddress = tzAccountAddress;
   }
 
-  async balanceOf(): Promise<BigNumber> {
-    const balance = await this.erc20Contract.balanceOf(this.ethAccountAddress);
-    return new BigNumber(balance.toString());
+  async getCurrentApprovedAddress(tokenId: string): Promise<string> {
+    return this.erc721Contract.getApproved(tokenId);
   }
 
-  async allowanceOf(): Promise<BigNumber> {
-    const balance = await this.erc20Contract.allowance(
-      this.ethAccountAddress,
-      this.benderContractAddress()
-    );
-    return new BigNumber(balance.toString());
-  }
-
-  async approve(amount: BigNumber) {
-    return this.erc20Contract.approve(
-      this.benderContractAddress(),
-      ethers.BigNumber.from(amount.toString(10))
-    );
-  }
-
-  private async gasEstimator(amount: BigNumber): Promise<ethers.BigNumber> {
-    return await this.custodianContract.estimateGas.wrapERC20(
-      this.erc20ContractAddress(),
-      ethers.BigNumber.from(amount.toString(10)),
-      this.erc20ContractAddress(),
-      {
+  async estimateApprove(tokenId: string): Promise<ethers.BigNumber> {
+    try {
+      return await this.erc721Contract.estimateGas.approve(this.benderContractAddress(), tokenId, {
         gasLimit: 1000000
-      }
-    );
+      });
+    } catch(err) {
+      return ethers.BigNumber.from('100000');
+    }
   }
 
-  async wrap(amount: BigNumber): Promise<string> {
-    const gasLimit = await this.gasEstimator(amount);
-    const response: ethers.providers.TransactionResponse = await this.custodianContract.wrapERC20(
-      this.erc20ContractAddress(),
-      ethers.BigNumber.from(amount.toString(10)),
+  async approve(tokenId: string) {
+    const estimate = await this.estimateApprove(tokenId);
+    return this.erc721Contract.approve(this.benderContractAddress(), tokenId, {
+      gasLimit: estimate.add(estimate.div(2)).toNumber()
+    });
+  }
+
+  async isApproved(tokenId: string): Promise<boolean> {
+    const currentApprovedAddress = await this.getCurrentApprovedAddress(tokenId);
+    return currentApprovedAddress === this.benderContractAddress();
+  }
+
+  async estimateWrapNft(tokenId: string): Promise<ethers.BigNumber> {
+    try {
+      return await this.custodianContract.estimateGas.wrapERC721(
+        this.erc721Contract.address,
+        tokenId,
+        this.tzAccountAddress,
+        {
+          gasLimit: '1000000'
+        }
+      );
+    } catch(err) {
+      return ethers.BigNumber.from('300000');
+    }
+  }
+
+  async wrapNft(tokenId: string): Promise<string> {
+    const gasEstimate = await this.estimateWrapNft(tokenId);
+    const response: ethers.providers.TransactionResponse = await this.custodianContract.wrapERC721(
+      this.erc721Contract.address,
+      tokenId,
       this.tzAccountAddress,
       {
-        gasLimit: gasLimit.add(gasLimit.div(2)).toNumber()
+        gasLimit: gasEstimate.add(gasEstimate.div(2)).toNumber()
       }
     );
-
     return response.hash;
   }
 
-  async networkFees(
-    amount: BigNumber,
-    provider: Web3Provider
-  ): Promise<BigNumber> {
-    const gas = await this.gasEstimator(amount);
+  async networkFees(provider: Web3Provider, tokenId: string): Promise<BigNumber> {
+    const gas = await this.estimateWrapNft(tokenId);
     const gasPrice = await provider.getGasPrice();
     const fees = gas.mul(gasPrice);
     return new BigNumber(fees.toString(), 10);
@@ -79,17 +83,13 @@ export class EthereumWrapApi {
     return this.custodianContract.address;
   }
 
-  private erc20ContractAddress() {
-    return this.erc20Contract.address;
-  }
-
-  private readonly erc20Contract: ethers.Contract;
+  private readonly erc721Contract: ethers.Contract;
   private readonly custodianContract: ethers.Contract;
   private readonly ethAccountAddress: EthereumAddress;
   private readonly tzAccountAddress: TezosAddress;
 }
 
-export class EthereumWrapApiFactory {
+export class EthereumNftWrapApiFactory {
   constructor(
     benderContract: ethers.Contract,
     ethAccountAddress: EthereumAddress,
@@ -102,11 +102,11 @@ export class EthereumWrapApiFactory {
     this.provider = provider;
   }
 
-  public forErc20(erc20ContractAddress: EthereumAddress): EthereumWrapApi {
-    return new EthereumWrapApi(
+  public forErc721(erc721ContractAddress: EthereumAddress): EthereumNftWrapApi {
+    return new EthereumNftWrapApi(
       new ethers.Contract(
-        erc20ContractAddress,
-        new ethers.utils.Interface(ERC20_ABI),
+        erc721ContractAddress,
+        new ethers.utils.Interface(ERC721_ABI),
         this.provider.getSigner()
       ),
       this.benderContract,
@@ -121,19 +121,19 @@ export class EthereumWrapApiFactory {
   private readonly tezosAccountAddress: TezosAddress;
 }
 
-export class EthereumWrapApiBuilder {
+export class EthereumNftWrapApiBuilder {
   constructor(provider: Web3Provider) {
     this.provider = provider;
   }
 
-  public static withProvider(provider: Web3Provider): EthereumWrapApiBuilder {
-    return new EthereumWrapApiBuilder(provider);
+  public static withProvider(provider: Web3Provider): EthereumNftWrapApiBuilder {
+    return new EthereumNftWrapApiBuilder(provider);
   }
 
   public forAccount(
     ethAccountAddress: EthereumAddress,
     tzAccountAddress: TezosAddress
-  ): EthereumWrapApiBuilder {
+  ): EthereumNftWrapApiBuilder {
     this.ethAccountAddress = ethAccountAddress;
     this.tzAccountAddress = tzAccountAddress;
     return this;
@@ -141,7 +141,7 @@ export class EthereumWrapApiBuilder {
 
   public forCustodianContract(
     contractAddress: EthereumAddress
-  ): EthereumWrapApiBuilder {
+  ): EthereumNftWrapApiBuilder {
     this.custodianContractAddress = contractAddress;
     return this;
   }
@@ -153,10 +153,10 @@ export class EthereumWrapApiBuilder {
       this.custodianContractAddress === undefined ||
       this.tzAccountAddress === undefined
     ) {
-      throw new Error('Missing context for Ethereum Wrap Api initialization');
+      throw new Error('Missing context for Ethereum Nft Wrap Api initialization');
     }
 
-    return new EthereumWrapApiFactory(
+    return new EthereumNftWrapApiFactory(
       new ethers.Contract(
         this.custodianContractAddress,
         new ethers.utils.Interface(CUSTODIAN_ABI),

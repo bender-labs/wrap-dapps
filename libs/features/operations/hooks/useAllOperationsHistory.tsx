@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { UnwrapErc20Operation, WrapErc20Operation } from '../state/types';
-import { unwrapToOperations, wrapsToOperations } from '../state/operation';
+import { UnwrapErc20Operation, WrapErc20Operation } from '../state';
+import { unwrapToOperations, wrapsToOperations } from '../state';
 import {
   EthereumStateType,
   TezosStateType,

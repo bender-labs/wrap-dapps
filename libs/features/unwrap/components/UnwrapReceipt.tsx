@@ -13,7 +13,6 @@ import {
 import React, { useMemo } from 'react';
 import { TokenMetadata } from '../../swap';
 import { Typography } from '@material-ui/core';
-import { ConnectionStatus } from '../../wallet';
 import { ReceiptStatus } from '../../operations/hooks/reducer';
 
 export type UnwrapReceiptProps = {
@@ -21,7 +20,6 @@ export type UnwrapReceiptProps = {
   tokens: Record<string, TokenMetadata>;
   signaturesThreshold: number;
   status: ReceiptStatus;
-  walletStatus: ConnectionStatus;
   onRelease: () => void;
 };
 
@@ -37,8 +35,7 @@ function unwrapStatus(
   operation: UnwrapErc20Operation,
   signaturesThreshold: number,
   onRelease: () => any,
-  status: ReceiptStatus,
-  walletStatus: ConnectionStatus
+  status: ReceiptStatus
 ) {
   const step = 100 / 4;
   switch (operation.status.type) {
@@ -80,15 +77,13 @@ function unwrapStatus(
     case OperationStatusType.READY:
       return (
         <PaperContent>
-          {walletStatus === ConnectionStatus.CONNECTED && (
-            <LoadableButton
-              variant={'contained'}
-              disabled={false}
-              loading={status === ReceiptStatus.WAITING_FOR_APPLY}
-              onClick={onRelease}
-              text={'Release'}
-            />
-          )}
+          <LoadableButton
+            variant={'contained'}
+            disabled={false}
+            loading={status === ReceiptStatus.WAITING_FOR_APPLY}
+            onClick={onRelease}
+            text={'Release'}
+          />
         </PaperContent>
       );
 
@@ -113,7 +108,6 @@ export default function UnwrapReceipt({
                                         tokens,
                                         signaturesThreshold,
                                         status,
-                                        walletStatus,
                                         onRelease
                                       }: UnwrapReceiptProps) {
   const tokensByEthAddress = useMemo(
@@ -162,8 +156,7 @@ export default function UnwrapReceipt({
             operation,
             signaturesThreshold,
             onRelease,
-            status,
-            walletStatus
+            status
           )}
         </div>
       </PaperContent>

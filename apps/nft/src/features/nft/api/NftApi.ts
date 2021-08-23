@@ -1,7 +1,8 @@
 import abi from './erc721Abi';
-import { Cursor, NftApi, NftPage } from './types';
+import { Cursor, NftApi, NftInstance, NftPage } from './types';
 import { ethers } from 'ethers';
 import axios from 'axios';
+import { NonFungibleToken } from '@wrap-dapps/api';
 
 async function getTokenIds(contract: ethers.Contract, account: string, cursor?: Cursor) {
   const balance = await contract.balanceOf(account);
@@ -18,30 +19,51 @@ async function getTokensMetadata(
   contract: ethers.Contract,
   tokenIds: Array<string>
 ): Promise<Array<{ tokenId: string, metadataUrl: string }>> {
-  return Promise.all(tokenIds.map(async tokenId => ({ tokenId, metadataUrl: (await contract.tokenURI(tokenId)) })));
+  return Promise.all(tokenIds.map(async tokenId => (await getTokenMetadata(contract, tokenId))));
+}
+
+async function getTokenMetadata(contract: ethers.Contract, tokenId: string): Promise<{ tokenId: string, metadataUrl: string }> {
+  return { tokenId, metadataUrl: await contract.tokenURI(tokenId) };
 }
 
 export const createNftApi: (toolkit: ethers.providers.Provider) => NftApi = (toolkit) => {
   return {
-    async fetchUserNftInstances(nftAddress: string, userAddress: string, cursor?: Cursor): Promise<NftPage> {
+    async fetchUserNftToken(nftCollection: NonFungibleToken, tokenId: string): Promise<NftInstance> {
       const contract = new ethers.Contract(
-        nftAddress,
+        nftCollection.ethereumContractAddress,
+        abi,
+        toolkit
+      );
+      const metadataInfos = await getTokenMetadata(contract, tokenId);
+      return await axios.get(metadataInfos.metadataUrl).then(({ data }): NftInstance => ({
+        id: tokenId,
+        name: data.name,
+        description: data.description,
+        thumbnailUri: data.image,
+        attributes: [],
+        nftCollection: nftCollection
+      }));
+    },
+    async fetchUserNftTokens(nftCollection: NonFungibleToken, userAddress: string, cursor?: Cursor): Promise<NftPage> {
+      const contract = new ethers.Contract(
+        nftCollection.ethereumContractAddress,
         abi,
         toolkit
       );
       const tokenIds = await getTokenIds(contract, userAddress, cursor);
-      const metadatas = await getTokensMetadata(contract, tokenIds.result);
-      const metadataContent = metadatas
-        .map(({ tokenId, metadataUrl }) => axios.get(metadataUrl).then(({ data }) => ({
+      const metadataInfos = await getTokensMetadata(contract, tokenIds.result);
+      const metadataContents = metadataInfos
+        .map(({ tokenId, metadataUrl }) => axios.get(metadataUrl).then(({ data }): NftInstance => ({
           id: tokenId,
           name: data.name,
           description: data.description,
           thumbnailUri: data.image,
-          attributes: []
+          attributes: [],
+          nftCollection: nftCollection
         })));
-      return Promise.all(metadataContent).then(pages => ({
-        collection: nftAddress,
-        results: pages,
+      return Promise.all(metadataContents).then(nftInstances => ({
+        collection: nftCollection.ethereumContractAddress,
+        results: nftInstances,
         total: tokenIds.total
       }));
     }

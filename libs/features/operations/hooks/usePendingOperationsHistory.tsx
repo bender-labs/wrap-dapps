@@ -2,21 +2,29 @@ import { useConfig, useIndexerApi } from '@wrap-dapps/components';
 import { useEthereumWalletContext, useTezosWalletContext } from '../../wallet';
 import { useCallback, useEffect, useState } from 'react';
 import {
+  nftUnwrapToOperations,
+  nftwrapsToOperations,
   Operation,
   OperationType,
   UnwrapErc20Operation,
+  UnwrapERC721Operation,
   unwrapToOperations,
   WrapErc20Operation,
+  WrapERC721Operation,
   wrapsToOperations
 } from '../state';
 import { useHistory } from 'react-router';
 
 export const wrapPage = (op: Operation) => `/wrap/${op.hash}`;
+export const wrapNftPage = (op: Operation) => `/wrap-nft/${op.hash}`;
 export const unwrapPage = (op: Operation) => `/unwrap/${op.hash}`;
+export const unwrapNftPage = (op: Operation) => `/unwrap-nft/${op.hash}`;
 
 type OperationsHistoryState = {
   mints: WrapErc20Operation[];
+  nftMints: WrapERC721Operation[];
   burns: UnwrapErc20Operation[];
+  nftBurns: UnwrapERC721Operation[];
 };
 
 export const usePendingOperationsHistory = () => {
@@ -30,34 +38,50 @@ export const usePendingOperationsHistory = () => {
 
   const [operations, setOperations] = useState<OperationsHistoryState>({
     mints: [],
-    burns: []
+    nftMints: [],
+    burns: [],
+    nftBurns: []
   });
 
   useEffect(() => {
     const loadPendingWrap = async () => {
       if (!ethereumAccount() && !tezosAccount()) {
-        setOperations({ burns: [], mints: [] });
+        setOperations({ burns: [], nftMints: [], mints: [], nftBurns: [] });
         return;
       }
 
-      const [pendingWrap, pendingUnwrap] = await Promise.all([
+      const [pendingWrap, pendingNftWrap, pendingUnwrap, pendingNftUnwrap] = await Promise.all([
         indexerApi.fetchPendingWraps(ethereumAccount(), tezosAccount()),
-        indexerApi.fetchPendingUnwraps(ethereumAccount(), tezosAccount())
+        indexerApi.fetchPendingNftWraps(ethereumAccount(), tezosAccount()),
+        indexerApi.fetchPendingUnwraps(ethereumAccount(), tezosAccount()),
+        indexerApi.fetchPendingNftUnwraps(ethereumAccount(), tezosAccount()),
       ]);
       const mintsFromIndexer = wrapsToOperations(
         fees,
         wrapSignatureThreshold,
         pendingWrap
       );
+      const nftMintsFromIndexer = nftwrapsToOperations(
+        fees,
+        wrapSignatureThreshold,
+        pendingNftWrap
+      );
       const burnsFromIndexer = unwrapToOperations(
         fees,
         wrapSignatureThreshold,
         pendingUnwrap
       );
+      const nftBurnsFromIndexer = nftUnwrapToOperations(
+        fees,
+        wrapSignatureThreshold,
+        pendingNftUnwrap
+      );
 
       setOperations({
         mints: mintsFromIndexer,
-        burns: burnsFromIndexer
+        nftMints: nftMintsFromIndexer,
+        burns: burnsFromIndexer,
+        nftBurns: nftBurnsFromIndexer
       });
     };
     // noinspection JSIgnoredPromiseFromCall
@@ -75,6 +99,12 @@ export const usePendingOperationsHistory = () => {
           break;
         case OperationType.UNWRAP:
           history.push(unwrapPage(op));
+          break;
+        case OperationType.WRAP_NFT:
+          history.push(wrapNftPage(op));
+          break;
+        case OperationType.UNWRAP_NFT:
+          history.push(unwrapNftPage(op));
           break;
       }
     },

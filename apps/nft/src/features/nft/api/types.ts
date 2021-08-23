@@ -1,3 +1,5 @@
+import { NonFungibleToken } from '@wrap-dapps/api';
+
 export interface NftInstanceAttribute {
   key: string;
   value: string;
@@ -9,6 +11,7 @@ export interface NftInstance {
   name: string;
   description: string;
   attributes: NftInstanceAttribute[];
+  nftCollection: NonFungibleToken;
 }
 
 export interface NftPage {
@@ -23,9 +26,11 @@ export interface Cursor {
 }
 
 export interface NftApi {
-  fetchUserNftInstances(
-    collection: string,
+  fetchUserNftTokens(
+    nftCollection: NonFungibleToken,
     address: string,
     cursor?: Cursor
   ): Promise<NftPage>;
+
+  fetchUserNftToken(nftCollection: NonFungibleToken, tokenId: string): Promise<NftInstance>;
 }

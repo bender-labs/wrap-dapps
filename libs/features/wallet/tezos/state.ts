@@ -2,7 +2,6 @@ import { TezosToolkit } from '@taquito/taquito';
 import actionCreatorFactory from 'typescript-fsa';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { NetworkType } from '@airgap/beacon-sdk';
-import { ellipsizeAddress } from '../address';
 
 export enum TezosStateType {
   NOT_CONNECTED,
@@ -32,7 +31,7 @@ export const TezosState = {
   connected: (account: string, toolkit: TezosToolkit, network: NetworkType) =>
     ({
       type: TezosStateType.CONNECTED,
-      tezosAccount: ellipsizeAddress(account),
+      tezosAccount: account,
       tezosToolkit: toolkit,
       network
     } as TezosConnected),

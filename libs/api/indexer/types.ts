@@ -70,8 +70,9 @@ export interface IndexerTokenPayload {
   confirmations: number;
   confirmationsThreshold: number;
   amount?: string;
-  tokenId: string;
+  token_id?: string;
   status: 'asked' | 'finalized' | 'reverted';
+  type: string;
 }
 
 export interface IndexerWrapPayload {

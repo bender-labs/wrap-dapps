@@ -1,8 +1,11 @@
 import BigNumber from 'bignumber.js';
+import { NftInstance } from '@wrap-dapps/nft/src/features/nft/api/types';
 
 export enum OperationType {
     WRAP,
     UNWRAP,
+    WRAP_NFT,
+    UNWRAP_NFT
 }
 
 export enum OperationStatusType {
@@ -76,4 +79,14 @@ export interface UnwrapErc20Operation extends BaseOperation {
     operationHash: string;
 }
 
-export type Operation = WrapErc20Operation | UnwrapErc20Operation;
+export interface WrapERC721Operation extends BaseOperation {
+    type: OperationType.WRAP_NFT;
+    tokenId: string;
+}
+
+export interface UnwrapERC721Operation extends BaseOperation {
+    type: OperationType.UNWRAP_NFT;
+    tokenId: string;
+}
+
+export type Operation = WrapErc20Operation | UnwrapErc20Operation | WrapERC721Operation | UnwrapERC721Operation;

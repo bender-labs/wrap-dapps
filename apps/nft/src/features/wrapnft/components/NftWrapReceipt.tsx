@@ -1,4 +1,5 @@
-import { OperationStatusType, WrapErc20Operation } from '../../operations';
+import React from 'react';
+import { Typography } from '@material-ui/core';
 import {
   CircularProgressWithLabel,
   LabelAndAsset,
@@ -10,16 +11,12 @@ import {
   PaperNav,
   PaperTitle
 } from '@wrap-dapps/components';
-import React, { useMemo } from 'react';
-import { TokenMetadata } from '../../swap';
-import { Typography } from '@material-ui/core';
-import { ReceiptStatus } from '../../operations/hooks/reducer';
+import { OperationStatusType, ReceiptStatus, WrapERC721Operation } from '@wrap-dapps/features';
 
-export type WrapReceiptProps = {
-  operation: WrapErc20Operation;
+export type NftWrapReceiptProps = {
+  operation: WrapERC721Operation;
   status: ReceiptStatus;
   signaturesThreshold: number;
-  tokens: Record<string, TokenMetadata>;
   onMint: () => void;
 };
 
@@ -32,7 +29,7 @@ function label(value: string) {
 }
 
 function wrapStatus(
-  operation: WrapErc20Operation,
+  operation: WrapERC721Operation,
   signaturesThreshold: number,
   onMint: () => any,
   status: ReceiptStatus
@@ -102,28 +99,8 @@ function wrapStatus(
   }
 }
 
-export default function WrapReceipt({
-                                      operation,
-                                      tokens,
-                                      onMint,
-                                      status,
-                                      signaturesThreshold
-                                    }: WrapReceiptProps) {
-  const tokensByEthAddress = useMemo(
-    () =>
-      Object.entries(tokens).reduce<Record<string, TokenMetadata>>(
-        (acc, [, metadata]) => {
-          acc[metadata.ethereumContractAddress] = metadata;
-          return acc;
-        },
-        {}
-      ),
-    [tokens]
-  );
+export default function NftWrapReceipt({ operation, onMint, status, signaturesThreshold }: NftWrapReceiptProps) {
 
-  const { decimals, tezosSymbol } = tokensByEthAddress[
-    operation.token.toLowerCase()
-    ];
   return (
     <>
       <PaperHeader extraPadding>
@@ -136,17 +113,15 @@ export default function WrapReceipt({
           label={'Recipient address'}
           value={operation.destination}
         />
-        <LabelAndAsset
+        <LabelAndValue
           label={'Receive'}
-          value={operation.amount.minus(operation.fees)}
-          symbol={tezosSymbol}
-          decimals={decimals}
+          value={operation.tokenId}
         />
         <LabelAndAsset
           label={'Protocol fees'}
           value={operation.fees}
-          symbol={tezosSymbol}
-          decimals={decimals}
+          symbol='XTZ'
+          decimals={6}
         />
       </PaperContent>
       <PaperContent style={{ padding: '0px' }}>

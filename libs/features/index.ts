@@ -5,3 +5,4 @@ export * from './wrap';
 export * from './unwrap';
 export * from './operations';
 export * from './wallet';
+export * from './fees/fees';

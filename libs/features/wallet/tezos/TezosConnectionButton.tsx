@@ -2,6 +2,7 @@ import { useTezosWalletContext } from './useTezosWallet';
 import { TezosStateType } from './state';
 import { Button } from '@material-ui/core';
 import TezosIcon from './Icon';
+import {ellipsizeAddress} from '../address';
 
 export default function TezosConnectionButton() {
   const { state, activate, deactivate } = useTezosWalletContext();
@@ -21,7 +22,7 @@ export default function TezosConnectionButton() {
     case TezosStateType.CONNECTED:
       return (
         <Button color={'primary'} onClick={deactivate} startIcon={<TezosIcon />}>
-          {state.tezosAccount}
+          {ellipsizeAddress(state.tezosAccount)}
         </Button>
       );
   }

@@ -7,6 +7,7 @@ import logo from './logo.png';
 import { EthereumConnectionButton, TezosConnectionButton } from '../../features/wallet';
 import LaunchIcon from '@material-ui/icons/Launch';
 import { AppRoute } from '../routes';
+import OperationHistoryDialog from '@wrap-dapps/features/operations/components/OperationHistoryDialog';
 
 const StyledAppbar = styled(AppBar)(() => (
   {
@@ -94,8 +95,8 @@ export default (props: Props) => {
     setMobileOpen(!mobileOpen);
   };
 
-  const buildLinks = (routes: AppRoute[]) => {
-    return routes.map((route) => (
+  const buildNavLinks = (routes: AppRoute[]) => {
+    return routes.filter(route => route.navRoute).map((route) => (
       <Grid item key={route.path}>
         <StyledTypography variant='h6' component='h1'>
           <Link component={RouterLink} color='inherit' to={route.path}>
@@ -115,7 +116,7 @@ export default (props: Props) => {
               <Logo src={logo} alt='Logo' />
             </Grid>
             <Box sx={{ display: { xs: 'none', sm: 'inherit' } }}>
-              {buildLinks(routes)}
+              {buildNavLinks(routes)}
             </Box>
           </Grid>
           <Grid container={true} direction='row' justifyItems='flex-end' alignItems='center' sx={{ flex: 2 }}>
@@ -123,7 +124,7 @@ export default (props: Props) => {
               {showOperationHistory &&
               <Grid item>
                 <PendingButton>
-                  {/*<OperationHistoryDialog/>*/}
+                  <OperationHistoryDialog/>
                 </PendingButton>
               </Grid>}
               {showTezosWallet && <Grid item>

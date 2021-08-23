@@ -29,6 +29,12 @@ export const updateWrap = actionCreator<{
   signaturesThreshold: number;
 }>('UPDATE_WRAP');
 
+export const updateNftWrap = actionCreator<{
+  data: IndexerWrapPayload;
+  fees: Fees;
+  signaturesThreshold: number;
+}>('UPDATE_NFT_WRAP');
+
 export const updateUnwrap = actionCreator<{
   data: IndexerUnwrapPayload;
   fees: Fees;
@@ -46,6 +52,12 @@ export const mint = actionCreator<{
   quorumContractAddress: string;
   minterContractAddress: string;
 }>('MINT');
+
+export const mintNFT = actionCreator<{
+  tzLibrary: TezosToolkit;
+  quorumContractAddress: string;
+  minterContractAddress: string;
+}>('MINT_NFT');
 
 export const release = actionCreator<{
   ethLibrary: Web3Provider;

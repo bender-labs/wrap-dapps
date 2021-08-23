@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Operation, OperationType } from '../state';
 import { ReceiptState, ReceiptStatus, reducer, sideEffectReducer } from './reducer';
 import { Action, connectStore, createStore } from '../../types';
-import { fetchReceipt, mint, release, reload, update } from './actions';
+import { fetchReceipt, mint, mintNFT, release, reload, update } from './actions';
 import { atomFamily, useRecoilCallback, useRecoilState } from 'recoil';
 
 const receiptByHash = atomFamily<ReceiptState, string>({
@@ -126,13 +126,20 @@ export const useOperation = (
   const mintErc20 = () => {
     if (!tezosLibrary()) return;
     effectsDispatch(
-      mint({ minterContractAddress, quorumContractAddress, tzLibrary })
+      mint({ minterContractAddress, quorumContractAddress, tzLibrary: tezosLibrary()! })
+    );
+  };
+
+  const mintErc721 = () => {
+    if (!tezosLibrary()) return;
+    effectsDispatch(
+      mintNFT({ minterContractAddress, quorumContractAddress, tzLibrary: tezosLibrary()! })
     );
   };
 
   const unlockErc20 = () =>
     ethereumLibrary()
-      ? effectsDispatch(release({ custodianContractAddress, ethLibrary }))
+      ? effectsDispatch(release({ custodianContractAddress, ethLibrary: ethereumLibrary()! }))
       : Promise.reject('Not connected');
 
   return {
@@ -143,6 +150,7 @@ export const useOperation = (
       unwrap: unwrapSignatureThreshold
     },
     mintErc20,
+    mintErc721,
     unlockErc20
   };
 };

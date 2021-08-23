@@ -6,14 +6,14 @@ import { wrapERC20Fees } from '../../fees/fees';
 import { AssetSummary, PaperContent, TokenSelection } from '@wrap-dapps/components';
 import { SupportedBlockchain } from '../../wallet/blockchain';
 import AmountToWrapInput from '../../../components/token/AmountToWrapInput';
-import { Box, Button, styled } from '@material-ui/core';
+import { Box, Button, Paper, styled } from '@material-ui/core';
 import MultiConnect from '../../wallet/MultiConnect';
 import { UnwrapStatus } from '../hooks/reducer';
 
-const PaperContentTitle = styled(PaperContent)(() => ({
-  borderBottom: '3px solid #E0E0E0',
-  boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.25)'
-}));
+// const PaperContentTitle = styled(PaperContent)(() => ({
+//   borderBottom: '3px solid #E0E0E0',
+//   boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.25)'
+// }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
   color: 'black',
@@ -68,9 +68,9 @@ export default function UnwrapInitialStep({
   return (
     <>
       {!connected && (
-        <PaperContentTitle>
+        <PaperContent>
           <MultiConnect />
-        </PaperContentTitle>
+        </PaperContent>
       )}
       <Box sx={{ padding: '34px 50px 0 50px' }}>
         <PaperContent>

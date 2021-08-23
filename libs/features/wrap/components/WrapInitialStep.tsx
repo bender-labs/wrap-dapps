@@ -1,17 +1,17 @@
 import { AmountToWrapInput, AssetSummary, PaperContent, TokenSelection } from '@wrap-dapps/components';
 import React, { useEffect, useState } from 'react';
-import { SupportedBlockchain } from '../../wallet/blockchain';
+import { SupportedBlockchain } from '../../wallet';
 import BigNumber from 'bignumber.js';
 import { Fees, FungibleToken, Token } from '@wrap-dapps/api';
 import { Box, Button, styled } from '@material-ui/core';
 import { wrapERC20Fees } from '../../fees/fees';
 import MultiConnect from '../../wallet/MultiConnect';
-import { WrapStatus } from '../hooks/reducer';
+import { WrapStatus } from '../hooks';
 
-const Title = styled(PaperContent)(() => ({
-  borderBottom: '3px solid #E0E0E0',
-  boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.25)'
-}));
+// const Title = styled(PaperContent)(() => ({
+//   borderBottom: '3px solid #E0E0E0',
+//   boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.25)'
+// }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
   color: 'black',
@@ -65,9 +65,9 @@ export default function WrapInitialStep({
   return (
     <>
       {!connected && (
-        <Title>
+        <PaperContent>
           <MultiConnect />
-        </Title>
+        </PaperContent>
       )}
       <Box sx={{ padding: '34px 50px 0 50px' }}>
         <PaperContent>

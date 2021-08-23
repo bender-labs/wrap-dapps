@@ -1,6 +1,14 @@
 import BigNumber from 'bignumber.js';
 import { Fees } from '@wrap-dapps/api';
 
+export function wrapERC721Fees(fees: Fees) {
+  return new BigNumber(fees.erc721WrappingFees);
+}
+
+export function unwrapERC721Fees(fees: Fees) {
+  return new BigNumber(fees.erc721UnwrappingFees);
+}
+
 export function wrapERC20Fees(amount: BigNumber, fees: Fees) {
   return amount
     .div(10000)

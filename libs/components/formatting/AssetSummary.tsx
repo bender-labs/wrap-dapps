@@ -43,11 +43,11 @@ export type AssetSummaryProps = {
 };
 
 export function AssetSummary({
-                                       label,
-                                       symbol,
-                                       value,
-                                       decimals
-                                     }: AssetSummaryProps) {
+                               label,
+                               symbol,
+                               value,
+                               decimals
+                             }: AssetSummaryProps) {
   return (
     <Summary>
       <Wrapper>

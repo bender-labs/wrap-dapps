@@ -2,31 +2,26 @@ import React, { useState } from 'react';
 import { CardContent, Container } from '@material-ui/core';
 import Stack from '@material-ui/core/Stack';
 import Pagination from '@material-ui/core/Pagination';
-import {
-  EthereumConnected,
-  HalfCard,
-  TokenSelection,
-  useEthereumWalletContext,
-  useNonFungibleTokens
-} from '@wrap-dapps/components';
-import Gallery from '../features/nft/Gallery';
-import { useClientNtfBalance } from '../features/nft/hook/useClientNtfBalance';
+import { HalfCard, TokenSelection, useEthereumWalletContext, useNonFungibleTokens } from '@wrap-dapps/components';
+import Gallery from '../features/nft/components/Gallery';
+import { useNftQuery } from '../features/nft/hook/useNftQuery';
 import { SupportedBlockchain } from '@wrap-dapps/features';
 
 export const NftWrapSelectorScreen = () => {
   const { ethereumAccount, ethereumLibrary } = useEthereumWalletContext();
   const nonFungibleTokens = useNonFungibleTokens();
-  const [selectedToken, setSelectedToken] = useState(nonFungibleTokens[Object.keys(nonFungibleTokens)[0]]);
+  const [selectedNftCollection, setSelectedNftCollection] = useState(nonFungibleTokens[Object.keys(nonFungibleTokens)[0]]);
   const [pagination, setPagination] = useState({ currentPage: 1, limitPerPage: 4 });
-  const userTokens = useClientNtfBalance({
-    address: ethereumAccount()!,
-    nftAddress: selectedToken.ethereumContractAddress,
+
+  const nftQuery = useNftQuery({
+    ethereumAccount: ethereumAccount()!,
+    nftCollection: selectedNftCollection,
     ethereumToolkit: ethereumLibrary()!,
     ...pagination
   });
 
   const [page, setPage] = useState(1);
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const changePage = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
     setPagination({ ...pagination, currentPage: value });
   };
@@ -37,10 +32,10 @@ export const NftWrapSelectorScreen = () => {
         <HalfCard>
           <CardContent>
             <TokenSelection
-              token={selectedToken.ethereumSymbol}
+              token={selectedNftCollection.ethereumSymbol}
               disabled={false}
               onTokenSelect={(tokenId) => {
-                setSelectedToken(nonFungibleTokens[tokenId]);
+                setSelectedNftCollection(nonFungibleTokens[tokenId]);
               }}
               blockchainTarget={SupportedBlockchain.Ethereum}
               tokens={nonFungibleTokens}
@@ -49,15 +44,15 @@ export const NftWrapSelectorScreen = () => {
         </HalfCard>
       </Container>
       <Container maxWidth={'lg'} sx={{ padding: 3 }}>
-        <Gallery tokens={userTokens.tokens} />
+        <Gallery nftQuery={nftQuery}/>
       </Container>
       <Container>
         <Stack spacing={2}>
           <Pagination
             color={'primary'}
             page={page}
-            count={Math.ceil(userTokens.totalTokens / 4)}
-            onChange={handleChange}
+            count={Math.ceil(nftQuery.totalTokens / 4)}
+            onChange={changePage}
           />
         </Stack>
       </Container>

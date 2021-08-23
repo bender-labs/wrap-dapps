@@ -4,7 +4,7 @@ import { AllowanceButton } from './AllowanceButton';
 import BigNumber from 'bignumber.js';
 import { CustomConnector, CustomStepIcon, LoadableButton } from '@wrap-dapps/components';
 import { AllowanceLabel } from './AllowanceLabel';
-import { WrapStatus } from '../hooks/reducer';
+import { WrapStatus } from '../hooks/';
 
 export type WrapActionsProp = {
   currentAllowance: BigNumber;
@@ -17,14 +17,14 @@ export type WrapActionsProp = {
 };
 
 export function WrapActions({
-                                      currentAllowance,
-                                      amountToWrap,
-                                      decimals,
-                                      onAuthorize,
-                                      status,
-                                      token,
-                                      onWrap
-                                    }: WrapActionsProp) {
+                              currentAllowance,
+                              amountToWrap,
+                              decimals,
+                              onAuthorize,
+                              status,
+                              token,
+                              onWrap
+                            }: WrapActionsProp) {
   const activeStep = () => {
     if (
       status === WrapStatus.READY_TO_WRAP ||

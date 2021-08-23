@@ -7,17 +7,24 @@ import {
   Divider,
   List,
   ListItem,
+  ListItemProps,
   ListItemText,
   ListSubheader,
   styled,
   Typography
 } from '@material-ui/core';
-import { Operation, OperationStatusType, UnwrapErc20Operation, WrapErc20Operation } from '../state';
+import {
+  Operation,
+  OperationStatusType,
+  UnwrapErc20Operation,
+  WrapErc20Operation,
+  WrapERC721Operation
+} from '../state';
 import { formatAmount } from '../../ethereum/';
-import { ellipsizeAddress } from '../../wallet/address';
+import { ellipsizeAddress } from '../../wallet';
 import { FungibleToken } from '@wrap-dapps/api';
 
-const StyledListItem = styled(() => <ListItem button />)(() => ({
+const StyledListItem = styled(ListItem)<ListItemProps>(() => ({
   textAlign: 'center',
   backgroundColor: '#191919',
   color: 'white',
@@ -26,20 +33,20 @@ const StyledListItem = styled(() => <ListItem button />)(() => ({
   }
 }));
 
-const StyledPaperContent = styled(PaperContent)(() => ({
-  textAlign: 'center',
-  backgroundColor: '#191919',
-  color: 'white',
-  '&:hover': {
-    backgroundColor: '#4d4d4d'
-  }
-}));
+// const StyledPaperContent = styled(PaperContent)(() => ({
+//   textAlign: 'center',
+//   backgroundColor: '#191919',
+//   color: 'white',
+//   '&:hover': {
+//     backgroundColor: '#4d4d4d'
+//   }
+// }));
 
 const StyledDivider = styled(Divider)(() => ({
   backgroundColor: '#444444'
 }));
 
-const StyledTypography = styled(() => <Typography component='p' variant={'body2'} />)(({ theme }) => ({
+const StyledTypography = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.main,
   fontWeight: 700
 }));
@@ -98,7 +105,7 @@ export default function OperationHistoryDialog() {
   ) => {
     return (
       <React.Fragment key={operation.hash}>
-        <StyledListItem onClick={(e) => {
+        <StyledListItem button onClick={(e) => {
           e.preventDefault();
           gotoOp(operation);
         }}
@@ -130,7 +137,52 @@ export default function OperationHistoryDialog() {
       switch (operation.status.type) {
         case OperationStatusType.NEW:
           return (
+            <StyledTypography component='p' variant={'body2'}>
+              Waiting for operation to be included
+            </StyledTypography>
+          );
+        case OperationStatusType.WAITING_FOR_CONFIRMATIONS:
+          return (
             <StyledTypography>
+              Pending... {operation.status.confirmations} /{' '}
+              {operation.status.confirmationsThreshold} confirmations
+            </StyledTypography>
+          );
+        case OperationStatusType.WAITING_FOR_SIGNATURES:
+          return (
+            <React.Fragment>
+              <StyledTypography>
+                Waiting for signatures
+              </StyledTypography>
+              <StyledTypography>
+                {`(${
+                  Object.keys(operation.status.signatures).length
+                }/${wrapSignatureThreshold} signatures received)`}
+              </StyledTypography>
+            </React.Fragment>
+          );
+        case OperationStatusType.READY:
+          return (
+            <StyledTypography>
+              Ready to mint
+            </StyledTypography>
+          );
+      }
+    };
+
+    return renderItem(operation, primaryText(), secondaryText(), isLast);
+  };
+
+  const renderNftMint = (operation: WrapERC721Operation, isLast: boolean) => {
+    const primaryText = () => {
+      return `mint ${operation.tokenId} to ${ellipsizeAddress(operation.destination)}`;
+    };
+
+    const secondaryText = () => {
+      switch (operation.status.type) {
+        case OperationStatusType.NEW:
+          return (
+            <StyledTypography component='p' variant={'body2'}>
               Waiting for operation to be included
             </StyledTypography>
           );
@@ -218,6 +270,10 @@ export default function OperationHistoryDialog() {
     return renderItem(operation, primaryText(), secondaryText(), isLast);
   };
 
+  const renderNftBurn = () => {
+
+  };
+
   return (
     <>
       <OperationHistoryButton
@@ -231,12 +287,12 @@ export default function OperationHistoryDialog() {
           Pending operations
         </StyledDialogTitle>
         {!canFetch && (
-          <StyledPaperContent>
+          <PaperContent>
             <Typography variant={'body1'}>
               Please connect to at least one wallet to see your pending
               operations
             </Typography>
-          </StyledPaperContent>
+          </PaperContent>
         )}
         {canFetch && (
           <List style={{ padding: '0px' }}>
@@ -252,10 +308,32 @@ export default function OperationHistoryDialog() {
               </StyledListItem>
             )}
             <StyledListSubheader>
+              NFT Minting operations
+            </StyledListSubheader>
+            {operations.nftMints.map((o, i) =>
+              renderNftMint(o, i === operations.mints.length - 1)
+            )}
+            {operations.nftMints.length === 0 && (
+              <StyledListItem>
+                <ListItemText>No pending NFT minting operation</ListItemText>
+              </StyledListItem>
+            )}
+            <StyledListSubheader>
               Release operations
             </StyledListSubheader>
             {operations.burns.map((o, i) =>
               renderBurn(o, i === operations.burns.length - 1)
+            )}
+            {operations.burns.length === 0 && (
+              <StyledListItem>
+                <ListItemText>No pending release operation</ListItemText>
+              </StyledListItem>
+            )}
+            <StyledListSubheader>
+              NFT Release operations
+            </StyledListSubheader>
+            {operations.burns.map((o, i) =>
+              renderNftBurn(o, i === operations.burns.length - 1)
             )}
             {operations.burns.length === 0 && (
               <StyledListItem>

@@ -15,7 +15,8 @@ import {
 } from '@wrap-dapps/components';
 import './main.css';
 import { NetworkType } from '@airgap/beacon-sdk';
-import { routes } from './Routes';
+import { routes } from './pages';
+import { RecoilRoot } from 'recoil';
 
 function getLibrary(provider: ExternalProvider): Web3Provider {
   const library = new Web3Provider(provider);
@@ -43,28 +44,31 @@ const initConfig = {
 
 render(
   <React.StrictMode>
-    <ThemeProvider>
-      <Web3ReactProvider getLibrary={getLibrary}>
-        <ConfigProvider initConfig={initConfig}>
-          <TezosWalletProvider name={'Benderlabs NFT Bridge'}>
-            <EthereumWalletProvider>
-              <BrowserRouter>
-                <NavBar routes={routes} showEthereumWallet={true} showTezosWallet={true} showOperationHistory={true} />
-                <App />
-              </BrowserRouter>
-            </EthereumWalletProvider>
-          </TezosWalletProvider>
-        </ConfigProvider>
-        <ToastContainer
-          position='bottom-left'
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-        />
-      </Web3ReactProvider>
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <ConfigProvider initConfig={initConfig}>
+            <TezosWalletProvider name={'Benderlabs NFT Bridge'}>
+              <EthereumWalletProvider>
+                <BrowserRouter>
+                  <NavBar routes={routes} showEthereumWallet={true} showTezosWallet={true}
+                          showOperationHistory={true} />
+                  <App />
+                </BrowserRouter>
+              </EthereumWalletProvider>
+            </TezosWalletProvider>
+          </ConfigProvider>
+          <ToastContainer
+            position='bottom-left'
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+          />
+        </Web3ReactProvider>
+      </ThemeProvider>
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')
 );

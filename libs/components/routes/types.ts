@@ -1,8 +1,9 @@
-import { JSXElementConstructor } from 'react';
+import React from 'react';
 
 export type AppRoute = {
   name: string;
-  component: JSXElementConstructor<any>;
+  component: React.ComponentType<any>;
   path: string;
   external: boolean;
+  navRoute: boolean;
 }

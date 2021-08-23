@@ -8,8 +8,8 @@ import {
   useEthereumWalletContext,
   useTezosWalletContext
 } from '@wrap-dapps/components';
-import { Route, Switch } from 'react-router-dom';
-import { routes } from './Routes';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { routes } from './pages';
 import { CardContent, Container } from '@material-ui/core';
 
 const App = () => {
@@ -32,6 +32,9 @@ const App = () => {
     return (
       <Switch>
         {buildRoutes(routes)}
+        <Route path='*'>
+          <Redirect to='/' />
+        </Route>
       </Switch>
     );
   } else {

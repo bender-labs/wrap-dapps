@@ -1,5 +1,4 @@
 import {
-  AssetSummary,
   LabelAndAsset,
   LabelAndValue,
   PaperActions,
@@ -8,59 +7,53 @@ import {
   PaperNav,
   PaperTitle
 } from '@wrap-dapps/components';
-import { Checkbox, IconButton, styled, Typography } from '@material-ui/core';
+import { CardMedia, Checkbox, IconButton, styled, Typography } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import React from 'react';
 import BigNumber from 'bignumber.js';
-import { TokenMetadata } from '../../swap';
-import { wrapERC20Fees } from '../../fees/fees';
+import { wrapERC721Fees } from '@wrap-dapps/features';
 import { Fees } from '@wrap-dapps/api';
-import { WrapActions } from './WrapActions';
-import { WrapStatus } from '../hooks';
+import { NftInstance } from '../../nft/api/types';
+import { NftWrapStatus } from '../hooks/reducer';
+import { NftWrapActions } from './NftWrapActions';
 
 const Description = styled(Typography)(() => ({
   paddingLeft: '20px',
   fontWeight: 'bold'
 }));
 
-// const Background = styled(PaperContent)(() => ({
+// const PaperContentWithBackground = styled(PaperContent)(() => ({
 //   backgroundColor: '#C4C4C4'
 // }));
 
-// const PaperWithoutPadding = styled(PaperContent)(() => ({
-//   padding: '0'
-// }));
-
-export type WrapConfirmStepProps = {
-  token: TokenMetadata;
+export type WrapNftConfirmStepProps = {
   fees: Fees;
   sendingAddress: string;
   recipientAddress: string;
-  amount: BigNumber;
   onPrevious: () => void;
-  status: WrapStatus;
-  currentAllowance: BigNumber;
+  networkFees: BigNumber;
+  status: NftWrapStatus;
+  isAllowed: boolean;
   onAuthorize: () => void;
   onWrap: () => void;
-  networkFees: BigNumber;
   onAgreementChange: (v: boolean) => void;
+  nftInstance: NftInstance | null;
 };
 
-export function WrapConfirmStep({
-                                          onPrevious,
-                                          amount,
-                                          fees,
-                                          token,
-                                          status,
-                                          currentAllowance,
-                                          sendingAddress,
-                                          recipientAddress,
-                                          onAuthorize,
-                                          onWrap,
-                                          networkFees,
-                                          onAgreementChange
-                                        }: WrapConfirmStepProps) {
-  const currentFees = wrapERC20Fees(amount, fees);
+export function NftWrapConfirmStep({
+                                     onPrevious,
+                                     fees,
+                                     status,
+                                     isAllowed,
+                                     sendingAddress,
+                                     recipientAddress,
+                                     onAuthorize,
+                                     onWrap,
+                                     networkFees,
+                                     onAgreementChange,
+                                     nftInstance
+                                   }: WrapNftConfirmStepProps) {
+  const currentFees = wrapERC721Fees(fees);
 
   const [checked, setChecked] = React.useState(false);
   const [disabled, setDisabled] = React.useState(false);
@@ -72,8 +65,8 @@ export function WrapConfirmStep({
 
   React.useEffect(() => {
     const check =
-      status === WrapStatus.READY_TO_WRAP ||
-      status === WrapStatus.WAITING_FOR_WRAP;
+      status === NftWrapStatus.READY_TO_WRAP ||
+      status === NftWrapStatus.WAITING_FOR_WRAP;
     setChecked(check);
     setDisabled(check);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,17 +83,15 @@ export function WrapConfirmStep({
         <PaperTitle>Confirm</PaperTitle>
         <PaperActions />
       </PaperHeader>
-
       <PaperContent>
-        <Description variant={'body2'}>
-          Details
-        </Description>
-        <LabelAndAsset
-          label={'Send'}
-          decimals={token.decimals}
-          value={amount}
-          symbol={token.ethereumSymbol}
+        <CardMedia sx={{
+          height: 0,
+          backgroundImage: '100%',
+          paddingTop: '100%'
+        }} image={nftInstance?.thumbnailUri} title={nftInstance?.name}
         />
+        <LabelAndValue label={'Collection'} value={nftInstance?.nftCollection.ethereumName} />
+        <LabelAndValue label={'Name'} value={nftInstance?.name} />
         <LabelAndValue label={'From'} value={sendingAddress} />
         <LabelAndValue label={'To'} value={recipientAddress} />
       </PaperContent>
@@ -110,9 +101,9 @@ export function WrapConfirmStep({
         </Description>
         <LabelAndAsset
           label={'Wrap fees'}
-          decimals={token.decimals}
+          decimals={6}
           value={currentFees}
-          symbol={token.tezosSymbol}
+          symbol='XTZ'
         />
         <LabelAndAsset
           label={'Network fees (est.)'}
@@ -121,15 +112,6 @@ export function WrapConfirmStep({
           symbol={'ETH'}
           emptyState={networkFees.lte(0)}
           emptyStatePlaceHolder={'Awaiting for allowance'}
-        />
-      </PaperContent>
-
-      <PaperContent>
-        <AssetSummary
-          label={'You will receive'}
-          value={amount.minus(currentFees)}
-          decimals={token.decimals}
-          symbol={token.tezosSymbol}
         />
       </PaperContent>
       <PaperContent style={{ display: 'flex', padding: '20px 26px 0px 26px' }}>
@@ -143,14 +125,11 @@ export function WrapConfirmStep({
           finalize minting
         </Typography>
       </PaperContent>
-      <WrapActions
-        currentAllowance={currentAllowance}
-        amountToWrap={amount}
-        decimals={token.decimals}
+      <NftWrapActions
         onAuthorize={onAuthorize}
         onWrap={onWrap}
         status={status}
-        token={token.ethereumSymbol}
+        isAllowed={isAllowed}
       />
     </>
   );
