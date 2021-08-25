@@ -1,5 +1,5 @@
 import abi from './erc721Abi';
-import { Cursor, NftApi, NftInstance, NftPage } from './types';
+import { Cursor, EthereumNftApi, NftInstance, NftPage } from './types';
 import { ethers } from 'ethers';
 import axios from 'axios';
 import { NonFungibleToken } from '@wrap-dapps/api';
@@ -26,9 +26,9 @@ async function getTokenMetadata(contract: ethers.Contract, tokenId: string): Pro
   return { tokenId, metadataUrl: await contract.tokenURI(tokenId) };
 }
 
-export const createNftApi: (toolkit: ethers.providers.Provider) => NftApi = (toolkit) => {
+export const createEthereumNftApi: (toolkit: ethers.providers.Provider) => EthereumNftApi = (toolkit) => {
   return {
-    async fetchUserNftToken(nftCollection: NonFungibleToken, tokenId: string): Promise<NftInstance> {
+    async fetchNftTokenMetadata(nftCollection: NonFungibleToken, tokenId: string): Promise<NftInstance> {
       const contract = new ethers.Contract(
         nftCollection.ethereumContractAddress,
         abi,
@@ -44,7 +44,7 @@ export const createNftApi: (toolkit: ethers.providers.Provider) => NftApi = (too
         nftCollection: nftCollection
       }));
     },
-    async fetchUserNftTokens(nftCollection: NonFungibleToken, userAddress: string, cursor?: Cursor): Promise<NftPage> {
+    async fetchNftTokensWithMetadata(nftCollection: NonFungibleToken, userAddress: string, cursor?: Cursor): Promise<NftPage> {
       const contract = new ethers.Contract(
         nftCollection.ethereumContractAddress,
         abi,

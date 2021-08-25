@@ -5,10 +5,11 @@ import { NftInstance } from '../features/nft/api/types';
 import { NftWrapConfirmScreen } from './NftWrapConfirmScreen';
 import NftWrapOperationScreen from './NftWrapOperationScreen';
 
-const confirmPath = '/confirm-wrap-nft';
+const confirmWrapPath = '/confirm-wrap-nft';
+const confirmUnwrapPath = '/confirm-unwrap-nft';
 const wrapOperationPath = '/wrap-nft';
 
-const CONFIRM_NFT_WRAP = confirmPath + '/:nftCollectionAddress/:tokenId';
+const CONFIRM_NFT_WRAP = confirmWrapPath + '/:nftCollectionAddress/:tokenId';
 const NFT_WRAP_OPERATION = wrapOperationPath + '/:transactionHash';
 const ETHEREUM_DASHBOARD = '/ethereum';
 const TEZOS_DASHBOARD = '/tezos';
@@ -21,7 +22,8 @@ export const paths = {
 };
 
 export const nftOperationPage = (op: Operation) => `${wrapOperationPath}/${op.hash}`;
-export const confirmNft = (nftInstance: NftInstance) => `${confirmPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
+export const confirmNftWrap = (nftInstance: NftInstance) => `${confirmWrapPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
+export const confirmNftUnwrap = (nftInstance: NftInstance) => `${confirmUnwrapPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
 
 export const routes: AppRoute[] = [{
   name: 'Ethereum NFTs',

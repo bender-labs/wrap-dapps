@@ -3,8 +3,8 @@ import { CardContent, Container } from '@material-ui/core';
 import Stack from '@material-ui/core/Stack';
 import Pagination from '@material-ui/core/Pagination';
 import { HalfCard, TokenSelection, useEthereumWalletContext, useNonFungibleTokens } from '@wrap-dapps/components';
-import Gallery from '../features/nft/components/Gallery';
-import { useNftQuery } from '../features/nft/hook/useNftQuery';
+import Gallery, { GalleryDirection } from '../features/nft/components/Gallery';
+import { useEthereumNftQuery } from '../features/nft/hook/useEthereumNftQuery';
 import { SupportedBlockchain } from '@wrap-dapps/features';
 
 export const NftWrapSelectorScreen = () => {
@@ -13,7 +13,7 @@ export const NftWrapSelectorScreen = () => {
   const [selectedNftCollection, setSelectedNftCollection] = useState(nonFungibleTokens[Object.keys(nonFungibleTokens)[0]]);
   const [pagination, setPagination] = useState({ currentPage: 1, limitPerPage: 4 });
 
-  const nftQuery = useNftQuery({
+  const nftQuery = useEthereumNftQuery({
     ethereumAccount: ethereumAccount()!,
     nftCollection: selectedNftCollection,
     ethereumToolkit: ethereumLibrary()!,
@@ -44,7 +44,7 @@ export const NftWrapSelectorScreen = () => {
         </HalfCard>
       </Container>
       <Container maxWidth={'lg'} sx={{ padding: 3 }}>
-        <Gallery nftQuery={nftQuery}/>
+        <Gallery nftQuery={nftQuery} direction={GalleryDirection.WRAP} linkLabel='Send to Tezos' />
       </Container>
       <Container>
         <Stack spacing={2}>

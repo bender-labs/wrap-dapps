@@ -1,14 +1,14 @@
 import { ethers } from 'ethers';
-import { createNftApi } from './NftApi';
+import { createEthereumNftApi } from './EthereumNftApi';
 
 test('should get users token and metadata', async () => {
   const userAddressWithTokens = '0x7d86457D26205b7DCA5C4ab5d83FBf3A91C6e30d';
   const jbIsTopDogContractAddress = '0x55cb8f57363a0549899696e17d716a2654680db1';
   const rpcProvider = new ethers.providers.JsonRpcProvider('https://rinkeby.infura.io/v3/1915fb285d0747d9af84c7e106fdb443');
 
-  const nftApi = createNftApi(rpcProvider);
+  const nftApi = createEthereumNftApi(rpcProvider);
 
-  const result = await nftApi.fetchUserNftTokens(jbIsTopDogContractAddress, userAddressWithTokens);
+  const result = await nftApi.fetchNftTokensWithMetadata(jbIsTopDogContractAddress, userAddressWithTokens);
 
   const expected = [{
     id: '27',
@@ -45,9 +45,9 @@ test('should get users token and metadata with pagination', async () => {
   const jbIsTopDogContractAddress = '0x55cb8f57363a0549899696e17d716a2654680db1';
   const rpcProvider = new ethers.providers.JsonRpcProvider('https://rinkeby.infura.io/v3/1915fb285d0747d9af84c7e106fdb443');
 
-  const nftApi = createNftApi(rpcProvider);
+  const nftApi = createEthereumNftApi(rpcProvider);
 
-  const result = await nftApi.fetchUserNftTokens(jbIsTopDogContractAddress, userAddressWithTokens, {
+  const result = await nftApi.fetchNftTokensWithMetadata(jbIsTopDogContractAddress, userAddressWithTokens, {
     offset: 1,
     limit: 2
   });

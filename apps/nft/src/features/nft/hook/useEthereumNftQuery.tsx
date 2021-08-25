@@ -1,6 +1,6 @@
 import { NftInstance } from '../api/types';
 import { ethers } from 'ethers';
-import { createNftApi } from '../api/NftApi';
+import { createEthereumNftApi } from '../api/EthereumNftApi';
 import { useEffect, useMemo, useState } from 'react';
 import { NonFungibleToken } from '@wrap-dapps/api';
 
@@ -18,15 +18,15 @@ interface Props {
   currentPage: number;
 }
 
-export function useNftQuery(props: Props): NftQuery {
+export function useEthereumNftQuery(props: Props): NftQuery {
   const { ethereumAccount, ethereumToolkit, nftCollection, limitPerPage, currentPage } = props;
   const [state, setState] = useState<NftQuery>({ loading: false, tokens: [], totalTokens: 0 });
-  const nftApi = useMemo(() => createNftApi(ethereumToolkit), [ethereumToolkit]);
+  const nftApi = useMemo(() => createEthereumNftApi(ethereumToolkit), [ethereumToolkit]);
 
   useEffect(() => {
     const fetch = async () => {
       setState({ ...state, loading: true });
-      const result = await nftApi.fetchUserNftTokens(nftCollection, ethereumAccount, {
+      const result = await nftApi.fetchNftTokensWithMetadata(nftCollection, ethereumAccount, {
         limit: limitPerPage,
         offset: limitPerPage * (currentPage - 1)
       });

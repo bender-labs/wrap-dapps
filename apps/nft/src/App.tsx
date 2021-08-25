@@ -33,7 +33,7 @@ const App = () => {
       <Switch>
         {buildRoutes(routes)}
         <Route path='*'>
-          <Redirect to='/' />
+          <Redirect to='/ethereum' />
         </Route>
       </Switch>
     );

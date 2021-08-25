@@ -2,13 +2,21 @@ import { Grid } from '@material-ui/core';
 import Stack from '@material-ui/core/Stack';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { NFTCard } from './NFTCard';
-import { NftQuery } from '../hook/useNftQuery';
+import { NftQuery } from '../hook/useEthereumNftQuery';
+import { confirmNftUnwrap, confirmNftWrap } from '../../../pages';
 
-type GalleryProps = {
-  nftQuery: NftQuery
+export enum GalleryDirection {
+  WRAP,
+  UNWRAP
 }
 
-export default function Gallery({ nftQuery }: GalleryProps) {
+type GalleryProps = {
+  nftQuery: NftQuery;
+  direction: GalleryDirection;
+  linkLabel: string;
+}
+
+export default function Gallery({ nftQuery, direction, linkLabel }: GalleryProps) {
   const { tokens, loading } = nftQuery;
 
   return (
@@ -17,7 +25,10 @@ export default function Gallery({ nftQuery }: GalleryProps) {
         <Stack sx={{ paddingTop: 12, width: 0, margin: 'auto' }}>
           <CircularProgress color='primary' />
         </Stack> :
-        tokens.map((token) => (<NFTCard token={token} key={token.id} />))
+        tokens.map((token) => {
+          const link = direction === GalleryDirection.WRAP ? confirmNftWrap(token) : confirmNftUnwrap(token);
+          return <NFTCard token={token} link={link} linkLabel={linkLabel} key={token.id} />;
+        })
       }
     </Grid>
   );

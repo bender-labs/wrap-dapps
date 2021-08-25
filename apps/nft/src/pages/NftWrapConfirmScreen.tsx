@@ -1,7 +1,7 @@
 import { useHistory, useParams } from 'react-router-dom';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useEthereumWalletContext, usePendingOperationsActions } from '@wrap-dapps/features';
-import { createNftApi } from '../features/nft/api/NftApi';
+import { createEthereumNftApi } from '../features/nft/api/EthereumNftApi';
 import { nftOperationPage, paths } from './routes';
 import { useNftWrap } from '../features/wrapnft/hooks/useNftWrap';
 import { NftWrapConfirmStep } from '../features/wrapnft/components/NftWrapConfirmStep';
@@ -16,7 +16,7 @@ export function NftWrapConfirmScreen() {
     loading: true
   });
   const { ethereumLibrary } = useEthereumWalletContext();
-  const nftApi = useMemo(() => createNftApi(ethereumLibrary()!), [ethereumLibrary]);
+  const nftApi = useMemo(() => createEthereumNftApi(ethereumLibrary()!), [ethereumLibrary]);
   const history = useHistory();
 
   const {
@@ -49,7 +49,7 @@ export function NftWrapConfirmScreen() {
   useEffect(() => {
     const loadToken = async () => {
       const nftCollection = Object.values(nonFungibleTokens).find((availableToken) => (availableToken.ethereumContractAddress === nftCollectionAddress)) ?? null;
-      const nftInstance = nftCollection && tokenId ? await nftApi.fetchUserNftToken(nftCollection, tokenId) : null;
+      const nftInstance = nftCollection && tokenId ? await nftApi.fetchNftTokenMetadata(nftCollection, tokenId) : null;
       setNft(nftCollection, nftInstance);
       setNftWrapConfirmState({
         loading: false

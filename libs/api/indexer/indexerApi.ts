@@ -1,4 +1,4 @@
-import { IndexerUnwrapPayload, IndexerWrapPayload, WrapConfiguration } from './types';
+import { IndexerTezosNftPayload, IndexerUnwrapPayload, IndexerWrapPayload, WrapConfiguration } from './types';
 import axios, { AxiosInstance } from 'axios';
 import { EthereumAddress, TezosAddress } from '@wrap-dapps/features/ethereum/EthereumWrapApi';
 
@@ -107,6 +107,14 @@ export class IndexerApi {
     return this.client
       .get('/unwraps', {
         params: { hash, type }
+      })
+      .then(({ data }) => data);
+  }
+
+  public fetchTezosNft(tezosAddress: string, contractAddress: string): Promise<IndexerTezosNftPayload> {
+    return this.client
+      .get('/tezos-nfts', {
+        params: { tezosAddress, contractAddress }
       })
       .then(({ data }) => data);
   }

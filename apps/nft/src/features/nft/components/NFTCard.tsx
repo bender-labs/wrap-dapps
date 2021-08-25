@@ -2,9 +2,14 @@ import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typograph
 import { shadeOfBlack } from '@wrap-dapps/components/theme/theme';
 import { NftInstance } from '../api/types';
 import { Link } from 'react-router-dom';
-import { confirmNft } from '../../../pages';
 
-export const NFTCard = ({ token }: { token: NftInstance }) => {
+type NFTCardProps = {
+  token: NftInstance;
+  link: string;
+  linkLabel: string;
+}
+
+export const NFTCard = ({ token, link, linkLabel }: NFTCardProps) => {
   const { name, thumbnailUri, id, nftCollection } = token;
 
   return (
@@ -26,9 +31,9 @@ export const NFTCard = ({ token }: { token: NftInstance }) => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Link to={confirmNft(token)}>
+            <Link to={link}>
               <Button>
-                Wrap this NFT
+                {linkLabel}
               </Button>
             </Link>
           </CardActions>

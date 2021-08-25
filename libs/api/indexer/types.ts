@@ -82,3 +82,13 @@ export interface IndexerWrapPayload {
 export interface IndexerUnwrapPayload {
   result: Array<IndexerTokenPayload>;
 }
+
+export interface IndexerTezosNft {
+  contract: string;
+  owner: string;
+  tokenId: string;
+}
+
+export interface IndexerTezosNftPayload {
+  result: Array<IndexerTezosNft>;
+}
