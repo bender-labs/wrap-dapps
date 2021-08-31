@@ -5,8 +5,9 @@
   "scripts": {
     "start": "razzle start",
     "build": "razzle build",
+    "build:ni": "razzle build --noninteractive",
     "test": "razzle test --env=jsdom",
-    "start:prod": "NODE_ENV=production node build/server.js"
+    "build:staging": "dotenv -e .env.development yarn build:ni"
   },
   "private": true,
   "dependencies": {
@@ -29,13 +30,14 @@
     "babel-preset-razzle": "4.0.6",
     "html-webpack-plugin": "^4.5.2",
     "jest": "^27.0.6",
-    "mini-css-extract-plugin": "^2.2.0",
+    "mini-css-extract-plugin": "^1.6.2",
     "postcss": "^8.3.6",
     "razzle": "^4.0.6",
     "razzle-dev-utils": "^4.0.6",
     "ts-jest": "^27.0.4",
     "webpack": "^4.44.1",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "dotenv-cli": "^4.0.0"
   },
   "volta": {
     "extends": "../../package.json"
