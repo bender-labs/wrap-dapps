@@ -2,17 +2,17 @@ import { useHistory, useParams } from 'react-router-dom';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useEthereumWalletContext, usePendingOperationsActions } from '@wrap-dapps/features';
 import { createEthereumNftApi } from '../features/nft/api/EthereumNftApi';
-import { nftWrapOperationPage, paths } from './routes';
-import { useNftWrap } from '../features/wrapnft/hooks/useNftWrap';
-import { NftWrapConfirmStep } from '../features/wrapnft/components/NftWrapConfirmStep';
+import { nftUnwrapOperationPage, paths } from './routes';
+import { NftUnwrapConfirmStep } from '../features/unwrapnft/components/NftUnwrapConfirmStep';
+import { useNftUnwrap } from '../features/unwrapnft/hooks/useNftUnwrap';
 
-type NftWrapConfirmState = {
+type NftUnwrapConfirmState = {
   loading: boolean;
 };
 
-export function NftWrapConfirmScreen() {
+export function NftUnwrapConfirmScreen() {
   const { nftCollectionAddress, tokenId } = useParams() as { nftCollectionAddress: string; tokenId: string };
-  const [nftWrapConfirmState, setNftWrapConfirmState] = useState<NftWrapConfirmState>({
+  const [nftUnwrapConfirmState, setNftUnwrapConfirmState] = useState<NftUnwrapConfirmState>({
     loading: true
   });
   const { ethereumLibrary } = useEthereumWalletContext();
@@ -22,26 +22,24 @@ export function NftWrapConfirmScreen() {
   const {
     setNft,
     fees,
-    launchNftWrap,
+    launchNftUnwrap,
     tezosAccount,
     ethereumAccount,
     agree,
-    launchNftAllowanceApproval,
-    isAllowed,
     status,
     nftInstance,
     networkFees,
     nonFungibleTokens
-  } = useNftWrap();
+  } = useNftUnwrap();
   const { addOperation } = usePendingOperationsActions();
 
-  const doLaunchNftWrap = async () => {
-    const op = await launchNftWrap();
+  const doLaunchNftUnwrap = async () => {
+    const op = await launchNftUnwrap();
     if (!op) {
       return;
     }
     await addOperation(op);
-    history.push(nftWrapOperationPage(op));
+    history.push(nftUnwrapOperationPage(op));
     return op;
   };
 
@@ -51,7 +49,7 @@ export function NftWrapConfirmScreen() {
       const nftCollection = Object.values(nonFungibleTokens).find((availableToken) => (availableToken.ethereumContractAddress === nftCollectionAddress)) ?? null;
       const nftInstance = nftCollection && tokenId ? await nftApi.fetchNftTokenMetadata(nftCollection, tokenId) : null;
       setNft(nftCollection, nftInstance);
-      setNftWrapConfirmState({
+      setNftUnwrapConfirmState({
         loading: false
       });
     };
@@ -59,25 +57,23 @@ export function NftWrapConfirmScreen() {
   }, [nftApi, nftCollectionAddress, tokenId]);
 
   useEffect(() => {
-    if (!nftWrapConfirmState.loading && !nftInstance) {
-      history.push(paths.ETHEREUM_DASHBOARD);
+    if (!nftUnwrapConfirmState.loading && !nftInstance) {
+      history.push(paths.TEZOS_DASHBOARD);
     }
-  }, [nftWrapConfirmState]);
+  }, [nftUnwrapConfirmState]);
 
   return (
-    <NftWrapConfirmStep fees={fees}
-                        sendingAddress={ethereumAccount()!}
-                        recipientAddress={tezosAccount()!}
-                        onPrevious={() => {
-                          history.push(paths.ETHEREUM_DASHBOARD);
-                        }}
-                        networkFees={networkFees}
-                        status={status}
-                        isAllowed={isAllowed}
-                        onAuthorize={launchNftAllowanceApproval}
-                        onWrap={doLaunchNftWrap}
-                        onAgreementChange={agree}
-                        nftInstance={nftInstance}
+    <NftUnwrapConfirmStep fees={fees}
+                          sendingAddress={tezosAccount()!}
+                          recipientAddress={ethereumAccount()!}
+                          onPrevious={() => {
+                            history.push(paths.TEZOS_DASHBOARD);
+                          }}
+                          networkFees={networkFees}
+                          status={status}
+                          onWrap={doLaunchNftUnwrap}
+                          onAgreementChange={agree}
+                          nftInstance={nftInstance}
     />
   );
 }

@@ -41,6 +41,12 @@ export const updateUnwrap = actionCreator<{
   signaturesThreshold: number;
 }>('UPDATE_UNWRAP');
 
+export const updateNftUnwrap = actionCreator<{
+  data: IndexerUnwrapPayload;
+  fees: Fees;
+  signaturesThreshold: number;
+}>('UPDATE_NFT_UNWRAP');
+
 export const receiptFetched = actionCreator<{ receipt?: TransactionReceipt }>(
   'RECEIPT_FETCHED'
 );
@@ -63,3 +69,8 @@ export const release = actionCreator<{
   ethLibrary: Web3Provider;
   custodianContractAddress: string;
 }>('RELEASE');
+
+export const releaseNFT = actionCreator<{
+  ethLibrary: Web3Provider;
+  custodianContractAddress: string;
+}>('RELEASE_NFT');

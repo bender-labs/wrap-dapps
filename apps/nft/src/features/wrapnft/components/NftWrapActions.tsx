@@ -40,8 +40,8 @@ export function NftWrapActions({
             <NftAllowanceButton
               isAllowed={isAllowed}
               onAuthorize={onAuthorize}
-              enabled={status === NftWrapStatus.AGREEMENT_CONFIRMED}
               loading={status === NftWrapStatus.WAITING_FOR_ALLOWANCE_APPROVAL}
+              enabled={status === NftWrapStatus.AGREEMENT_CONFIRMED}
             />
           </StepLabel>
         </Step>

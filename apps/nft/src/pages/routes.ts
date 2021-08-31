@@ -4,13 +4,19 @@ import { Operation } from '@wrap-dapps/features';
 import { NftInstance } from '../features/nft/api/types';
 import { NftWrapConfirmScreen } from './NftWrapConfirmScreen';
 import NftWrapOperationScreen from './NftWrapOperationScreen';
+import { NftUnwrapConfirmScreen } from './NftUnwrapConfirmScreen';
+import NftUnwrapOperationScreen from './NftUnwrapOperationScreen';
 
-const confirmWrapPath = '/confirm-wrap-nft';
-const confirmUnwrapPath = '/confirm-unwrap-nft';
-const wrapOperationPath = '/wrap-nft';
+const confirmWrapNftPath = '/confirm-wrap-nft';
+const confirmUnwrapNftPath = '/confirm-unwrap-nft';
+const wrapNftOperationPath = '/wrap-nft';
+const unwrapNftOperationPath = '/unwrap-nft';
 
-const CONFIRM_NFT_WRAP = confirmWrapPath + '/:nftCollectionAddress/:tokenId';
-const NFT_WRAP_OPERATION = wrapOperationPath + '/:transactionHash';
+const CONFIRM_NFT_WRAP = confirmWrapNftPath + '/:nftCollectionAddress/:tokenId';
+const NFT_WRAP_OPERATION = wrapNftOperationPath + '/:transactionHash';
+const CONFIRM_NFT_UNWRAP = confirmUnwrapNftPath + '/:nftCollectionAddress/:tokenId';
+const NFT_UNWRAP_OPERATION = unwrapNftOperationPath + '/:transactionHash';
+
 const ETHEREUM_DASHBOARD = '/ethereum';
 const TEZOS_DASHBOARD = '/tezos';
 
@@ -21,9 +27,10 @@ export const paths = {
   TEZOS_DASHBOARD
 };
 
-export const nftOperationPage = (op: Operation) => `${wrapOperationPath}/${op.hash}`;
-export const confirmNftWrap = (nftInstance: NftInstance) => `${confirmWrapPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
-export const confirmNftUnwrap = (nftInstance: NftInstance) => `${confirmUnwrapPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
+export const nftWrapOperationPage = (op: Operation) => `${wrapNftOperationPath}/${op.hash}`;
+export const nftUnwrapOperationPage = (op: Operation) => `${unwrapNftOperationPath}/${op.hash}`;
+export const confirmNftWrap = (nftInstance: NftInstance) => `${confirmWrapNftPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
+export const confirmNftUnwrap = (nftInstance: NftInstance) => `${confirmUnwrapNftPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
 
 export const routes: AppRoute[] = [{
   name: 'Ethereum NFTs',
@@ -44,9 +51,21 @@ export const routes: AppRoute[] = [{
   external: false,
   navRoute: false
 }, {
+  name: 'Nft unwrap operation page',
+  component: NftUnwrapOperationScreen,
+  path: NFT_UNWRAP_OPERATION,
+  external: false,
+  navRoute: false
+},{
   name: 'Confirm nft wrap',
   component: NftWrapConfirmScreen,
   path: CONFIRM_NFT_WRAP,
+  external: false,
+  navRoute: false
+}, {
+  name: 'Confirm nft unwrap',
+  component: NftUnwrapConfirmScreen,
+  path: CONFIRM_NFT_UNWRAP,
   external: false,
   navRoute: false
 }];

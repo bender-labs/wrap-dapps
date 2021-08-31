@@ -27,7 +27,7 @@ export class EthereumNftWrapApi {
       return await this.erc721Contract.estimateGas.approve(this.benderContractAddress(), tokenId, {
         gasLimit: 1000000
       });
-    } catch(err) {
+    } catch (err) {
       return ethers.BigNumber.from('100000');
     }
   }
@@ -54,7 +54,7 @@ export class EthereumNftWrapApi {
           gasLimit: '1000000'
         }
       );
-    } catch(err) {
+    } catch (err) {
       return ethers.BigNumber.from('300000');
     }
   }

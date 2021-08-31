@@ -71,6 +71,7 @@ export interface IndexerTokenPayload {
   confirmationsThreshold: number;
   amount?: string;
   token_id?: string;
+  tokenId?: string;
   status: 'asked' | 'finalized' | 'reverted';
   type: string;
 }

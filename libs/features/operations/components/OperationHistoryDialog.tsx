@@ -16,7 +16,7 @@ import {
 import {
   Operation,
   OperationStatusType,
-  UnwrapErc20Operation,
+  UnwrapErc20Operation, UnwrapERC721Operation,
   WrapErc20Operation,
   WrapERC721Operation
 } from '../state';
@@ -270,8 +270,49 @@ export default function OperationHistoryDialog() {
     return renderItem(operation, primaryText(), secondaryText(), isLast);
   };
 
-  const renderNftBurn = () => {
+  const renderNftBurn = (operation: UnwrapERC721Operation, isLast: boolean) => {
+    const primaryText = () => {
+      return `release ${operation.tokenId} to ${ellipsizeAddress(operation.destination)}`;
+    };
 
+    const secondaryText = () => {
+      switch (operation.status.type) {
+        case OperationStatusType.NEW:
+          return (
+            <StyledTypography>
+              Waiting for operation to be included
+            </StyledTypography>
+          );
+        case OperationStatusType.WAITING_FOR_CONFIRMATIONS:
+          return (
+            <StyledTypography>
+              Pending... {operation.status.confirmations} /{' '}
+              {operation.status.confirmationsThreshold} confirmations
+            </StyledTypography>
+          );
+        case OperationStatusType.WAITING_FOR_SIGNATURES:
+          return (
+            <React.Fragment>
+              <StyledTypography>
+                Waiting for signatures
+              </StyledTypography>
+              <StyledTypography>
+                {`(${
+                  Object.keys(operation.status.signatures).length
+                }/${unwrapSignatureThreshold} signatures received)`}
+              </StyledTypography>
+            </React.Fragment>
+          );
+        case OperationStatusType.READY:
+          return (
+            <StyledTypography>
+              Ready to release
+            </StyledTypography>
+          );
+      }
+    };
+
+    return renderItem(operation, primaryText(), secondaryText(), isLast);
   };
 
   return (
@@ -311,7 +352,7 @@ export default function OperationHistoryDialog() {
               NFT Minting operations
             </StyledListSubheader>
             {operations.nftMints.map((o, i) =>
-              renderNftMint(o, i === operations.mints.length - 1)
+              renderNftMint(o, i === operations.nftMints.length - 1)
             )}
             {operations.nftMints.length === 0 && (
               <StyledListItem>
@@ -332,10 +373,10 @@ export default function OperationHistoryDialog() {
             <StyledListSubheader>
               NFT Release operations
             </StyledListSubheader>
-            {operations.burns.map((o, i) =>
-              renderNftBurn(o, i === operations.burns.length - 1)
+            {operations.nftBurns.map((o, i) =>
+              renderNftBurn(o, i === operations.nftBurns.length - 1)
             )}
-            {operations.burns.length === 0 && (
+            {operations.nftBurns.length === 0 && (
               <StyledListItem>
                 <ListItemText>No pending release operation</ListItemText>
               </StyledListItem>

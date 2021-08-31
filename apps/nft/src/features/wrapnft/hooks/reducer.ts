@@ -32,7 +32,8 @@ export enum NftWrapStatus {
   WAITING_FOR_ALLOWANCE_APPROVAL,
   READY_TO_WRAP,
   AGREEMENT_CONFIRMED,
-  WAITING_FOR_WRAP
+  WAITING_FOR_WRAP,
+  WRAP_DONE
 }
 
 export function initialState(custodianContractAddress: string): NftWrapState {
@@ -101,11 +102,11 @@ export function reducer(state: NftWrapState, action: Action): NftWrapState {
   if (isType(action, nftWrapDone)) {
     return {
       ...state,
-      status: NftWrapStatus.READY_TO_WRAP
+      status: NftWrapStatus.WRAP_DONE
     };
   }
   if (isType(action, toggleNftAgreement)) {
-    return action.payload ? agree(state) : { ...state, status: NftWrapStatus.READY_TO_CONFIRM };
+    return action.payload ? agree(state) : { ...state, status: NftWrapStatus.NOT_READY };
   }
   if (isType(action, walletChange)) {
     const { ethAccount, tezosAccount, ethLibrary } = action.payload;

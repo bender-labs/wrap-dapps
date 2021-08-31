@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Operation, OperationType } from '../state';
 import { ReceiptState, ReceiptStatus, reducer, sideEffectReducer } from './reducer';
 import { Action, connectStore, createStore } from '../../types';
-import { fetchReceipt, mint, mintNFT, release, reload, update } from './actions';
+import { fetchReceipt, mint, mintNFT, release, releaseNFT, reload, update } from './actions';
 import { atomFamily, useRecoilCallback, useRecoilState } from 'recoil';
 
 const receiptByHash = atomFamily<ReceiptState, string>({
@@ -142,6 +142,11 @@ export const useOperation = (
       ? effectsDispatch(release({ custodianContractAddress, ethLibrary: ethereumLibrary()! }))
       : Promise.reject('Not connected');
 
+  const unlockErc721 = () => {
+    if (!tezosLibrary()) return;
+    effectsDispatch(releaseNFT({ custodianContractAddress, ethLibrary: ethereumLibrary()! }));
+  };
+
   return {
     state,
     fungibleTokens,
@@ -151,6 +156,7 @@ export const useOperation = (
     },
     mintErc20,
     mintErc721,
-    unlockErc20
+    unlockErc20,
+    unlockErc721
   };
 };

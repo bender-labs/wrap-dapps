@@ -189,17 +189,6 @@ const abi = [{
   'stateMutability': 'nonpayable',
   'type': 'function'
 }, {
-  'constant': false,
-  'inputs': [{ 'name': 'from', 'type': 'address' }, { 'name': 'to', 'type': 'address' }, {
-    'name': 'tokenId',
-    'type': 'uint256'
-  }, { 'name': '_data', 'type': 'bytes' }],
-  'name': 'safeTransferFrom',
-  'outputs': [],
-  'payable': false,
-  'stateMutability': 'nonpayable',
-  'type': 'function'
-}, {
   'constant': true,
   'inputs': [{ 'name': 'tokenId', 'type': 'uint256' }],
   'name': 'tokenURI',

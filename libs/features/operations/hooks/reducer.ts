@@ -1,12 +1,16 @@
 import {
   markAsDone,
-  markAsNew, nftwrapsToOperations,
+  markAsNew,
+  nftUnwrapToOperations,
+  nftwrapsToOperations,
   Operation,
   OperationStatusType,
   OperationType,
   UnwrapErc20Operation,
+  UnwrapERC721Operation,
   unwrapToOperations,
-  WrapErc20Operation, WrapERC721Operation,
+  WrapErc20Operation,
+  WrapERC721Operation,
   wrapsToOperations
 } from '../state';
 import { Action, Dispatch, Store } from '../../types';
@@ -14,11 +18,15 @@ import { isType } from 'typescript-fsa';
 import {
   beginApply,
   fetchReceipt,
-  mint, mintNFT,
+  mint,
+  mintNFT,
   receiptFetched,
   release,
+  releaseNFT,
   reload,
-  update, updateNftWrap,
+  update,
+  updateNftUnwrap,
+  updateNftWrap,
   updateUnwrap,
   updateWrap
 } from './actions';
@@ -26,6 +34,7 @@ import { IndexerApi } from '@wrap-dapps/api';
 import { ethers } from 'ethers';
 import CUSTODIAN_ABI from '../../ethereum/custodianContractAbi';
 import ERC20_ABI from '../../ethereum/erc20Abi';
+import ERC721_ABI from '../../ethereum/erc721Abi';
 
 export enum ReceiptStatus {
   UNINITIALIZED,
@@ -91,6 +100,17 @@ export const reducer = (state: ReceiptState, action: Action): ReceiptState => {
       };
     }
   }
+  if (isType(action, updateNftUnwrap)) {
+    const { fees, signaturesThreshold, data } = action.payload;
+    const all = nftUnwrapToOperations(fees, signaturesThreshold, data);
+    if (all.length > 0) {
+      return {
+        ...state,
+        status: toReceiptStatus(all[0].status.type),
+        operation: all[0]
+      };
+    }
+  }
   if (isType(action, update)) {
     return {
       ...state,
@@ -130,9 +150,11 @@ export const sideEffectReducer = (api: IndexerApi) => (
   action: Action
 ) => async (next: Dispatch) => {
   if (isType(action, fetchReceipt)) {
-    const { hash, ethLibrary } = action.payload;
-    const receipt = await ethLibrary?.getTransactionReceipt(hash);
-    dispatch(receiptFetched({ receipt }));
+    const { hash, ethLibrary, type } = action.payload;
+    if (type === OperationType.WRAP || type === OperationType.WRAP_NFT) {
+      const receipt = await ethLibrary?.getTransactionReceipt(hash);
+      dispatch(receiptFetched({ receipt }));
+    }
     return;
   }
   if (isType(action, reload)) {
@@ -145,7 +167,7 @@ export const sideEffectReducer = (api: IndexerApi) => (
       }
       case OperationType.UNWRAP_NFT: {
         const payload = await api.fetchUnwrapsByHash(hash, 'ERC721');
-        dispatch(updateUnwrap({ data: payload, signaturesThreshold, fees }));
+        dispatch(updateNftUnwrap({ data: payload, signaturesThreshold, fees }));
         break;
       }
       case OperationType.WRAP: {
@@ -224,7 +246,7 @@ export const sideEffectReducer = (api: IndexerApi) => (
         minterContractAddress,
         mintSignatures
       )
-      .send({amount: op.fees.toNumber(), mutez: true});
+      .send({ amount: op.fees.toNumber(), mutez: true });
     await result.receipt();
     dispatch(update({ operation: markAsDone(op) }));
     return;
@@ -264,5 +286,42 @@ export const sideEffectReducer = (api: IndexerApi) => (
     dispatch(update({ operation: markAsDone(op) }));
     return;
   }
+
+  if (isType(action, releaseNFT)) {
+    const { ethLibrary, custodianContractAddress } = action.payload;
+    const op = getState().operation as UnwrapERC721Operation;
+    if (!op) {
+      return Promise.reject('Not loaded');
+    }
+    if (op.status.type !== OperationStatusType.READY) {
+      return Promise.reject('Operation is not ready');
+    }
+    dispatch(beginApply());
+    const custodianContract = new ethers.Contract(
+      custodianContractAddress,
+      new ethers.utils.Interface(CUSTODIAN_ABI),
+      ethLibrary?.getSigner()
+    );
+    const erc721Interface = new ethers.utils.Interface(ERC721_ABI);
+    const data = erc721Interface.encodeFunctionData('safeTransferFrom', [
+      custodianContractAddress,
+      op.destination,
+      op.tokenId
+    ]);
+    const result = await custodianContract.execTransaction(
+      op.token,
+      0,
+      data,
+      op.status.id,
+      buildFullSignature(op.status.signatures),
+      {
+        gasLimit: 350000
+      }
+    );
+    await result.wait();
+    dispatch(update({ operation: markAsDone(op) }));
+    return;
+  }
+
   next(action);
 };

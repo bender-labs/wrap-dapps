@@ -6,3 +6,4 @@ export * from './unwrap';
 export * from './operations';
 export * from './wallet';
 export * from './fees/fees';
+export * from './tezos';

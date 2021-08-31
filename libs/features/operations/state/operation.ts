@@ -170,7 +170,7 @@ export const nftUnwrapToOperations = (
       destination: w.destination,
       token: w.token,
       fees: unwrapERC721Fees(fees),
-      tokenId: w.token_id!
+      tokenId: w.tokenId!
     };
   });
 };
