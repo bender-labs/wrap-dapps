@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { CardContent, Container } from '@material-ui/core';
+import { CardContent, Container, Typography } from '@material-ui/core';
 import { SupportedBlockchain, useEthereumWalletContext, useTezosWalletContext } from '@wrap-dapps/features';
 import { HalfCard, TokenSelection, useNonFungibleTokens } from '@wrap-dapps/components';
 import { useTezosNftQuery } from '../features/nft/hook/useTezosNftQuery';
 import Gallery, { GalleryDirection } from '../features/nft/components/Gallery';
-import Stack from '@material-ui/core/Stack';
 import Pagination from '@material-ui/core/Pagination';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { NftSwapDirectionTab } from '../features/nft/components/NftSwapDirectionTab';
 
 export const NftUnwrapSelectorScreen = () => {
   const { tezosAccount } = useTezosWalletContext();
@@ -30,8 +31,10 @@ export const NftUnwrapSelectorScreen = () => {
   return (
     <>
       <Container>
+        <NftSwapDirectionTab />
         <HalfCard>
-          <CardContent>
+          <CardContent sx={{ padding: 4 }}>
+            <Typography>Choose an NFT Collection :</Typography>
             <TokenSelection
               token={selectedNftCollection.ethereumSymbol}
               disabled={false}
@@ -44,19 +47,25 @@ export const NftUnwrapSelectorScreen = () => {
           </CardContent>
         </HalfCard>
       </Container>
-      <Container maxWidth={'lg'} sx={{ padding: 3 }}>
-        <Gallery nftQuery={nftQuery} direction={GalleryDirection.UNWRAP} linkLabel='Send to Ethereum' />
-      </Container>
-      <Container>
-        <Stack spacing={2}>
+      {nftQuery.loading ?
+        <Container maxWidth='lg' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <CircularProgress color='primary' />
+        </Container>
+        :
+        <Gallery nftQuery={nftQuery} direction={GalleryDirection.WRAP} linkLabel='Send to Tezos' />
+      }
+      {!nftQuery.loading && nftQuery.totalTokens > pagination.limitPerPage ?
+        <Container maxWidth='lg' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Pagination
             color={'primary'}
             page={page}
             count={Math.ceil(nftQuery.totalTokens / 4)}
             onChange={changePage}
           />
-        </Stack>
-      </Container>
+        </Container>
+        :
+        <></>
+      }
     </>
   );
 };

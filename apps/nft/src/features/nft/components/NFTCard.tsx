@@ -14,7 +14,7 @@ export const NFTCard = ({ token, link, linkLabel }: NFTCardProps) => {
 
   return (
     <Grid item lg={3} key={id}>
-      <Box sx={{ maxWidth: 250 }}>
+      <Box sx={{ margin: 1 }}>
         <Card>
           <CardContent>
             <CardMedia sx={{

@@ -28,7 +28,8 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          padding: 2
+          padding: 20,
+          border: 'none'
         }
       },
       defaultProps: {
@@ -41,7 +42,8 @@ const theme = createTheme({
     MuiToolbar: {
       styleOverrides: {
         root: {
-          marginLeft: 'auto'
+          color: '#FFFFFF',
+          minHeight: 110,
         }
       }
     },
@@ -61,7 +63,6 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: '#e5e5e5'
-
         }
       }
     },
@@ -86,7 +87,6 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           minHeight: 180
-
         }
       },
       defaultProps: {

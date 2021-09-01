@@ -4,24 +4,23 @@ import { Link, styled, Table, TableBody, TableCell, TableContainer, TableHead, T
 import { ellipsizeAddress, ERC721Operation, OperationType } from '@wrap-dapps/features';
 import { NonFungibleToken } from '@wrap-dapps/api';
 
-const StyledTableCell = styled(TableCell)(() => ({
-  head: {
-    backgroundColor: '#e5e5e5',
-    color: 'black',
-    padding: '0px',
-    fontWeight: 'bold'
+const StyledTableCellBody = styled(TableCell)(() => ({
+  fontSize: 14,
+  padding: '20px',
+  backgroundColor: 'white',
+  '&:first-child': {
+    borderRadius: '20px 0 0 20px'
   },
-  body: {
-    fontSize: 14,
-    padding: '20px',
-    backgroundColor: 'white',
-    '&:first-child': {
-      borderRadius: '20px 0 0 20px'
-    },
-    '&:last-child': {
-      borderRadius: '0 20px 20px 0'
-    }
+  '&:last-child': {
+    borderRadius: '0 20px 20px 0'
   }
+}));
+
+const StyledTableCellHead = styled(TableCell)(() => ({
+  backgroundColor: '#e5e5e5',
+  color: 'black',
+  padding: '0px',
+  fontWeight: 'bold'
 }));
 
 const StyledTableRow = styled(TableRow)(() => ({
@@ -52,16 +51,16 @@ const renderRow = (
     case OperationType.WRAP_NFT:
       return (
         <StyledTableRow key={op.hash}>
-          <StyledTableCell align='center'>
+          <StyledTableCellBody align='center'>
             {tokensByEthAddress[op.token].ethereumName}
-          </StyledTableCell>
-          <StyledTableCell align='center'>
+          </StyledTableCellBody>
+          <StyledTableCellBody align='center'>
             {op.tokenId}
-          </StyledTableCell>
-          <StyledTableCell align='center'>{op.source}</StyledTableCell>
-          <StyledTableCell align='center'>{op.destination}</StyledTableCell>
-          <StyledTableCell align='center'>{op.status.type}</StyledTableCell>
-          <StyledTableCell align='center'>
+          </StyledTableCellBody>
+          <StyledTableCellBody align='center'>{op.source}</StyledTableCellBody>
+          <StyledTableCellBody align='center'>{op.destination}</StyledTableCellBody>
+          <StyledTableCellBody align='center'>{op.status.type}</StyledTableCellBody>
+          <StyledTableCellBody align='center'>
             <Link
               href={`https://etherscan.io/tx/${op.hash}`}
               rel='noreferrer'
@@ -70,22 +69,22 @@ const renderRow = (
             >
               {ellipsizeAddress(op.hash)}
             </Link>
-          </StyledTableCell>
+          </StyledTableCellBody>
         </StyledTableRow>
       );
     case OperationType.UNWRAP_NFT:
       return (
         <StyledTableRow key={op.hash}>
-          <StyledTableCell align='center'>
+          <StyledTableCellBody align='center'>
             {tokensByEthAddress[op.token].ethereumName}
-          </StyledTableCell>
-          <StyledTableCell align='center'>
+          </StyledTableCellBody>
+          <StyledTableCellBody align='center'>
             {op.tokenId}
-          </StyledTableCell>
-          <StyledTableCell align='center'>{op.source}</StyledTableCell>
-          <StyledTableCell align='center'>{op.destination}</StyledTableCell>
-          <StyledTableCell align='center'>{op.status.type}</StyledTableCell>
-          <StyledTableCell align='center'>
+          </StyledTableCellBody>
+          <StyledTableCellBody align='center'>{op.source}</StyledTableCellBody>
+          <StyledTableCellBody align='center'>{op.destination}</StyledTableCellBody>
+          <StyledTableCellBody align='center'>{op.status.type}</StyledTableCellBody>
+          <StyledTableCellBody align='center'>
             <Link
               href={`https://tzkt.io/${op.hash}`}
               rel='noreferrer'
@@ -94,7 +93,7 @@ const renderRow = (
             >
               {ellipsizeAddress(op.hash)}
             </Link>
-          </StyledTableCell>
+          </StyledTableCellBody>
         </StyledTableRow>
       );
   }
@@ -127,12 +126,12 @@ export default function HistoryOperations({ operations, nonFungibleTokens }: Ope
           <StyledTable aria-label='customized table'>
             <TableHead>
               <TableRow>
-                <StyledTableCell align='center'>Collection</StyledTableCell>
-                <StyledTableCell align='center'>Token</StyledTableCell>
-                <StyledTableCell align='center'>Source</StyledTableCell>
-                <StyledTableCell align='center'>Destination</StyledTableCell>
-                <StyledTableCell align='center'>Status</StyledTableCell>
-                <StyledTableCell align='center'>Transaction Hash</StyledTableCell>
+                <StyledTableCellHead align='center'>Collection</StyledTableCellHead>
+                <StyledTableCellHead align='center'>Token</StyledTableCellHead>
+                <StyledTableCellHead align='center'>Source</StyledTableCellHead>
+                <StyledTableCellHead align='center'>Destination</StyledTableCellHead>
+                <StyledTableCellHead align='center'>Status</StyledTableCellHead>
+                <StyledTableCellHead align='center'>Transaction Hash</StyledTableCellHead>
               </TableRow>
             </TableHead>
             <TableBody>

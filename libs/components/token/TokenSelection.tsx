@@ -1,4 +1,4 @@
-import { FormControl, FormHelperText, MenuItem, Select } from '@material-ui/core';
+import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@material-ui/core';
 import React from 'react';
 import { SupportedBlockchain } from '@wrap-dapps/features/wallet/blockchain';
 import EthereumTokenIcon from './ethereum/EthereumTokenIcon';
@@ -54,7 +54,7 @@ export function TokenSelection({
   };
 
   return (
-    <FormControl fullWidth variant={'filled'}>
+    <FormControl fullWidth variant={'standard'}>
       <Select
         fullWidth
         disabled={disabled}
@@ -65,6 +65,7 @@ export function TokenSelection({
           name: 'ethereumSymbol',
           id: 'token-selector'
         }}
+        label='choose'
       >
         {tokenList.map(([key, token]) => (
           <MenuItem value={key} key={key}>
@@ -73,7 +74,7 @@ export function TokenSelection({
           </MenuItem>
         ))}
       </Select>
-      <FormHelperText>Only supported token are listed</FormHelperText>
+      <FormHelperText sx={{paddingTop: 2}}>Only supported token are listed</FormHelperText>
     </FormControl>
   );
 }

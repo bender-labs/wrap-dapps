@@ -34,25 +34,22 @@ export const paths = {
   HISTORY_UNWRAP
 };
 
-export const historyPaths = [HISTORY_WRAP, HISTORY_UNWRAP];
-
 export const nftWrapOperationPage = (op: Operation) => `${wrapNftOperationPath}/${op.hash}`;
 export const nftUnwrapOperationPage = (op: Operation) => `${unwrapNftOperationPath}/${op.hash}`;
 export const confirmNftWrap = (nftInstance: NftInstance) => `${confirmWrapNftPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
 export const confirmNftUnwrap = (nftInstance: NftInstance) => `${confirmUnwrapNftPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
 
 export const routes: AppRoute[] = [{
-  name: 'Ethereum NFTs',
+  name: 'NFT Wrap',
   component: NftWrapSelectorScreen,
   path: ETHEREUM_DASHBOARD,
   external: false,
   navRoute: true
 }, {
-  name: 'Tezos NFTs',
   component: NftUnwrapSelectorScreen,
   path: TEZOS_DASHBOARD,
   external: false,
-  navRoute: true
+  navRoute: false
 }, {
   component: NftWrapOperationScreen,
   path: NFT_WRAP_OPERATION,

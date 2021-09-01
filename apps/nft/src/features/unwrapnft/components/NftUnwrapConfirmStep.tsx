@@ -7,7 +7,7 @@ import {
   PaperNav,
   PaperTitle
 } from '@wrap-dapps/components';
-import { CardMedia, Checkbox, IconButton, styled, Typography } from '@material-ui/core';
+import { CardMedia, Checkbox, Container, IconButton, styled, Typography } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import React from 'react';
 import BigNumber from 'bignumber.js';
@@ -69,7 +69,7 @@ export function NftUnwrapConfirmStep({
   }, []);
 
   return (
-    <>
+    <Container maxWidth="xs">
       <PaperHeader>
         <PaperNav>
           <IconButton onClick={onPrevious}>
@@ -122,6 +122,6 @@ export function NftUnwrapConfirmStep({
         </Typography>
       </PaperContent>
       <NftUnwrapActions onUnwrap={onWrap} status={status}/>
-    </>
+    </Container>
   );
 }

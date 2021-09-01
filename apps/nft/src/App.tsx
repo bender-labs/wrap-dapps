@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   AppRoute,
   EthereumStateType,
-  HalfCard,
   MultiConnect,
   TezosStateType,
   useEthereumWalletContext,
@@ -10,7 +9,7 @@ import {
 } from '@wrap-dapps/components';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { routes } from './pages';
-import { CardContent, Container } from '@material-ui/core';
+import { Card, CardContent, Container } from '@material-ui/core';
 
 const App = () => {
   const { state: tzState } = useTezosWalletContext();
@@ -39,12 +38,12 @@ const App = () => {
     );
   } else {
     return (
-      <Container sx={{ paddingBottom: 3 }}>
-        <HalfCard>
+      <Container sx={{ marginTop: 20 }}>
+        <Card>
           <CardContent>
             <MultiConnect />
           </CardContent>
-        </HalfCard>
+        </Card>
       </Container>
     );
   }

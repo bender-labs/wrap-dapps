@@ -9,20 +9,6 @@ import LaunchIcon from '@material-ui/icons/Launch';
 import { AppRoute } from '../routes';
 import OperationHistoryDialog from '@wrap-dapps/features/operations/components/OperationHistoryDialog';
 
-const StyledAppbar = styled(AppBar)(() => (
-  {
-    background: 'transparent',
-    boxShadow: 'none'
-  }
-));
-
-const StyledToolbar = styled(Toolbar)(() => (
-  {
-    color: '#FFFFFF',
-    minHeight: 110
-  }
-));
-
 const StyledTypography = styled(Typography)(({ theme }) => (
     {
       flexGrow: 1,
@@ -42,7 +28,6 @@ const StyledTypography = styled(Typography)(({ theme }) => (
         '&:hover': {
           textDecoration: 'none',
           border: '1px solid #FFD000',
-
           '& > svg': {
             display: 'inline'
           }
@@ -54,27 +39,18 @@ const StyledTypography = styled(Typography)(({ theme }) => (
 
 const Logo = styled('img')(({ theme }) => ({
   width: 50,
-  marginLeft: theme.spacing(4)
+  marginLeft: theme.spacing(4),
+  marginRight: theme.spacing(4)
 }));
 
 const StyledLaunchIcon = styled(LaunchIcon)(() => ({
   fontSize: '0.8rem'
 }));
 
-const PendingButton = styled(Box)(({ theme }) => ({
-  marginRight: theme.spacing(1)
-}));
-
-const Wallets = styled(Box)(({ theme }) => ({
-  '& > *': {
-    marginRight: theme.spacing(3)
-  }
-}));
-
 const MenuButton = styled(IconButton)(({ theme }) => (
   {
     marginRight: theme.spacing(1),
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'none'
     }
   }
@@ -88,7 +64,7 @@ type Props = {
 };
 
 export default (props: Props) => {
-  const { routes , showEthereumWallet, showTezosWallet, showOperationHistory} = props;
+  const { routes, showEthereumWallet, showTezosWallet, showOperationHistory } = props;
   const [mobileOpen, setMobileOpen] = React.useState(true);
 
   const handleDrawerToggle = () => {
@@ -98,9 +74,9 @@ export default (props: Props) => {
   const buildNavLinks = (routes: AppRoute[]) => {
     return routes.filter(route => route.navRoute).map((route) => (
       <Grid item key={route.path}>
-        <StyledTypography variant='h6' component='h1'>
-          <Link component={RouterLink} color='inherit' to={route.path}>
-            {route.name} {route.external ? <StyledLaunchIcon/> : null}
+        <StyledTypography variant='h6'>
+          <Link component={RouterLink} color='inherit' to={route.path} underline='none'>
+            {route.name} {route.external ? <StyledLaunchIcon /> : null}
           </Link>
         </StyledTypography>
       </Grid>
@@ -109,41 +85,38 @@ export default (props: Props) => {
 
   return (
     <>
-      <StyledAppbar position='static'>
-        <StyledToolbar>
-          <Grid container={true} direction='row' justifyItems='flex-start' alignItems='center' sx={{ flex: 2 }}>
+      <AppBar position='static'>
+        <Toolbar>
+          <Grid container direction='row' alignItems='center'>
             <Grid item>
               <Logo src={logo} alt='Logo' />
             </Grid>
-            <Box sx={{ display: { xs: 'none', sm: 'inherit' } }}>
+            <Box sx={{ display: { xs: 'none', md: 'inherit' } }}>
               {buildNavLinks(routes)}
             </Box>
           </Grid>
-          <Grid container={true} direction='row' justifyItems='flex-end' alignItems='center' sx={{ flex: 2 }}>
-            <Box sx={{ display: { xs: 'none', sm: 'inherit' } }}>
-              {showOperationHistory &&
-              <Grid item>
-                <PendingButton>
-                  <OperationHistoryDialog/>
-                </PendingButton>
-              </Grid>}
-              {showTezosWallet && <Grid item>
-                <Wallets>
-                  <TezosConnectionButton />
-                </Wallets>
-              </Grid>}
-              {showEthereumWallet && <Grid item>
-                <Wallets>
-                  <EthereumConnectionButton />
-                </Wallets>
-              </Grid>}
-            </Box>
+          <Grid container direction='row' justifyContent='flex-end' alignItems='center'
+                sx={{ display: { xs: 'none', md: 'inherit' } }}>
+            {showOperationHistory &&
+            <Grid item spacing={1}>
+              <OperationHistoryDialog />
+            </Grid>}
+            {showTezosWallet && <Grid item>
+              <Box sx={{margin: 1}}>
+                <TezosConnectionButton />
+              </Box>
+            </Grid>}
+            {showEthereumWallet && <Grid item>
+              <Box sx={{margin: 1}}>
+                <EthereumConnectionButton />
+              </Box>
+            </Grid>}
           </Grid>
           <MenuButton color='inherit' aria-label='open drawer' edge='start' onClick={handleDrawerToggle}>
             <MenuIcon />
           </MenuButton>
-        </StyledToolbar>
-      </StyledAppbar>
+        </Toolbar>
+      </AppBar>
       <DrawerComp open={mobileOpen} onClose={handleDrawerToggle} routes={routes} />
     </>
   );
