@@ -6,6 +6,8 @@ import { NftWrapConfirmScreen } from './NftWrapConfirmScreen';
 import NftWrapOperationScreen from './NftWrapOperationScreen';
 import { NftUnwrapConfirmScreen } from './NftUnwrapConfirmScreen';
 import NftUnwrapOperationScreen from './NftUnwrapOperationScreen';
+import HistoryWrapOperationsScreen from './HistoryWrapOperationsScreen';
+import HistoryUnwrapOperationsScreen from './HistoryUnwrapOperationsScreen';
 
 const confirmWrapNftPath = '/confirm-wrap-nft';
 const confirmUnwrapNftPath = '/confirm-unwrap-nft';
@@ -20,12 +22,19 @@ const NFT_UNWRAP_OPERATION = unwrapNftOperationPath + '/:transactionHash';
 const ETHEREUM_DASHBOARD = '/ethereum';
 const TEZOS_DASHBOARD = '/tezos';
 
+const HISTORY_WRAP = '/history/wrap';
+const HISTORY_UNWRAP = '/history/unwrap';
+
 export const paths = {
   CONFIRM_NFT_WRAP,
   NFT_WRAP_OPERATION,
   ETHEREUM_DASHBOARD,
-  TEZOS_DASHBOARD
+  TEZOS_DASHBOARD,
+  HISTORY_WRAP,
+  HISTORY_UNWRAP
 };
+
+export const historyPaths = [HISTORY_WRAP, HISTORY_UNWRAP];
 
 export const nftWrapOperationPage = (op: Operation) => `${wrapNftOperationPath}/${op.hash}`;
 export const nftUnwrapOperationPage = (op: Operation) => `${unwrapNftOperationPath}/${op.hash}`;
@@ -45,27 +54,34 @@ export const routes: AppRoute[] = [{
   external: false,
   navRoute: true
 }, {
-  name: 'Nft wrap operation page',
   component: NftWrapOperationScreen,
   path: NFT_WRAP_OPERATION,
   external: false,
   navRoute: false
 }, {
-  name: 'Nft unwrap operation page',
   component: NftUnwrapOperationScreen,
   path: NFT_UNWRAP_OPERATION,
   external: false,
   navRoute: false
-},{
-  name: 'Confirm nft wrap',
+}, {
   component: NftWrapConfirmScreen,
   path: CONFIRM_NFT_WRAP,
   external: false,
   navRoute: false
 }, {
-  name: 'Confirm nft unwrap',
   component: NftUnwrapConfirmScreen,
   path: CONFIRM_NFT_UNWRAP,
+  external: false,
+  navRoute: false
+}, {
+  name: 'History',
+  component: HistoryWrapOperationsScreen,
+  path: HISTORY_WRAP,
+  external: false,
+  navRoute: true
+}, {
+  component: HistoryUnwrapOperationsScreen,
+  path: HISTORY_UNWRAP,
   external: false,
   navRoute: false
 }];

@@ -1,7 +1,7 @@
 import React from 'react';
 
 export type AppRoute = {
-  name: string;
+  name?: string;
   component: React.ComponentType<any>;
   path: string;
   external: boolean;
