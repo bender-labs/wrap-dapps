@@ -24,12 +24,15 @@ const itemLabel = (
 const itemIcon = (
   blockchainTarget: SupportedBlockchain,
   tokenMetadata: Token
-) =>
-  blockchainTarget === SupportedBlockchain.Ethereum ? (
-    <EthereumTokenIcon tokenMetadata={tokenMetadata} />
-  ) : (
-    <TezosTokenIcon tokenMetadata={tokenMetadata} />
-  );
+) => {
+  if (tokenMetadata.type === 'ERC20') {
+    return blockchainTarget === SupportedBlockchain.Ethereum ? (
+      <EthereumTokenIcon tokenMetadata={tokenMetadata} />
+    ) : (
+      <TezosTokenIcon tokenMetadata={tokenMetadata} />
+    );
+  }
+}
 
 function orderTokens(tokens: Record<string, Token>): [string, Token][] {
   return Object.entries(tokens).sort(([key1, metadata1], [, metadata2]) => {

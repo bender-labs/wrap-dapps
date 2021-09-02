@@ -16,7 +16,8 @@ import {
 import {
   Operation,
   OperationStatusType,
-  UnwrapErc20Operation, UnwrapERC721Operation,
+  UnwrapErc20Operation,
+  UnwrapERC721Operation,
   WrapErc20Operation,
   WrapERC721Operation
 } from '../state';
@@ -32,15 +33,6 @@ const StyledListItem = styled(ListItem)<ListItemProps>(() => ({
     backgroundColor: '#4d4d4d'
   }
 }));
-
-// const StyledPaperContent = styled(PaperContent)(() => ({
-//   textAlign: 'center',
-//   backgroundColor: '#191919',
-//   color: 'white',
-//   '&:hover': {
-//     backgroundColor: '#4d4d4d'
-//   }
-// }));
 
 const StyledDivider = styled(Divider)(() => ({
   backgroundColor: '#444444'
@@ -124,7 +116,7 @@ export default function OperationHistoryDialog() {
         }}
         >
           <ListItemText
-            primaryTypographyProps={{ variant: 'body2' }}
+            disableTypography={true}
             primary={primary}
             secondary={secondary}
           />
@@ -150,13 +142,13 @@ export default function OperationHistoryDialog() {
       switch (operation.status.type) {
         case OperationStatusType.NEW:
           return (
-            <StyledTypography component='p' variant={'body2'}>
+            <StyledTypography variant={'body2'}>
               Waiting for operation to be included
             </StyledTypography>
           );
         case OperationStatusType.WAITING_FOR_CONFIRMATIONS:
           return (
-            <StyledTypography>
+            <StyledTypography variant={'body2'}>
               Pending... {operation.status.confirmations} /{' '}
               {operation.status.confirmationsThreshold} confirmations
             </StyledTypography>
@@ -164,10 +156,10 @@ export default function OperationHistoryDialog() {
         case OperationStatusType.WAITING_FOR_SIGNATURES:
           return (
             <React.Fragment>
-              <StyledTypography>
+              <StyledTypography variant={'body2'}>
                 Waiting for signatures
               </StyledTypography>
-              <StyledTypography>
+              <StyledTypography variant={'body2'}>
                 {`(${
                   Object.keys(operation.status.signatures).length
                 }/${wrapSignatureThreshold} signatures received)`}
@@ -176,7 +168,7 @@ export default function OperationHistoryDialog() {
           );
         case OperationStatusType.READY:
           return (
-            <StyledTypography>
+            <StyledTypography variant={'body2'}>
               Ready to mint
             </StyledTypography>
           );
@@ -188,7 +180,7 @@ export default function OperationHistoryDialog() {
 
   const renderNftMint = (operation: WrapERC721Operation, isLast: boolean) => {
     const primaryText = () => {
-      const {ethereumName} = nftByEthAddress[
+      const { ethereumName } = nftByEthAddress[
         operation.token.toLowerCase()
         ];
       return `mint ${ethereumName} - ${operation.tokenId} to ${ellipsizeAddress(operation.destination)}`;
@@ -198,13 +190,13 @@ export default function OperationHistoryDialog() {
       switch (operation.status.type) {
         case OperationStatusType.NEW:
           return (
-            <StyledTypography component='p' variant={'body2'}>
+            <StyledTypography variant={'body2'}>
               Waiting for operation to be included
             </StyledTypography>
           );
         case OperationStatusType.WAITING_FOR_CONFIRMATIONS:
           return (
-            <StyledTypography>
+            <StyledTypography variant={'body2'}>
               Pending... {operation.status.confirmations} /{' '}
               {operation.status.confirmationsThreshold} confirmations
             </StyledTypography>
@@ -212,10 +204,10 @@ export default function OperationHistoryDialog() {
         case OperationStatusType.WAITING_FOR_SIGNATURES:
           return (
             <React.Fragment>
-              <StyledTypography>
+              <StyledTypography variant={'body2'}>
                 Waiting for signatures
               </StyledTypography>
-              <StyledTypography>
+              <StyledTypography variant={'body2'}>
                 {`(${
                   Object.keys(operation.status.signatures).length
                 }/${wrapSignatureThreshold} signatures received)`}
@@ -224,7 +216,7 @@ export default function OperationHistoryDialog() {
           );
         case OperationStatusType.READY:
           return (
-            <StyledTypography>
+            <StyledTypography variant={'body2'}>
               Ready to mint
             </StyledTypography>
           );
@@ -250,13 +242,13 @@ export default function OperationHistoryDialog() {
       switch (operation.status.type) {
         case OperationStatusType.NEW:
           return (
-            <StyledTypography>
+            <StyledTypography variant={'body2'}>
               Waiting for operation to be included
             </StyledTypography>
           );
         case OperationStatusType.WAITING_FOR_CONFIRMATIONS:
           return (
-            <StyledTypography>
+            <StyledTypography variant={'body2'}>
               Pending... {operation.status.confirmations} /{' '}
               {operation.status.confirmationsThreshold} confirmations
             </StyledTypography>
@@ -264,10 +256,10 @@ export default function OperationHistoryDialog() {
         case OperationStatusType.WAITING_FOR_SIGNATURES:
           return (
             <React.Fragment>
-              <StyledTypography>
+              <StyledTypography variant={'body2'}>
                 Waiting for signatures
               </StyledTypography>
-              <StyledTypography>
+              <StyledTypography variant={'body2'}>
                 {`(${
                   Object.keys(operation.status.signatures).length
                 }/${unwrapSignatureThreshold} signatures received)`}
@@ -276,7 +268,7 @@ export default function OperationHistoryDialog() {
           );
         case OperationStatusType.READY:
           return (
-            <StyledTypography>
+            <StyledTypography variant={'body2'}>
               Ready to release
             </StyledTypography>
           );
@@ -288,7 +280,7 @@ export default function OperationHistoryDialog() {
 
   const renderNftBurn = (operation: UnwrapERC721Operation, isLast: boolean) => {
     const primaryText = () => {
-      const {ethereumName} = nftByEthAddress[
+      const { ethereumName } = nftByEthAddress[
         operation.token.toLowerCase()
         ];
       return `release ${ethereumName} - ${operation.tokenId} to ${ellipsizeAddress(operation.destination)}`;
@@ -298,13 +290,13 @@ export default function OperationHistoryDialog() {
       switch (operation.status.type) {
         case OperationStatusType.NEW:
           return (
-            <StyledTypography>
+            <StyledTypography variant={'body2'}>
               Waiting for operation to be included
             </StyledTypography>
           );
         case OperationStatusType.WAITING_FOR_CONFIRMATIONS:
           return (
-            <StyledTypography>
+            <StyledTypography variant={'body2'}>
               Pending... {operation.status.confirmations} /{' '}
               {operation.status.confirmationsThreshold} confirmations
             </StyledTypography>
@@ -312,10 +304,10 @@ export default function OperationHistoryDialog() {
         case OperationStatusType.WAITING_FOR_SIGNATURES:
           return (
             <React.Fragment>
-              <StyledTypography>
+              <StyledTypography variant={'body2'}>
                 Waiting for signatures
               </StyledTypography>
-              <StyledTypography>
+              <StyledTypography variant={'body2'}>
                 {`(${
                   Object.keys(operation.status.signatures).length
                 }/${unwrapSignatureThreshold} signatures received)`}
@@ -324,7 +316,7 @@ export default function OperationHistoryDialog() {
           );
         case OperationStatusType.READY:
           return (
-            <StyledTypography>
+            <StyledTypography variant={'body2'}>
               Ready to release
             </StyledTypography>
           );

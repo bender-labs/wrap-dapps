@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { Config, InitialConfig } from './types';
-import { IndexerApi, FungibleToken, NonFungibleToken, TokenType } from '@wrap-dapps/api';
-import { Box, Typography } from '@material-ui/core';
+import { FungibleToken, IndexerApi, NonFungibleToken, TokenType } from '@wrap-dapps/api';
+import { CircularProgress, Container } from '@material-ui/core';
 
 type ContextValue = undefined | Config;
 const ConfigContext = React.createContext<ContextValue>(undefined);
@@ -90,9 +90,10 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
   return (
     <>
       {!config ? (
-        <Box>
-          <Typography variant={'h1'}>Loading</Typography>
-        </Box>
+        <Container maxWidth='lg'
+                   sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 10 }}>
+          <CircularProgress color='primary' />
+        </Container>
       ) : (
         <ConfigContext.Provider value={config}>
           {children}

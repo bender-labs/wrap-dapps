@@ -69,7 +69,7 @@ export function NftWrapConfirmStep({
   }, []);
 
   return (
-    <Container maxWidth='xs' sx={{marginBottom: 10}}>
+    <Container maxWidth='xs' sx={{ marginBottom: 10 }}>
       <PaperHeader>
         <PaperNav>
           <IconButton onClick={onPrevious}>
@@ -80,12 +80,14 @@ export function NftWrapConfirmStep({
         <PaperActions />
       </PaperHeader>
       <PaperContent>
+        {nftInstance &&
         <CardMedia sx={{
           height: 0,
           backgroundImage: '100%',
           paddingTop: '100%'
-        }} image={nftInstance?.thumbnailUri} title={nftInstance?.name}
+        }} image={nftInstance.thumbnailUri} title={nftInstance.name}
         />
+        }
         <LabelAndValue label={'Collection'} value={nftInstance?.nftCollection.ethereumName} />
         <LabelAndValue label={'Name'} value={nftInstance?.name} />
         <LabelAndValue label={'From'} value={sendingAddress} />

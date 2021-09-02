@@ -39,16 +39,16 @@ export type NftUnwrapConfirmStepProps = {
 };
 
 export function NftUnwrapConfirmStep({
-                                     onPrevious,
-                                     fees,
-                                     status,
-                                     sendingAddress,
-                                     recipientAddress,
-                                     onWrap,
-                                     networkFees,
-                                     onAgreementChange,
-                                     nftInstance
-                                   }: NftUnwrapConfirmStepProps) {
+                                       onPrevious,
+                                       fees,
+                                       status,
+                                       sendingAddress,
+                                       recipientAddress,
+                                       onWrap,
+                                       networkFees,
+                                       onAgreementChange,
+                                       nftInstance
+                                     }: NftUnwrapConfirmStepProps) {
   const currentFees = wrapERC721Fees(fees);
 
   const [checked, setChecked] = React.useState(false);
@@ -69,7 +69,7 @@ export function NftUnwrapConfirmStep({
   }, []);
 
   return (
-    <Container maxWidth="xs">
+    <Container maxWidth='xs'>
       <PaperHeader>
         <PaperNav>
           <IconButton onClick={onPrevious}>
@@ -80,12 +80,13 @@ export function NftUnwrapConfirmStep({
         <PaperActions />
       </PaperHeader>
       <PaperContent>
+        {nftInstance &&
         <CardMedia sx={{
           height: 0,
           backgroundImage: '100%',
           paddingTop: '100%'
-        }} image={nftInstance?.thumbnailUri} title={nftInstance?.name}
-        />
+        }} image={nftInstance.thumbnailUri} title={nftInstance.name}
+        />}
         <LabelAndValue label={'Collection'} value={nftInstance?.nftCollection.ethereumName} />
         <LabelAndValue label={'Name'} value={nftInstance?.name} />
         <LabelAndValue label={'From'} value={sendingAddress} />
@@ -121,7 +122,7 @@ export function NftUnwrapConfirmStep({
           finalize minting
         </Typography>
       </PaperContent>
-      <NftUnwrapActions onUnwrap={onWrap} status={status}/>
+      <NftUnwrapActions onUnwrap={onWrap} status={status} />
     </Container>
   );
 }
