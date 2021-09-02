@@ -194,7 +194,7 @@ export default function OperationHistoryDialog() {
       return `mint ${ethereumName} - ${operation.tokenId} to ${ellipsizeAddress(operation.destination)}`;
     };
 
-    const secondaryText = () => {$
+    const secondaryText = () => {
       switch (operation.status.type) {
         case OperationStatusType.NEW:
           return (
