@@ -98,7 +98,7 @@ export default (props: Props) => {
           <Grid container direction='row' justifyContent='flex-end' alignItems='center'
                 sx={{ display: { xs: 'none', md: 'inherit' } }}>
             {showOperationHistory &&
-            <Grid item spacing={1}>
+            <Grid item>
               <OperationHistoryDialog />
             </Grid>}
             {showTezosWallet && <Grid item>

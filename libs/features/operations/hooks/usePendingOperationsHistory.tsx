@@ -54,7 +54,7 @@ export const usePendingOperationsHistory = () => {
         indexerApi.fetchPendingWraps(ethereumAccount(), tezosAccount()),
         indexerApi.fetchPendingNftWraps(ethereumAccount(), tezosAccount()),
         indexerApi.fetchPendingUnwraps(ethereumAccount(), tezosAccount()),
-        indexerApi.fetchPendingNftUnwraps(ethereumAccount(), tezosAccount()),
+        indexerApi.fetchPendingNftUnwraps(ethereumAccount(), tezosAccount())
       ]);
       const mintsFromIndexer = wrapsToOperations(
         fees,
@@ -111,7 +111,7 @@ export const usePendingOperationsHistory = () => {
     [history]
   );
 
-  useEffect(() => setCount(operations.burns.length + operations.mints.length), [
+  useEffect(() => setCount(operations.burns.length + operations.mints.length + operations.nftBurns.length + operations.nftMints.length), [
     operations
   ]);
 

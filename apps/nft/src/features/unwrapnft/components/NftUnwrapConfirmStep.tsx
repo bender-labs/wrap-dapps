@@ -103,9 +103,9 @@ export function NftUnwrapConfirmStep({
         />
         <LabelAndAsset
           label={'Network fees (est.)'}
-          decimals={18}
+          decimals={6}
           value={networkFees}
-          symbol={'ETH'}
+          symbol={'XTZ'}
           emptyState={networkFees.isNaN() || networkFees.lte(0)}
           emptyStatePlaceHolder={'Awaiting agreement'}
         />

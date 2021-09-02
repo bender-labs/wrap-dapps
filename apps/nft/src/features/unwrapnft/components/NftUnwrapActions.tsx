@@ -16,7 +16,7 @@ export function NftUnwrapActions({ status, onUnwrap }: UnwrapActionsProp) {
         variant={'contained'}
         onClick={onUnwrap}
         disabled={status !== NftUnwrapStatus.READY_TO_UNWRAP}
-        text={'Wrap'}
+        text={'Unwrap'}
       />
     </Box>
   );

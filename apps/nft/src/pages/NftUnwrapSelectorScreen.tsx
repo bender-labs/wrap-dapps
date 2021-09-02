@@ -52,7 +52,7 @@ export const NftUnwrapSelectorScreen = () => {
           <CircularProgress color='primary' />
         </Container>
         :
-        <Gallery nftQuery={nftQuery} direction={GalleryDirection.UNWRAP} linkLabel='Send to Tezos' />
+        <Gallery nftQuery={nftQuery} direction={GalleryDirection.UNWRAP} linkLabel='Send to Ethereum' />
       }
       {!nftQuery.loading && nftQuery.totalTokens > pagination.limitPerPage ?
         <Container maxWidth='lg' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
