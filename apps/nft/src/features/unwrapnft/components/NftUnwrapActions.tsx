@@ -1,6 +1,7 @@
 import React from 'react';
 import { LoadableButton } from '@wrap-dapps/components';
 import { NftUnwrapStatus } from '../hooks/reducer';
+import { Box } from '@material-ui/core';
 
 export type UnwrapActionsProp = {
   onUnwrap: () => void;
@@ -9,7 +10,7 @@ export type UnwrapActionsProp = {
 
 export function NftUnwrapActions({ status, onUnwrap }: UnwrapActionsProp) {
   return (
-    <div style={{ borderRadius: '0 0 10px 10px', backgroundColor: '#e5e5e5' }}>
+    <Box sx={{ borderRadius: '0 0 10px 10px', backgroundColor: '#e5e5e5', padding: 2 }}>
       <LoadableButton
         loading={status === NftUnwrapStatus.WAITING_FOR_UNWRAP}
         variant={'contained'}
@@ -17,6 +18,6 @@ export function NftUnwrapActions({ status, onUnwrap }: UnwrapActionsProp) {
         disabled={status !== NftUnwrapStatus.READY_TO_UNWRAP}
         text={'Wrap'}
       />
-    </div>
+    </Box>
   );
 }

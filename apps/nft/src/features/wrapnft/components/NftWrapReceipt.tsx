@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import {
   CircularProgressWithLabel,
   LabelAndAsset,
@@ -102,7 +102,7 @@ function wrapStatus(
 export default function NftWrapReceipt({ operation, onMint, status, signaturesThreshold }: NftWrapReceiptProps) {
 
   return (
-    <>
+    <Container maxWidth='xs' sx={{paddingTop: 3}}>
       <PaperHeader extraPadding>
         <PaperNav />
         <PaperTitle>Minting</PaperTitle>
@@ -135,8 +135,8 @@ export default function NftWrapReceipt({ operation, onMint, status, signaturesTh
         </div>
       </PaperContent>
       <PaperContent
-        style={{ minHeight: '160px', borderRadius: '0 0 10px 10px' }}
+        style={{ borderRadius: '0 0 10px 10px' }}
       />
-    </>
+    </Container>
   );
 }

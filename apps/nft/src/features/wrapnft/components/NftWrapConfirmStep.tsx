@@ -22,10 +22,6 @@ const Description = styled(Typography)(() => ({
   fontWeight: 'bold'
 }));
 
-// const PaperContentWithBackground = styled(PaperContent)(() => ({
-//   backgroundColor: '#C4C4C4'
-// }));
-
 export type WrapNftConfirmStepProps = {
   fees: Fees;
   sendingAddress: string;
@@ -73,14 +69,14 @@ export function NftWrapConfirmStep({
   }, []);
 
   return (
-    <Container maxWidth="xs">
+    <Container maxWidth='xs' sx={{marginBottom: 10}}>
       <PaperHeader>
         <PaperNav>
           <IconButton onClick={onPrevious}>
             <ArrowBackIcon />
           </IconButton>
         </PaperNav>
-        <PaperTitle>Confirm</PaperTitle>
+        <PaperTitle>Confirm NFT wrap</PaperTitle>
         <PaperActions />
       </PaperHeader>
       <PaperContent>
@@ -95,7 +91,7 @@ export function NftWrapConfirmStep({
         <LabelAndValue label={'From'} value={sendingAddress} />
         <LabelAndValue label={'To'} value={recipientAddress} />
       </PaperContent>
-      <PaperContent>
+      <PaperContent alternate={true}>
         <Description variant={'body2'}>
           Fees
         </Description>
@@ -110,7 +106,7 @@ export function NftWrapConfirmStep({
           decimals={18}
           value={networkFees}
           symbol={'ETH'}
-          emptyState={networkFees.lte(0)}
+          emptyState={networkFees.isNaN() || networkFees.lte(0)}
           emptyStatePlaceHolder={'Awaiting for allowance'}
         />
       </PaperContent>
@@ -125,12 +121,7 @@ export function NftWrapConfirmStep({
           finalize minting
         </Typography>
       </PaperContent>
-      <NftWrapActions
-        onAuthorize={onAuthorize}
-        onWrap={onWrap}
-        status={status}
-        isAllowed={isAllowed}
-      />
+      <NftWrapActions onAuthorize={onAuthorize} onWrap={onWrap} status={status} isAllowed={isAllowed} />
     </Container>
   );
 }

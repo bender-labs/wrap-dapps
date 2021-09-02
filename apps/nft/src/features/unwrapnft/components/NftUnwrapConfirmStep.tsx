@@ -76,7 +76,7 @@ export function NftUnwrapConfirmStep({
             <ArrowBackIcon />
           </IconButton>
         </PaperNav>
-        <PaperTitle>Confirm</PaperTitle>
+        <PaperTitle>Confirm NFT unwrap</PaperTitle>
         <PaperActions />
       </PaperHeader>
       <PaperContent>
@@ -91,7 +91,7 @@ export function NftUnwrapConfirmStep({
         <LabelAndValue label={'From'} value={sendingAddress} />
         <LabelAndValue label={'To'} value={recipientAddress} />
       </PaperContent>
-      <PaperContent>
+      <PaperContent alternate={true}>
         <Description variant={'body2'}>
           Fees
         </Description>
@@ -106,7 +106,7 @@ export function NftUnwrapConfirmStep({
           decimals={18}
           value={networkFees}
           symbol={'ETH'}
-          emptyState={networkFees.lte(0)}
+          emptyState={networkFees.isNaN() || networkFees.lte(0)}
           emptyStatePlaceHolder={'Awaiting agreement'}
         />
       </PaperContent>

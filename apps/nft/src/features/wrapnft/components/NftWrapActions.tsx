@@ -1,5 +1,5 @@
 import React from 'react';
-import { Step, StepLabel, Stepper } from '@material-ui/core';
+import { Box, Step, StepLabel, Stepper } from '@material-ui/core';
 import { NftAllowanceButton } from './NftAllowanceButton';
 import { CustomConnector, CustomStepIcon, LoadableButton } from '@wrap-dapps/components';
 import { NftWrapStatus } from '../hooks/reducer';
@@ -28,7 +28,7 @@ export function NftWrapActions({
   };
 
   return (
-    <div style={{ borderRadius: '0 0 10px 10px', backgroundColor: '#e5e5e5' }}>
+    <Box sx={{ borderRadius: '0 0 10px 10px', backgroundColor: '#e5e5e5', paddingTop: 2}}>
       <Stepper
         alternativeLabel
         activeStep={activeStep()}
@@ -57,6 +57,6 @@ export function NftWrapActions({
           </StepLabel>
         </Step>
       </Stepper>
-    </div>
+    </Box>
   );
 }

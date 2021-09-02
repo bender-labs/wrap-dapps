@@ -22,7 +22,7 @@ import {
 } from '../state';
 import { formatAmount } from '../../ethereum/';
 import { ellipsizeAddress } from '../../wallet';
-import { FungibleToken } from '@wrap-dapps/api';
+import { FungibleToken, NonFungibleToken } from '@wrap-dapps/api';
 
 const StyledListItem = styled(ListItem)<ListItemProps>(() => ({
   textAlign: 'center',
@@ -76,6 +76,7 @@ export default function OperationHistoryDialog() {
   const [open, setOpen] = useState(false);
   const {
     fungibleTokens,
+    nonFungibleTokens,
     wrapSignatureThreshold,
     unwrapSignatureThreshold
   } = useConfig();
@@ -84,6 +85,18 @@ export default function OperationHistoryDialog() {
     selectOperation(op);
     setOpen(false);
   };
+
+  const nftByEthAddress = useMemo(
+    () =>
+      Object.entries(nonFungibleTokens).reduce<Record<string, NonFungibleToken>>(
+        (acc, [, metadata]) => {
+          acc[metadata.ethereumContractAddress] = metadata;
+          return acc;
+        },
+        {}
+      ),
+    [nonFungibleTokens]
+  );
 
   const tokensByEthAddress = useMemo(
     () =>
@@ -175,10 +188,13 @@ export default function OperationHistoryDialog() {
 
   const renderNftMint = (operation: WrapERC721Operation, isLast: boolean) => {
     const primaryText = () => {
-      return `mint ${operation.tokenId} to ${ellipsizeAddress(operation.destination)}`;
+      const {ethereumName} = nftByEthAddress[
+        operation.token.toLowerCase()
+        ];
+      return `mint ${ethereumName} - ${operation.tokenId} to ${ellipsizeAddress(operation.destination)}`;
     };
 
-    const secondaryText = () => {
+    const secondaryText = () => {$
       switch (operation.status.type) {
         case OperationStatusType.NEW:
           return (
@@ -272,7 +288,10 @@ export default function OperationHistoryDialog() {
 
   const renderNftBurn = (operation: UnwrapERC721Operation, isLast: boolean) => {
     const primaryText = () => {
-      return `release ${operation.tokenId} to ${ellipsizeAddress(operation.destination)}`;
+      const {ethereumName} = nftByEthAddress[
+        operation.token.toLowerCase()
+        ];
+      return `release ${ethereumName} - ${operation.tokenId} to ${ellipsizeAddress(operation.destination)}`;
     };
 
     const secondaryText = () => {

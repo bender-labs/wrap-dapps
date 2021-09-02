@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import {
   CircularProgressWithLabel,
   LabelAndAsset,
@@ -79,7 +79,7 @@ function unwrapNftStatus(
             disabled={false}
             loading={status === ReceiptStatus.WAITING_FOR_APPLY}
             onClick={onMint}
-            text={'Mint'}
+            text={'Release'}
           />
         </PaperContent>
       );
@@ -101,10 +101,10 @@ function unwrapNftStatus(
 
 export default function NftUnwrapReceipt({ operation, onMint, status, signaturesThreshold }: NftUnwrapReceiptProps) {
   return (
-    <>
+    <Container maxWidth='xs' sx={{ paddingTop: 3 }}>
       <PaperHeader extraPadding>
         <PaperNav />
-        <PaperTitle>Minting</PaperTitle>
+        <PaperTitle>Releasing</PaperTitle>
         <PaperActions />
       </PaperHeader>
       <PaperContent>
@@ -134,8 +134,8 @@ export default function NftUnwrapReceipt({ operation, onMint, status, signatures
         </div>
       </PaperContent>
       <PaperContent
-        style={{ minHeight: '160px', borderRadius: '0 0 10px 10px' }}
+        style={{ borderRadius: '0 0 10px 10px' }}
       />
-    </>
+    </Container>
   );
 }

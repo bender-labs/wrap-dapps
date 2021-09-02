@@ -34,12 +34,13 @@ const StyledButton = styled(Button)(({ theme }) => ({
   fontWeight: 900,
   borderRadius: '25px',
   border: 'none',
+  backgroundColor: '#FFFFFF',
+  color: '#000000',
   '&:hover': {
     border: 'none',
     boxShadow: 'none',
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
   },
-  backgroundColor: '#FFFFFF',
   '&.Mui-disabled': {
     border: 'none',
     backgroundColor: 'rgba(0, 0, 0, 0.05)'

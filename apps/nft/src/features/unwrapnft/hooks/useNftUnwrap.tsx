@@ -60,8 +60,8 @@ export function useNftUnwrap() {
         const transactionHash = await contract.unwrapNft(unwrapERC721Fees(fees));
         const op: Operation = {
           hash: transactionHash,
-          source: ethereumAccount()!,
-          destination: tezosAccount()!,
+          source: tezosAccount()!,
+          destination: ethereumAccount()!,
           status: { type: OperationStatusType.NEW },
           type: OperationType.UNWRAP_NFT,
           token: state.nftCollection!.ethereumContractAddress,

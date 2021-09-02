@@ -54,7 +54,7 @@ export const NftWrapSelectorScreen = () => {
         <Gallery nftQuery={nftQuery} direction={GalleryDirection.WRAP} linkLabel='Send to Tezos' />
       }
       {!nftQuery.loading && nftQuery.totalTokens > pagination.limitPerPage ?
-        <Container maxWidth='lg' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Container maxWidth='lg' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, paddingBottom: 10, minHeight: '0' }}>
           <Pagination
             color={'primary'}
             page={page}
