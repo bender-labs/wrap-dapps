@@ -26,7 +26,7 @@ export default function Gallery({ nftQuery, direction, linkLabel }: GalleryProps
     );
   } else {
     return (
-      <Container maxWidth='lg' sx={{ display: 'flex', padding: 10 }}>
+      <Container maxWidth='lg' sx={{ display: 'flex', paddingTop: 10 }}>
         {tokens.map((token) => {
           const link = direction === GalleryDirection.WRAP ? confirmNftWrap(token) : confirmNftUnwrap(token);
           return <NFTCard token={token} link={link} linkLabel={linkLabel} key={token.id} />;
