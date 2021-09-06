@@ -43,7 +43,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           color: '#FFFFFF',
-          minHeight: 110,
+          minHeight: 110
         }
       }
     },
@@ -112,6 +112,13 @@ const theme = createTheme({
           backgroundColor: opaqueYellow,
           height: '8px',
           borderRadius: '12px'
+        }
+      }
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#191919'
         }
       }
     }

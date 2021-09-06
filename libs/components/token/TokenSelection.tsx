@@ -1,4 +1,4 @@
-import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { FormControl, FormHelperText, MenuItem, Select } from '@material-ui/core';
 import React from 'react';
 import { SupportedBlockchain } from '@wrap-dapps/features/wallet/blockchain';
 import EthereumTokenIcon from './ethereum/EthereumTokenIcon';
@@ -25,14 +25,12 @@ const itemIcon = (
   blockchainTarget: SupportedBlockchain,
   tokenMetadata: Token
 ) => {
-  if (tokenMetadata.type === 'ERC20') {
-    return blockchainTarget === SupportedBlockchain.Ethereum ? (
-      <EthereumTokenIcon tokenMetadata={tokenMetadata} />
-    ) : (
-      <TezosTokenIcon tokenMetadata={tokenMetadata} />
-    );
-  }
-}
+  return blockchainTarget === SupportedBlockchain.Ethereum ? (
+    <EthereumTokenIcon tokenMetadata={tokenMetadata} />
+  ) : (
+    <TezosTokenIcon tokenMetadata={tokenMetadata} />
+  );
+};
 
 function orderTokens(tokens: Record<string, Token>): [string, Token][] {
   return Object.entries(tokens).sort(([key1, metadata1], [, metadata2]) => {
@@ -43,12 +41,12 @@ function orderTokens(tokens: Record<string, Token>): [string, Token][] {
 }
 
 export function TokenSelection({
-                                         token,
-                                         tokens,
-                                         disabled,
-                                         blockchainTarget,
-                                         onTokenSelect
-                                       }: Props) {
+                                 token,
+                                 tokens,
+                                 disabled,
+                                 blockchainTarget,
+                                 onTokenSelect
+                               }: Props) {
   const tokenList = orderTokens(tokens);
 
   const handleTokenSelect = (event: any) => {
@@ -77,7 +75,7 @@ export function TokenSelection({
           </MenuItem>
         ))}
       </Select>
-      <FormHelperText sx={{paddingTop: 2}}>Only supported token are listed</FormHelperText>
+      <FormHelperText sx={{ paddingTop: 2 }}>Only supported token are listed</FormHelperText>
     </FormControl>
   );
 }

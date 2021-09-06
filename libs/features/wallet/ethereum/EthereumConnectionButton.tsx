@@ -3,8 +3,35 @@ import Icon from './Icon';
 import React, { useState } from 'react';
 import { EthereumStateType } from './state';
 import { EthConnector, EthConnectors } from './connectorsFactory';
-import { Box, Button, Dialog, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  styled
+} from '@material-ui/core';
 import { ellipsizeAddress } from '../address';
+
+const StyledDialogTitle = styled(DialogTitle)(() => ({
+  backgroundColor: '#191919',
+  color: '#FFFFFF',
+  fontSize: 20,
+  fontWeight: 700,
+  textAlign: 'center'
+}));
+
+const StyledListItem = styled(ListItem)(() => ({
+  backgroundColor: '#191919',
+  color: '#FFFFFF',
+  borderTop: '1px solid #444444',
+  '&:hover': {
+    backgroundColor: '#4d4d4d'
+  }
+}));
 
 type SelectorProps = {
   providers: EthConnectors;
@@ -18,21 +45,19 @@ function ConnectFlow({ providers, activate }: SelectorProps) {
     const connector = providers[key as keyof EthConnectors];
     activate(connector);
   };
+
   return (
     <>
       <Button onClick={() => setShow(true)} startIcon={<Icon />}>
         Connect
       </Button>
-      <Dialog open={show} onClose={() => setShow(false)}>
-        <List
-          subheader={
-            <ListSubheader component='div' id='nested-list-subheader'>
-              Select your wallet
-            </ListSubheader>
-          }
-        >
+      <Dialog open={show} onClose={() => setShow(false)} maxWidth={'xs'} fullWidth={true}>
+        <StyledDialogTitle disableTypography={true}>
+          Select your wallet
+        </StyledDialogTitle>
+        <List>
           {Object.entries(providers).map(([key, value]) => (
-            <ListItem
+            <StyledListItem
               key={key}
               button
               onClick={() => {
@@ -47,7 +72,7 @@ function ConnectFlow({ providers, activate }: SelectorProps) {
                   src={value.iconName}
                 />
               </ListItemIcon>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </Dialog>

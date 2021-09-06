@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Container, Typography } from '@material-ui/core';
 import {
   CircularProgressWithLabel,
@@ -9,9 +9,11 @@ import {
   PaperContent,
   PaperHeader,
   PaperNav,
-  PaperTitle
+  PaperTitle,
+  useConfig
 } from '@wrap-dapps/components';
 import { OperationStatusType, ReceiptStatus, UnwrapERC721Operation } from '@wrap-dapps/features';
+import { NonFungibleToken } from '@wrap-dapps/api';
 
 export type NftUnwrapReceiptProps = {
   operation: UnwrapERC721Operation;
@@ -100,6 +102,24 @@ function unwrapNftStatus(
 }
 
 export default function NftUnwrapReceipt({ operation, onMint, status, signaturesThreshold }: NftUnwrapReceiptProps) {
+  const { nonFungibleTokens } = useConfig();
+
+  const nftByEthAddress = useMemo(
+    () =>
+      Object.entries(nonFungibleTokens).reduce<Record<string, NonFungibleToken>>(
+        (acc, [, metadata]) => {
+          acc[metadata.ethereumContractAddress] = metadata;
+          return acc;
+        },
+        {}
+      ),
+    [nonFungibleTokens]
+  );
+
+  const { ethereumName } = nftByEthAddress[
+    operation.token.toLowerCase()
+    ];
+
   return (
     <Container maxWidth='xs' sx={{ paddingTop: 3 }}>
       <PaperHeader extraPadding>
@@ -114,7 +134,7 @@ export default function NftUnwrapReceipt({ operation, onMint, status, signatures
         />
         <LabelAndValue
           label={'Receive'}
-          value={operation.tokenId}
+          value={ethereumName + ' #' + operation.tokenId}
         />
         <LabelAndAsset
           label={'Protocol fees'}
