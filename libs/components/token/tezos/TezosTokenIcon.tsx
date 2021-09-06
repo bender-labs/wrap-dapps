@@ -1,9 +1,8 @@
-import { Token } from '@wrap-dapps/api';
 // @ts-ignore
 import defaultIcon from '../default.png';
 
 type Props = {
-  tokenMetadata: Token;
+  url: string;
 };
 
 const TezosTokenIcon = (props: Props) => {
@@ -11,9 +10,7 @@ const TezosTokenIcon = (props: Props) => {
     <img
       style={{ width: 28, height: 28, marginRight: 5, verticalAlign: 'middle' }}
       src={`https://cloudflare-ipfs.com/ipfs/${
-        props.tokenMetadata.thumbnailUri
-          ? props.tokenMetadata.thumbnailUri.replace('ipfs://', '')
-          : ''
+        props.url ? props.url.replace('ipfs://', '') : ''
       }`}
       alt={''}
       onError={(e: any) => {

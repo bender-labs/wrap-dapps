@@ -1,4 +1,4 @@
-import { OperationStatusType, WrapErc20Operation } from '../../operations';
+import { OperationStatusType, ReceiptStatus, WrapErc20Operation } from '../../operations';
 import {
   CircularProgressWithLabel,
   LabelAndAsset,
@@ -11,15 +11,14 @@ import {
   PaperTitle
 } from '@wrap-dapps/components';
 import React, { useMemo } from 'react';
-import { TokenMetadata } from '../../swap';
-import { Typography } from '@material-ui/core';
-import { ReceiptStatus } from '../../operations/hooks/reducer';
+import { Container, Typography } from '@material-ui/core';
+import { FungibleToken } from '@wrap-dapps/api';
 
 export type WrapReceiptProps = {
   operation: WrapErc20Operation;
   status: ReceiptStatus;
   signaturesThreshold: number;
-  tokens: Record<string, TokenMetadata>;
+  tokens: Record<string, FungibleToken>;
   onMint: () => void;
 };
 
@@ -111,7 +110,7 @@ export default function WrapReceipt({
                                     }: WrapReceiptProps) {
   const tokensByEthAddress = useMemo(
     () =>
-      Object.entries(tokens).reduce<Record<string, TokenMetadata>>(
+      Object.entries(tokens).reduce<Record<string, FungibleToken>>(
         (acc, [, metadata]) => {
           acc[metadata.ethereumContractAddress] = metadata;
           return acc;
@@ -125,7 +124,7 @@ export default function WrapReceipt({
     operation.token.toLowerCase()
     ];
   return (
-    <>
+    <Container maxWidth='xs' sx={{ paddingTop: 3 }}>
       <PaperHeader extraPadding>
         <PaperNav />
         <PaperTitle>Minting</PaperTitle>
@@ -162,6 +161,6 @@ export default function WrapReceipt({
       <PaperContent
         style={{ minHeight: '160px', borderRadius: '0 0 10px 10px' }}
       />
-    </>
+    </Container>
   );
 }

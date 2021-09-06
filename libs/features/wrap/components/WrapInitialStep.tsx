@@ -1,17 +1,11 @@
-import { AmountToWrapInput, AssetSummary, PaperContent, TokenSelection } from '@wrap-dapps/components';
+import { AmountToWrapInput, AssetSummary, TokenSelection } from '@wrap-dapps/components';
 import React, { useEffect, useState } from 'react';
 import { SupportedBlockchain } from '../../wallet';
 import BigNumber from 'bignumber.js';
 import { Fees, FungibleToken, Token } from '@wrap-dapps/api';
 import { Box, Button, styled } from '@material-ui/core';
 import { wrapERC20Fees } from '../../fees/fees';
-import MultiConnect from '../../wallet/MultiConnect';
 import { WrapStatus } from '../hooks';
-
-// const Title = styled(PaperContent)(() => ({
-//   borderBottom: '3px solid #E0E0E0',
-//   boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.25)'
-// }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
   color: 'black',
@@ -64,61 +58,51 @@ export default function WrapInitialStep({
 
   return (
     <>
-      {!connected && (
-        <PaperContent>
-          <MultiConnect />
-        </PaperContent>
-      )}
-      <Box sx={{ padding: '34px 50px 0 50px' }}>
-        <PaperContent>
-          <TokenSelection
-            token={token.ethereumSymbol}
-            onTokenSelect={onTokenChange}
-            blockchainTarget={SupportedBlockchain.Ethereum}
-            tokens={tokens}
-            disabled={false}
-          />
-          <AmountToWrapInput
-            balance={balance}
-            decimals={token.decimals}
-            symbol={token.ethereumSymbol}
-            onChange={onAmountChange}
-            amountToWrap={amount}
-            displayBalance={connected}
-          />
-        </PaperContent>
+      <Box sx={{ padding: '34px 50px 0 50px', backgroundColor: '#E5E5E5' }} padding={2}>
+        <TokenSelection
+          token={token.ethereumSymbol}
+          onTokenSelect={onTokenChange}
+          blockchainTarget={SupportedBlockchain.Ethereum}
+          tokens={tokens}
+          disabled={false}
+        />
+        <AmountToWrapInput
+          balance={balance.value}
+          balanceLoading={balance.loading}
+          decimals={token.decimals}
+          symbol={token.ethereumSymbol}
+          onChange={onAmountChange}
+          amountToWrap={amount}
+          disabled={!connected}
+        />
       </Box>
-      <Box sx={{ padding: '16px 0' }}>
-        <PaperContent>
-          <AssetSummary
-            label={'You will receive'}
-            value={amount.minus(currentFees)}
-            symbol={token.tezosSymbol}
-            decimals={token.decimals}
-          />
-        </PaperContent>
+      <Box sx={{ padding: '16px 0', backgroundColor: '#E5E5E5' }}>
+        <AssetSummary
+          label={'You will receive'}
+          value={amount.minus(currentFees)}
+          symbol={token.tezosSymbol}
+          decimals={token.decimals}
+        />
       </Box>
-
       <Box sx={{
         borderRadius: '0 0 10px 10px',
         minHeight: '40px',
-        padding: '50px 30px'
+        padding: '50px 30px',
+        backgroundColor: '#E5E5E5'
       }}>
-        <PaperContent>
-          {connected && (
-            <StyledButton
-              variant={'contained'}
-              color={'primary'}
-              onClick={onNext}
-              disabled={
-                status !== WrapStatus.READY_TO_CONFIRM &&
-                status !== WrapStatus.READY_TO_WRAP
-              }
-            >
-              Next →
-            </StyledButton>
-          )}
-        </PaperContent>
+        {connected && (
+          <StyledButton
+            variant={'contained'}
+            color={'primary'}
+            onClick={onNext}
+            disabled={
+              status !== WrapStatus.READY_TO_CONFIRM &&
+              status !== WrapStatus.READY_TO_WRAP
+            }
+          >
+            Next →
+          </StyledButton>
+        )}
       </Box>
     </>
   );

@@ -11,13 +11,13 @@ import {
   PaperTitle
 } from '@wrap-dapps/components';
 import React, { useMemo } from 'react';
-import { TokenMetadata } from '../../swap';
-import { Typography } from '@material-ui/core';
-import { ReceiptStatus } from '../../operations/hooks/reducer';
+import { Container, Typography } from '@material-ui/core';
+import { ReceiptStatus } from '../../operations';
+import { FungibleToken } from '@wrap-dapps/api';
 
 export type UnwrapReceiptProps = {
   operation: UnwrapErc20Operation;
-  tokens: Record<string, TokenMetadata>;
+  tokens: Record<string, FungibleToken>;
   signaturesThreshold: number;
   status: ReceiptStatus;
   onRelease: () => void;
@@ -112,7 +112,7 @@ export default function UnwrapReceipt({
                                       }: UnwrapReceiptProps) {
   const tokensByEthAddress = useMemo(
     () =>
-      Object.entries(tokens).reduce<Record<string, TokenMetadata>>(
+      Object.entries(tokens).reduce<Record<string, FungibleToken>>(
         (acc, [, metadata]) => {
           acc[metadata.ethereumContractAddress] = metadata;
           return acc;
@@ -126,7 +126,7 @@ export default function UnwrapReceipt({
     operation.token.toLowerCase()
     ];
   return (
-    <>
+    <Container maxWidth='xs' sx={{ paddingTop: 3 }}>
       <PaperHeader extraPadding>
         <PaperNav />
         <PaperTitle>Releasing</PaperTitle>
@@ -163,6 +163,6 @@ export default function UnwrapReceipt({
       <PaperContent
         style={{ minHeight: '160px', borderRadius: '0 0 10px 10px' }}
       />
-    </>
+    </Container>
   );
 }

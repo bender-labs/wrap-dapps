@@ -2,7 +2,6 @@ import { useCallback, useEffect, useReducer } from 'react';
 import BigNumber from 'bignumber.js';
 import { useConfig, useNotify } from '@wrap-dapps/components';
 import { useEthereumWalletContext, useTezosWalletContext } from '../../wallet';
-import { TokenMetadata } from '../../swap';
 import { reducer, sideEffectReducer, UnwrapStatus } from './reducer';
 import {
   amountToUnwrapChange,
@@ -14,8 +13,9 @@ import {
   walletChange
 } from './actions';
 import { connectStore, createStore } from '../../types';
+import { FungibleToken } from '@wrap-dapps/api';
 
-function getFirstTokenByName(tokens: Record<string, TokenMetadata>) {
+function getFirstTokenByName(tokens: Record<string, FungibleToken>) {
   return Object.entries(tokens)
     .sort(([key1,
              metadata1],

@@ -1,4 +1,11 @@
-import { IndexerTezosNftPayload, IndexerUnwrapPayload, IndexerWrapPayload, WrapConfiguration } from './types';
+import {
+  IndexerContractBalance, IndexerContractBalancesPayload,
+  IndexerFarmingConfigurationPayload,
+  IndexerTezosNftPayload,
+  IndexerUnwrapPayload,
+  IndexerWrapPayload,
+  WrapConfiguration
+} from './types';
 import axios, { AxiosInstance } from 'axios';
 import { EthereumAddress, TezosAddress } from '@wrap-dapps/features/ethereum/EthereumWrapApi';
 
@@ -11,6 +18,14 @@ export class IndexerApi {
 
   public getConfiguration(_: void): Promise<WrapConfiguration> {
     return this.client.get('/configuration').then(({ data }) => data);
+  }
+
+  public fetchFarmingConfiguration(): Promise<IndexerFarmingConfigurationPayload> {
+    return this.client.get('/staking-configuration').then(({data}) => data);
+  }
+
+  public fetchCurrentUserFarmingConfiguration(tezosAddress: string): Promise<IndexerContractBalance[]> {
+    return this.client.get('/staking-balances?tezosAddress=' + tezosAddress).then(({data}: { data: IndexerContractBalancesPayload }) => data.result);
   }
 
   public fetchPendingWraps(

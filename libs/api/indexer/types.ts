@@ -21,7 +21,6 @@ export enum TokenType {
 export interface FungibleToken extends BaseToken {
   type: TokenType.ERC20;
   decimals: number;
-  tezosTokenId: number;
 }
 
 export interface NonFungibleToken extends BaseToken {
@@ -36,6 +35,7 @@ export interface BaseToken {
   tezosWrappingContract: string;
   tezosSymbol: string;
   tezosName: string;
+  tezosTokenId: number;
   thumbnailUri?: string;
 }
 
@@ -92,4 +92,45 @@ export interface IndexerTezosNft {
 
 export interface IndexerTezosNftPayload {
   result: Array<IndexerTezosNft>;
+}
+
+export interface IndexerFarmingConfigurationPayload {
+  contracts: IndexerFarmConfigurationPayload[];
+}
+
+export interface IndexerFarmConfigurationRewardsPayload {
+  contract: string;
+  startLevel: string;
+  totalRewards: string;
+  startTimestamp: string;
+  duration: string;
+}
+
+export interface IndexerFarmConfigurationPayload {
+  rewards: IndexerFarmConfigurationRewardsPayload | undefined;
+  totalStaked: string;
+  maxLevelProcessed: number;
+  contract: string;
+  token: string;
+  tokenId: string;
+}
+
+export interface IndexerContractBalance {
+  contract: string;
+  balance: string;
+  totalStaked: string;
+  tezosAddress: string;
+  maxLevelProcessed: number;
+}
+
+export interface IndexerContractBalance {
+  contract: string;
+  balance: string;
+  totalStaked: string;
+  tezosAddress: string;
+  maxLevelProcessed: number;
+}
+
+export interface IndexerContractBalancesPayload {
+  result: IndexerContractBalance[];
 }

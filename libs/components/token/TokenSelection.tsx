@@ -28,7 +28,7 @@ const itemIcon = (
   return blockchainTarget === SupportedBlockchain.Ethereum ? (
     <EthereumTokenIcon tokenMetadata={tokenMetadata} />
   ) : (
-    <TezosTokenIcon tokenMetadata={tokenMetadata} />
+    <TezosTokenIcon url={tokenMetadata.thumbnailUri ?? ''} />
   );
 };
 
@@ -55,7 +55,7 @@ export function TokenSelection({
   };
 
   return (
-    <FormControl fullWidth variant={'standard'}>
+    <FormControl fullWidth variant={'filled'}>
       <Select
         fullWidth
         disabled={disabled}

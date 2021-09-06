@@ -2,7 +2,6 @@
   "name": "wrap-dapps",
   "private": true,
   "scripts": {
-    "nft": "yarn workspace @wrap-dapps/nft",
     "wrap": "yarn workspace @wrap-dapps/wrap",
     "components": "yarn workspace @wrap-dapps/components",
     "api": "yarn workspace @wrap-dapps/api",

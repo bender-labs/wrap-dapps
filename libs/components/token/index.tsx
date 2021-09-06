@@ -1,2 +1,2 @@
 export * from './TokenSelection';
-export { default as AmountToWrapInput } from './AmountToWrapInput';
+export {default as TezosTokenIcon} from './tezos/TezosTokenIcon';

@@ -1,4 +1,4 @@
-import { FungibleToken, NonFungibleToken } from '@wrap-dapps/api';
+import { FungibleToken, IndexerFarmConfigurationRewardsPayload, NonFungibleToken } from '@wrap-dapps/api';
 import { NetworkType } from '@airgap/beacon-sdk';
 import {Fees} from "@wrap-dapps/api";
 
@@ -30,6 +30,9 @@ export interface Config {
   fungibleTokens: Record<string, FungibleToken>;
   nonFungibleTokens: Record<string, NonFungibleToken>;
   fees: Fees;
+  farms: FarmConfig[];
+  farmInput: FarmStakedToken;
+  oldFarms: FarmConfig[];
 }
 
 export interface InitialConfig {
@@ -48,9 +51,37 @@ export interface InitialConfig {
     networkId: NetworkType;
     networkName: string;
   };
+  tzktLink: string;
+  farmInput: FarmStakedToken;
 }
 
 export enum Environment {
   TESTNET = 'TESTNET',
   MAINNET = 'MAINNET',
+}
+
+export interface FarmConfig {
+  maxTotalStakedLevelProcessed: number;
+  farmContractAddress: string;
+  farmContractLink: string;
+  farmTotalStaked: string;
+  farmStakedToken: FarmStakedToken;
+  rewardTokenName: string;
+  rewardTokenThumbnailUri: string;
+  rewardTokenContractAddress: string;
+  rewardTokenId: number;
+  rewardTokenDecimals: number;
+  rewardTokenSymbol: string;
+  rewards: IndexerFarmConfigurationRewardsPayload | undefined;
+  apy?: string;
+  apr?: string;
+}
+
+interface FarmStakedToken {
+  contractAddress: string;
+  thumbnailUri: string;
+  tokenId: number;
+  symbol: string;
+  name: string;
+  decimals: number;
 }

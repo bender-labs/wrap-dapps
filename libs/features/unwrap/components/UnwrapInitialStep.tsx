@@ -1,19 +1,12 @@
 import BigNumber from 'bignumber.js';
-import { TokenMetadata } from '../../swap';
-import { Fees, Token } from '@wrap-dapps/api';
+import { Fees, FungibleToken, Token } from '@wrap-dapps/api';
 import React, { useEffect, useState } from 'react';
 import { wrapERC20Fees } from '../../fees/fees';
-import { AssetSummary, PaperContent, TokenSelection } from '@wrap-dapps/components';
-import { SupportedBlockchain } from '../../wallet/blockchain';
-import AmountToWrapInput from '../../../components/token/AmountToWrapInput';
-import { Box, Button, Paper, styled } from '@material-ui/core';
-import MultiConnect from '../../wallet/MultiConnect';
-import { UnwrapStatus } from '../hooks/reducer';
-
-// const PaperContentTitle = styled(PaperContent)(() => ({
-//   borderBottom: '3px solid #E0E0E0',
-//   boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.25)'
-// }));
+import { AssetSummary, TokenSelection } from '@wrap-dapps/components';
+import { SupportedBlockchain } from '../../wallet';
+import AmountToWrapInput from '../../../components/formatting/AmountToWrapInput';
+import { Box, Button, styled } from '@material-ui/core';
+import { UnwrapStatus } from '../hooks';
 
 const StyledButton = styled(Button)(({ theme }) => ({
   color: 'black',
@@ -39,7 +32,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 export type UnwrapInitialStepProps = {
   status: UnwrapStatus;
   balance: { value: BigNumber, loading: boolean };
-  token: TokenMetadata;
+  token: FungibleToken;
   connected: boolean;
   amount: BigNumber;
   fees: Fees;
@@ -67,57 +60,48 @@ export default function UnwrapInitialStep({
 
   return (
     <>
-      {!connected && (
-        <PaperContent>
-          <MultiConnect />
-        </PaperContent>
-      )}
-      <Box sx={{ padding: '34px 50px 0 50px' }}>
-        <PaperContent>
-          <TokenSelection
-            token={token.ethereumSymbol}
-            onTokenSelect={onTokenChange}
-            blockchainTarget={SupportedBlockchain.Tezos}
-            tokens={tokens}
-            disabled={false}
-          />
-          <AmountToWrapInput
-            balance={balance}
-            decimals={token.decimals}
-            symbol={token.tezosSymbol}
-            onChange={onAmountChange}
-            amountToWrap={amount}
-            displayBalance={connected}
-          />
-        </PaperContent>
+      <Box sx={{ padding: '34px 50px 0 50px', backgroundColor: '#E5E5E5' }} padding={2}>
+        <TokenSelection
+          token={token.ethereumSymbol}
+          onTokenSelect={onTokenChange}
+          blockchainTarget={SupportedBlockchain.Tezos}
+          tokens={tokens}
+          disabled={false}
+        />
+        <AmountToWrapInput
+          balance={balance.value}
+          balanceLoading={balance.loading}
+          decimals={token.decimals}
+          symbol={token.tezosSymbol}
+          onChange={onAmountChange}
+          amountToWrap={amount}
+          disabled={!connected}
+        />
       </Box>
-      <Box sx={{ padding: '16px 0' }}>
-        <PaperContent>
-          <AssetSummary
-            label={'You will receive'}
-            value={amount.minus(currentFees)}
-            symbol={token.ethereumSymbol}
-            decimals={token.decimals}
-          />
-        </PaperContent>
+      <Box sx={{ padding: '16px 0', backgroundColor: '#E5E5E5' }}>
+        <AssetSummary
+          label={'You will receive'}
+          value={amount.minus(currentFees)}
+          symbol={token.ethereumSymbol}
+          decimals={token.decimals}
+        />
       </Box>
       <Box sx={{
         borderRadius: '0 0 10px 10px',
         minHeight: '40px',
-        padding: '50px 30px'
+        padding: '50px 30px',
+        backgroundColor: '#E5E5E5'
       }}>
-        <PaperContent>
-          {connected && (
-            <StyledButton
-              variant={'contained'}
-              color={'primary'}
-              onClick={onNext}
-              disabled={status !== UnwrapStatus.READY_TO_CONFIRM}
-            >
-              Next →
-            </StyledButton>
-          )}
-        </PaperContent>
+        {connected && (
+          <StyledButton
+            variant={'contained'}
+            color={'primary'}
+            onClick={onNext}
+            disabled={status !== UnwrapStatus.READY_TO_CONFIRM}
+          >
+            Next →
+          </StyledButton>
+        )}
       </Box>
     </>
   );

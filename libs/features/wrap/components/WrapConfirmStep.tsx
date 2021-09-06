@@ -12,9 +12,8 @@ import { Checkbox, IconButton, styled, Typography } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import React from 'react';
 import BigNumber from 'bignumber.js';
-import { TokenMetadata } from '../../swap';
 import { wrapERC20Fees } from '../../fees/fees';
-import { Fees } from '@wrap-dapps/api';
+import { Fees, FungibleToken } from '@wrap-dapps/api';
 import { WrapActions } from './WrapActions';
 import { WrapStatus } from '../hooks';
 
@@ -32,7 +31,7 @@ const Description = styled(Typography)(() => ({
 // }));
 
 export type WrapConfirmStepProps = {
-  token: TokenMetadata;
+  token: FungibleToken;
   fees: Fees;
   sendingAddress: string;
   recipientAddress: string;
@@ -47,19 +46,19 @@ export type WrapConfirmStepProps = {
 };
 
 export function WrapConfirmStep({
-                                          onPrevious,
-                                          amount,
-                                          fees,
-                                          token,
-                                          status,
-                                          currentAllowance,
-                                          sendingAddress,
-                                          recipientAddress,
-                                          onAuthorize,
-                                          onWrap,
-                                          networkFees,
-                                          onAgreementChange
-                                        }: WrapConfirmStepProps) {
+                                  onPrevious,
+                                  amount,
+                                  fees,
+                                  token,
+                                  status,
+                                  currentAllowance,
+                                  sendingAddress,
+                                  recipientAddress,
+                                  onAuthorize,
+                                  onWrap,
+                                  networkFees,
+                                  onAgreementChange
+                                }: WrapConfirmStepProps) {
   const currentFees = wrapERC20Fees(amount, fees);
 
   const [checked, setChecked] = React.useState(false);
