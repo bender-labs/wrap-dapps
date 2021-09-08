@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useMemo } from 'react';
-import { Link, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Link, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { ellipsizeAddress, ERC721Operation, OperationType } from '@wrap-dapps/features';
 import { NonFungibleToken } from '@wrap-dapps/api';
 

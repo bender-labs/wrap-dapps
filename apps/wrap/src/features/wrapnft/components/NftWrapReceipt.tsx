@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Container, Typography } from '@material-ui/core';
+import { Container, Typography } from '@mui/material';
 import {
   CircularProgressWithLabel,
   LabelAndAsset,

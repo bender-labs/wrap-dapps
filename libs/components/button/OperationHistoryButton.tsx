@@ -1,5 +1,5 @@
-import RestoreIcon from '@material-ui/icons/Restore';
-import { Badge, IconButton } from '@material-ui/core';
+import RestoreIcon from '@mui/icons-material/Restore';
+import { Badge, IconButton } from '@mui/material';
 
 export type OperationHistoryButtonProps = {
   count: number;

@@ -1,4 +1,4 @@
-import { styled, Typography } from '@material-ui/core';
+import { styled, Typography } from '@mui/material';
 import React, { ReactNode } from 'react';
 
 const Root = styled('div')(() => ({

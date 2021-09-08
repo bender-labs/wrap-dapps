@@ -1,6 +1,6 @@
 import { FarmingContractInfoProps } from '../../features/farming/types';
 import { LabelAndAsset, LabelAndValue, PaperContent } from '@wrap-dapps/components';
-import { Link } from '@material-ui/core';
+import { Link } from '@mui/material';
 import BigNumber from 'bignumber.js';
 
 export default function FarmingContractInfo({ farm, farmBalances }: FarmingContractInfoProps) {

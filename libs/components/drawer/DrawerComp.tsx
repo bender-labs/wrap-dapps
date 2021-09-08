@@ -1,6 +1,6 @@
 import React from 'react';
-import CloseIcon from '@material-ui/icons/Close';
-import { Box, Drawer, Link, List, ListItem, styled } from '@material-ui/core';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, Drawer, Link, List, ListItem, styled } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppRoute } from '../routes';
 

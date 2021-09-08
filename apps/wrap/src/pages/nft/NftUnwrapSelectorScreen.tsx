@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { CardContent, Container, Typography } from '@material-ui/core';
+import { CardContent, Container, Typography } from '@mui/material';
 import { SupportedBlockchain, useEthereumWalletContext, useTezosWalletContext } from '@wrap-dapps/features';
 import { HalfCard, TokenSelection, useNonFungibleTokens } from '@wrap-dapps/components';
 import { useTezosNftQuery } from '../../features/nft/hook/useTezosNftQuery';
 import Gallery, { GalleryDirection } from '../../features/nft/components/Gallery';
-import Pagination from '@material-ui/core/Pagination';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Pagination from '@mui/material/Pagination';
+import CircularProgress from '@mui/material/CircularProgress';
 import { NftSwapDirectionTab } from '../../features/nft/components/NftSwapDirectionTab';
 
 export const NftUnwrapSelectorScreen = () => {

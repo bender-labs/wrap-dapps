@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { styled, Typography } from '@material-ui/core';
+import { styled, Typography } from '@mui/material';
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import { formatOptions } from './numberFormat';

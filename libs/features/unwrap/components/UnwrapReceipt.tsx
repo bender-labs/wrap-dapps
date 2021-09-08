@@ -11,7 +11,7 @@ import {
   PaperTitle
 } from '@wrap-dapps/components';
 import React, { useMemo } from 'react';
-import { Container, Typography } from '@material-ui/core';
+import { Container, Typography } from '@mui/material';
 import { ReceiptStatus } from '../../operations';
 import { FungibleToken } from '@wrap-dapps/api';
 

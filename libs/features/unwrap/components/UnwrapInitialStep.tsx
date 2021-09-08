@@ -5,7 +5,7 @@ import { wrapERC20Fees } from '../../fees/fees';
 import { AssetSummary, TokenSelection } from '@wrap-dapps/components';
 import { SupportedBlockchain } from '../../wallet';
 import AmountToWrapInput from '../../../components/formatting/AmountToWrapInput';
-import { Box, Button, styled } from '@material-ui/core';
+import { Box, Button, styled } from '@mui/material';
 import { UnwrapStatus } from '../hooks';
 
 const StyledButton = styled(Button)(({ theme }) => ({

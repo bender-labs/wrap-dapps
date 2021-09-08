@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router';
 import { useRouteMatch } from 'react-router-dom';
 import React, { useCallback } from 'react';
-import { styled, Tab, Tabs } from '@material-ui/core';
+import { styled, Tab, Tabs } from '@mui/material';
 import { paths } from '../../../pages/routes';
 
 const StyledTabs = styled(Tabs)(() => ({

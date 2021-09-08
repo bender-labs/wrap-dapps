@@ -1,5 +1,5 @@
-import { styled } from '@material-ui/core';
-import TableRow from '@material-ui/core/TableRow';
+import { styled } from '@mui/material';
+import TableRow from '@mui/material/TableRow';
 
 const FarmingStyledTableRow = styled(TableRow)(() =>
   ({

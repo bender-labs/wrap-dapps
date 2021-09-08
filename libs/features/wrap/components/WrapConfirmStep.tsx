@@ -8,8 +8,8 @@ import {
   PaperNav,
   PaperTitle
 } from '@wrap-dapps/components';
-import { Checkbox, IconButton, styled, Typography } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Checkbox, IconButton, styled, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import { wrapERC20Fees } from '../../fees/fees';

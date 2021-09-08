@@ -1,11 +1,11 @@
-import { AppBar, Box, Grid, IconButton, Link, styled, Toolbar, Typography } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { AppBar, Box, Grid, IconButton, Link, styled, Toolbar, Typography } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import DrawerComp from '../drawer/DrawerComp';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import logo from './logo.png';
 import { EthereumConnectionButton, TezosConnectionButton } from '../../features/wallet';
-import LaunchIcon from '@material-ui/icons/Launch';
+import LaunchIcon from '@mui/icons-material/Launch';
 import { AppRoute } from '../routes';
 import OperationHistoryDialog from '@wrap-dapps/features/operations/components/OperationHistoryDialog';
 

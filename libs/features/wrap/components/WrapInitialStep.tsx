@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { SupportedBlockchain } from '../../wallet';
 import BigNumber from 'bignumber.js';
 import { Fees, FungibleToken, Token } from '@wrap-dapps/api';
-import { Box, Button, styled } from '@material-ui/core';
+import { Box, Button, styled } from '@mui/material';
 import { wrapERC20Fees } from '../../fees/fees';
 import { WrapStatus } from '../hooks';
 

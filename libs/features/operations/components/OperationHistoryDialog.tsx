@@ -12,7 +12,7 @@ import {
   ListSubheader,
   styled,
   Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   Operation,
   OperationStatusType,

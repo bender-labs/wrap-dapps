@@ -1,6 +1,6 @@
 import theme from './theme';
 import { PropsWithChildren } from 'react';
-import { CssBaseline, ThemeProvider } from '@material-ui/core';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 
 export default function MyThemeProvider({ children }: PropsWithChildren<{}>) {
   return (

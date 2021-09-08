@@ -1,4 +1,4 @@
-import { Box, LinearProgress, LinearProgressProps, styled } from '@material-ui/core';
+import { Box, LinearProgress, LinearProgressProps, styled } from '@mui/material';
 import { ReactNode } from 'react';
 
 const LabelWrapper = styled(Box)(() => ({

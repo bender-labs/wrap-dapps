@@ -13,7 +13,7 @@ import {
   ListItemIcon,
   ListItemText,
   styled
-} from '@material-ui/core';
+} from '@mui/material';
 import { ellipsizeAddress } from '../address';
 
 const StyledDialogTitle = styled(DialogTitle)(() => ({

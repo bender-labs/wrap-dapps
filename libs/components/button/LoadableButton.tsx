@@ -1,4 +1,4 @@
-import { Button, CircularProgress, styled } from '@material-ui/core';
+import { Button, CircularProgress, styled } from '@mui/material';
 import React, { PropsWithChildren } from 'react';
 
 export type LoadableButtonProps = {

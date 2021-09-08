@@ -1,6 +1,6 @@
 import { FarmConfig, PaperContent, TezosTokenIcon, useTezosWalletContext } from '@wrap-dapps/components';
-import { Grid, IconButton, styled, Typography } from '@material-ui/core';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { Grid, IconButton, styled, Typography } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { Duration } from 'luxon';

@@ -9,7 +9,7 @@ import {
 } from '@wrap-dapps/components';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { routes } from './pages/routes';
-import { Card, CardContent, Container } from '@material-ui/core';
+import { Card, CardContent, Container } from '@mui/material';
 
 const App = () => {
   const { state: tzState } = useTezosWalletContext();

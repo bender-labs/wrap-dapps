@@ -1,12 +1,12 @@
 import FarmingContractHeader from '../../../components/farming/FarmingContractHeader';
-import { Box, styled, Table, TableBody } from '@material-ui/core';
+import { Box, styled, Table, TableBody } from '@mui/material';
 import { paths } from '../../../pages/routes';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import React from 'react';
 import { FarmConfig, LoadableButton, PaperFooter, TezosConnectionButton } from '@wrap-dapps/components';
-import TableCell from '@material-ui/core/TableCell';
+import TableCell from '@mui/material/TableCell';
 import IconSelect from '../../../pages/farming/FarmToken';
 import BigNumber from 'bignumber.js';
 import useUnstakeAll, { UnstakeAllStatus } from './hook/useUnstakeAll';

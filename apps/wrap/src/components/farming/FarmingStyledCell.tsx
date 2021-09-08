@@ -1,5 +1,5 @@
-import { styled } from '@material-ui/core';
-import TableCell from '@material-ui/core/TableCell';
+import { styled } from '@mui/material';
+import TableCell from '@mui/material/TableCell';
 
 const FarmingStyledTableCell = styled(TableCell)(() =>
   ({

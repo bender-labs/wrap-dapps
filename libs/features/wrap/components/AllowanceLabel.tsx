@@ -1,4 +1,4 @@
-import { styled, Typography } from '@material-ui/core';
+import { styled, Typography } from '@mui/material';
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import { formatOptions } from '@wrap-dapps/components';

@@ -1,5 +1,5 @@
-import { Box, StepIconProps } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
+import { Box, StepIconProps } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
 import { white, yellow } from '../theme/theme';
 
 export default function CustomStepIcon(props: StepIconProps) {

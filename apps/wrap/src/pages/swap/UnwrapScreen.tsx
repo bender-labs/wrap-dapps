@@ -9,7 +9,7 @@ import {
 } from '@wrap-dapps/features';
 import { unwrapPage } from '../routes';
 import { SwapDirectionTab } from '../../features/swap/components/SwapDirectionTab';
-import { Container } from '@material-ui/core';
+import { Container } from '@mui/material';
 
 enum Step {
   AMOUNT,

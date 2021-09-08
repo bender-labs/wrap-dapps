@@ -1,4 +1,4 @@
-import { Box, PaperProps, styled } from '@material-ui/core';
+import { Box, PaperProps, styled } from '@mui/material';
 import * as React from 'react';
 import { PropsWithChildren } from 'react';
 

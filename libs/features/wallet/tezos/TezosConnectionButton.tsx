@@ -1,6 +1,6 @@
 import { useTezosWalletContext } from './useTezosWallet';
 import { TezosStateType } from './state';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import TezosIcon from './Icon';
 import {ellipsizeAddress} from '../address';
 

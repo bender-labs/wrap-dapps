@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import AmountInput from './AmountInput';
-import Link from '@material-ui/core/Link';
-import { styled } from '@material-ui/core';
+import Link from '@mui/material/Link';
+import { styled } from '@mui/material';
 
 const StyledLink = styled(Link)(() => ({
   cursor: 'pointer'

@@ -1,4 +1,4 @@
-import { FormControl, FormHelperText, MenuItem, Select } from '@material-ui/core';
+import { FormControl, FormHelperText, MenuItem, Select } from '@mui/material';
 import React from 'react';
 import { SupportedBlockchain } from '@wrap-dapps/features/wallet/blockchain';
 import EthereumTokenIcon from './ethereum/EthereumTokenIcon';

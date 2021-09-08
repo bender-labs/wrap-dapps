@@ -1,5 +1,5 @@
-import { styled } from '@material-ui/core';
-import StepConnector, { stepConnectorClasses } from '@material-ui/core/StepConnector';
+import { styled } from '@mui/material';
+import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 
 const CustomConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {

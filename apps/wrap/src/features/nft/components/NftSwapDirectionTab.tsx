@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { styled, Tab, Tabs, TabsProps } from '@material-ui/core';
+import { styled, Tab, Tabs, TabsProps } from '@mui/material';
 import { useHistory } from 'react-router';
 import { paths } from '../../../pages/routes';
 import { useRouteMatch } from 'react-router-dom';

@@ -7,8 +7,8 @@ import {
   PaperNav,
   PaperTitle
 } from '@wrap-dapps/components';
-import { CardMedia, Checkbox, Container, IconButton, styled, Typography } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { CardMedia, Checkbox, Container, IconButton, styled, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import { wrapERC721Fees } from '@wrap-dapps/features';

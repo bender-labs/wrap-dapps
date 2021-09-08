@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Step, StepLabel, Stepper } from '@material-ui/core';
+import { Box, Step, StepLabel, Stepper } from '@mui/material';
 import { NftAllowanceButton } from './NftAllowanceButton';
 import { CustomConnector, CustomStepIcon, LoadableButton } from '@wrap-dapps/components';
 import { NftWrapStatus } from '../hooks/reducer';

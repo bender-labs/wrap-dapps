@@ -8,12 +8,12 @@ import {
   PaperNav,
   PaperTitle
 } from '@wrap-dapps/components';
-import { Checkbox, IconButton, Typography } from '@material-ui/core';
+import { Checkbox, IconButton, Typography } from '@mui/material';
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import { unwrapERC20AmountsFromTotal } from '../../fees/fees';
 import { Fees, FungibleToken } from '@wrap-dapps/api';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import UnwrapActions from './UnwrapActions';
 import { UnwrapStatus } from '../hooks';
 

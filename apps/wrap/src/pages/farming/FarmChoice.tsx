@@ -1,7 +1,7 @@
-import { Box, Container, Grid, IconButton, styled, Typography } from '@material-ui/core';
+import { Box, Container, Grid, IconButton, styled, Typography } from '@mui/material';
 import React from 'react';
 import FarmList, { FarmStyle } from './FarmList';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { PaperContent, useConfig } from '@wrap-dapps/components';
 import { useHistory } from 'react-router';
 import { farmStakePageRoute, oldFarmUnstakePageRoute, paths } from '../routes';

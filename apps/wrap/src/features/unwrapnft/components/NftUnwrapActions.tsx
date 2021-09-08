@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoadableButton } from '@wrap-dapps/components';
 import { NftUnwrapStatus } from '../hooks/reducer';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 
 export type UnwrapActionsProp = {
   onUnwrap: () => void;

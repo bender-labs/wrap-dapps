@@ -1,7 +1,7 @@
 import { formatOptions } from './numberFormat';
 import NumberFormat, { NumberFormatValues } from 'react-number-format';
 import React from 'react';
-import { styled, TextField } from '@material-ui/core';
+import { styled, TextField } from '@mui/material';
 
 const StyledAmountInput = styled('div')(() => ({
   width: '100%',

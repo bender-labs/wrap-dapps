@@ -1,4 +1,4 @@
-import { createTheme } from '@material-ui/core';
+import { createTheme } from '@mui/material';
 
 export const yellow = '#FFD000';
 export const shadeOfYellow = '#F7CB16';

@@ -1,6 +1,6 @@
 import { PaperActions, PaperHeader, PaperNav, PaperTitle } from '@wrap-dapps/components';
-import { IconButton } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import React from 'react';
 import { useHistory } from 'react-router';
 

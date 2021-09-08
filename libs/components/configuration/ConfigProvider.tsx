@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { Config, FarmConfig, InitialConfig } from './types';
 import { FungibleToken, IndexerApi, NonFungibleToken, StatisticsApi, TokenType } from '@wrap-dapps/api';
-import { CircularProgress, Container } from '@material-ui/core';
+import { CircularProgress, Container } from '@mui/material';
 
 type ContextValue = undefined | Config;
 const ConfigContext = React.createContext<ContextValue>(undefined);

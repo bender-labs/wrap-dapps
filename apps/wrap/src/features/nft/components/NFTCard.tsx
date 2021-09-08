@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, styled, Typography } from '@material-ui/core';
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, styled, Typography } from '@mui/material';
 import { shadeOfBlack } from '@wrap-dapps/components/theme/theme';
 import { NftInstance } from '../api/types';
 import { Link } from 'react-router-dom';

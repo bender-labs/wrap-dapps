@@ -1,6 +1,6 @@
 import { EthereumConnectionButton, EthereumStateType, useEthereumWalletContext } from './ethereum';
 import { TezosConnectionButton, TezosStateType, useTezosWalletContext } from './tezos';
-import { Box, Step, StepLabel, Stepper } from '@material-ui/core';
+import { Box, Step, StepLabel, Stepper } from '@mui/material';
 import { CustomConnector, CustomStepIcon } from '@wrap-dapps/components/stepper';
 
 export default function MultiConnect() {

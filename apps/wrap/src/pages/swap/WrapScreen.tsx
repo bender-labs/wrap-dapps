@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { wrapPage } from '../routes';
 import { SwapDirectionTab } from '../../features/swap/components/SwapDirectionTab';
-import { Container } from '@material-ui/core';
+import { Container } from '@mui/material';
 
 enum Step {
   AMOUNT,

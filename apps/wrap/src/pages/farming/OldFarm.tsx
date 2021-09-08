@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useHistory, useParams, useRouteMatch } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
-import { Container, styled, Tab, Tabs } from '@material-ui/core';
+import { Container, styled, Tab, Tabs } from '@mui/material';
 import { paths } from '../routes';
 import BigNumber from 'bignumber.js';
 import { FarmConfig } from '@wrap-dapps/components';

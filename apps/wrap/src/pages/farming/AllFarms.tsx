@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Container, styled, Tab, Tabs } from '@material-ui/core';
+import { Container, styled, Tab, Tabs } from '@mui/material';
 import { Route, Switch } from 'react-router-dom';
 import { paths } from '../routes';
 import ClaimAll from '../../features/farming/claim_all/ClaimAll';

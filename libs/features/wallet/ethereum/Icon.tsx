@@ -1,4 +1,4 @@
-import { SvgIconProps } from '@material-ui/core';
+import { SvgIconProps } from '@mui/material';
 // @ts-ignore
 import { default as Eth } from './eth.svg';
 
