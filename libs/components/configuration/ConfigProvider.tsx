@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { Config, FarmConfig, InitialConfig } from './types';
 import { FungibleToken, IndexerApi, NonFungibleToken, StatisticsApi, TokenType } from '@wrap-dapps/api';
-import { CircularProgress, Container } from '@mui/material';
+import {LoadingScreen} from './LoadingScreen';
 
 type ContextValue = undefined | Config;
 const ConfigContext = React.createContext<ContextValue>(undefined);
@@ -33,6 +33,8 @@ export function useIndexerApi() {
   return useMemo(() => new IndexerApi(indexerUrl), [indexerUrl]);
 }
 
+const getTimeFromRetryCounter = (counter: number) => Math.pow(2, counter) - 1;
+
 const stoppedFarms = {
   contracts: [
     {
@@ -50,14 +52,33 @@ const stoppedFarms = {
   ]
 };
 
+export enum ConfigStatus {
+  UNINITIALIZED,
+  LOADING,
+  LOADED,
+}
+
 type Props = {
   initConfig: InitialConfig
 }
 
 export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props>) {
+  const [configStatus, setConfigStatus] = useState<ConfigStatus>(
+    ConfigStatus.UNINITIALIZED
+  );
   const [config, setConfig] = useState<ContextValue>();
+  const [retryTime, setRetryTime] = useState<number>(0);
 
   useEffect(() => {
+    setConfigStatus(ConfigStatus.LOADING);
+    const localConfigKey = `wrap-config-${initConfig.environmentName}`;
+    const localConfig = localStorage.getItem(localConfigKey);
+
+    if (localConfig != null) {
+      setConfig(JSON.parse(localConfig));
+      setConfigStatus(ConfigStatus.LOADED);
+    }
+
     const indexerApi = new IndexerApi(initConfig.indexerUrl);
     const statisticsApi = new StatisticsApi(initConfig.statisticsUrl);
 
@@ -162,20 +183,34 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         farmInput: initConfig.farmInput,
         oldFarms
       };
+      localStorage.setItem(localConfigKey, JSON.stringify(config));
       setConfig(config);
+      setConfigStatus(ConfigStatus.LOADED);
     };
-    // noinspection JSIgnoredPromiseFromCall
-    loadConfig();
+
+    const loadingWithRetries = async (counter = 1) => {
+      try {
+        await loadConfig();
+      } catch (_) {
+        const retrySecond = getTimeFromRetryCounter(counter);
+        console.warn(`Error fetching indexer config, retry in ${retrySecond}`);
+        setRetryTime(retrySecond);
+        await setTimeout(
+          () => loadingWithRetries(counter + 1),
+          retrySecond * 1000
+        );
+      }
+    };
+
+  // noinspection JSIgnoredPromiseFromCall
+    loadingWithRetries();
   }, []);
 
   return (
     <>
-      {!config ? (
-        <Container maxWidth='lg'
-                   sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 10 }}>
-          <CircularProgress color='primary' />
-        </Container>
-      ) : (
+      {configStatus !== ConfigStatus.LOADED ? (
+          <LoadingScreen retryTime={retryTime}/>
+        ):(
         <ConfigContext.Provider value={config}>
           {children}
         </ConfigContext.Provider>
