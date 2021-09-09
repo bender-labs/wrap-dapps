@@ -2,7 +2,7 @@ import { NftInstance } from '../api/types';
 import { createEthereumNftApi } from '../api/EthereumNftApi';
 import { useEffect, useMemo, useState } from 'react';
 import { NonFungibleToken } from '@wrap-dapps/api';
-import { useIndexerApi } from '@wrap-dapps/components';
+import { useConfig, useIndexerApi } from '@wrap-dapps/components';
 import { ethers } from 'ethers';
 
 export interface NftQuery {
@@ -23,6 +23,7 @@ export function useTezosNftQuery(props: Props): NftQuery {
   const { tezosAccount, ethereumToolkit, nftCollection, limitPerPage, currentPage } = props;
   const [state, setState] = useState<NftQuery>({ loading: false, tokens: [], totalTokens: 0 });
   const indexerApi = useIndexerApi();
+  const { indexerUrl } = useConfig();
   const nftApi = useMemo(() => createEthereumNftApi(ethereumToolkit), [ethereumToolkit]);
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export function useTezosNftQuery(props: Props): NftQuery {
         const indexerTezosNftPayload = await indexerApi.fetchTezosNft(tezosAccount, nftCollection.tezosWrappingContract);
         const currentOffset = limitPerPage * (currentPage - 1);
         const results = await Promise.all(indexerTezosNftPayload.result.slice(currentOffset, currentOffset + limitPerPage).map(async (payload): Promise<NftInstance> => {
-          return await nftApi.fetchNftTokenMetadata(nftCollection, payload.tokenId);
+          return await nftApi.fetchNftTokenMetadata(nftCollection, payload.tokenId, indexerUrl);
         }));
         setState({ loading: false, tokens: results, totalTokens: indexerTezosNftPayload.result.length });
       }

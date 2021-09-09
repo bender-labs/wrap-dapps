@@ -7,7 +7,8 @@
     "build": "razzle build",
     "build:ni": "razzle build --noninteractive",
     "test": "razzle test --env=jsdom",
-    "build:staging": "dotenv -e .env.development yarn build:ni"
+    "build:staging": "dotenv -e .env.development yarn build:ni",
+    "build:prod": "dotenv -e .env.production yarn build:ni"
   },
   "private": true,
   "dependencies": {

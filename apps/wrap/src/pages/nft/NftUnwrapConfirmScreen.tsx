@@ -5,6 +5,7 @@ import { createEthereumNftApi } from '../../features/nft/api/EthereumNftApi';
 import { nftUnwrapOperationPage, paths } from '../routes';
 import { NftUnwrapConfirmStep } from '../../features/unwrapnft/components/NftUnwrapConfirmStep';
 import { useNftUnwrap } from '../../features/unwrapnft/hooks/useNftUnwrap';
+import { useConfig } from '@wrap-dapps/components';
 
 type NftUnwrapConfirmState = {
   loading: boolean;
@@ -16,6 +17,7 @@ export function NftUnwrapConfirmScreen() {
     loading: true
   });
   const { ethereumLibrary } = useEthereumWalletContext();
+  const { indexerUrl } = useConfig();
   const nftApi = useMemo(() => createEthereumNftApi(ethereumLibrary()!), [ethereumLibrary]);
   const history = useHistory();
 
@@ -47,7 +49,7 @@ export function NftUnwrapConfirmScreen() {
   useEffect(() => {
     const loadToken = async () => {
       const nftCollection = Object.values(nonFungibleTokens).find((availableToken) => (availableToken.ethereumContractAddress === nftCollectionAddress)) ?? null;
-      const nftInstance = nftCollection && tokenId ? await nftApi.fetchNftTokenMetadata(nftCollection, tokenId) : null;
+      const nftInstance = nftCollection && tokenId ? await nftApi.fetchNftTokenMetadata(nftCollection, tokenId, indexerUrl) : null;
       setNft(nftCollection, nftInstance);
       setNftUnwrapConfirmState({
         loading: false

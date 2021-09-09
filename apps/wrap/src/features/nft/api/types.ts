@@ -26,7 +26,7 @@ export interface Cursor {
 }
 
 export interface EthereumNftApi {
-  fetchNftTokensWithMetadata(nftCollection: NonFungibleToken, address: string, cursor?: Cursor): Promise<NftPage>;
+  fetchNftTokensWithMetadata(nftCollection: NonFungibleToken, address: string, indexerUrl: string, cursor?: Cursor): Promise<NftPage>;
 
-  fetchNftTokenMetadata(nftCollection: NonFungibleToken, tokenId: string): Promise<NftInstance>;
+  fetchNftTokenMetadata(nftCollection: NonFungibleToken, tokenId: string, indexerUrl: string): Promise<NftInstance>;
 }
