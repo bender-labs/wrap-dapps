@@ -79,7 +79,7 @@ render(
       <ThemeProvider>
         <Web3ReactProvider getLibrary={getLibrary}>
           <ConfigProvider initConfig={initConfig}>
-            <TezosWalletProvider name={'Benderlabs NFT Bridge'}>
+            <TezosWalletProvider name={'Wrap Protocol'}>
               <EthereumWalletProvider>
                 <BrowserRouter>
                   <NavBar routes={routes} showEthereumWallet={true} showTezosWallet={true}
