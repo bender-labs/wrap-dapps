@@ -83,7 +83,7 @@ export function NftUnwrapConfirmStep({
         {nftInstance &&
         <CardMedia sx={{
           height: 0,
-          backgroundImage: '100%',
+          backgroundSize: 'contain',
           paddingTop: '100%'
         }} image={nftInstance.thumbnailUri} title={nftInstance.name}
         />}
