@@ -45,7 +45,9 @@ const StyledTable = styled(Table)(() => ({
 
 const renderRow = (
   op: ERC721Operation,
-  tokensByEthAddress: Record<string, NonFungibleToken>
+  tokensByEthAddress: Record<string, NonFungibleToken>,
+  tzktLink: string,
+  etherscanLink: string
 ) => {
   switch (op.type) {
     case OperationType.WRAP_NFT:
@@ -62,7 +64,7 @@ const renderRow = (
           <StyledTableCellBody align='center'>{op.status.type}</StyledTableCellBody>
           <StyledTableCellBody align='center'>
             <Link
-              href={`https://etherscan.io/tx/${op.hash}`}
+              href={`${etherscanLink}tx/${op.hash}`}
               rel='noreferrer'
               target='_blank'
               color='inherit'
@@ -86,7 +88,7 @@ const renderRow = (
           <StyledTableCellBody align='center'>{op.status.type}</StyledTableCellBody>
           <StyledTableCellBody align='center'>
             <Link
-              href={`https://tzkt.io/${op.hash}`}
+              href={`${tzktLink}${op.hash}`}
               rel='noreferrer'
               color='inherit'
               target='_blank'
@@ -102,9 +104,16 @@ const renderRow = (
 export type OperationsProps = {
   operations: ERC721Operation[];
   nonFungibleTokens: Record<string, NonFungibleToken>;
+  tzktLink: string;
+  etherscanLink: string;
 };
 
-export default function NFTHistoryOperations({ operations, nonFungibleTokens }: OperationsProps) {
+export default function NFTHistoryOperations({
+                                               operations,
+                                               nonFungibleTokens,
+                                               tzktLink,
+                                               etherscanLink
+                                             }: OperationsProps) {
   const tokensByEthAddress = useMemo(
     () =>
       Object.entries(nonFungibleTokens).reduce<Record<string, NonFungibleToken>>(
@@ -136,7 +145,7 @@ export default function NFTHistoryOperations({ operations, nonFungibleTokens }: 
             </TableHead>
             <TableBody>
               {active ? (
-                operations.map((op) => renderRow(op, tokensByEthAddress))
+                operations.map((op) => renderRow(op, tokensByEthAddress, tzktLink, etherscanLink))
               ) : (
                 <TableRow>
                   <TableCell>No data to display...</TableCell>

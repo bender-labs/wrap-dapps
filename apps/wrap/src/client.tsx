@@ -70,7 +70,8 @@ const initConfig: InitialConfig = {
     networkName: process.env.RAZZLE_TZ_NETWORK_NAME!
   },
   tzktLink: process.env.RAZZLE_TZKT_LINK!,
-  farmInput: process.env.RAZZLE_FARM_INPUT! === WRAP_GRANADA_TESTNET.contractAddress ? WRAP_GRANADA_TESTNET : WRAP_MAINNET
+  farmInput: process.env.RAZZLE_FARM_INPUT! === WRAP_GRANADA_TESTNET.contractAddress ? WRAP_GRANADA_TESTNET : WRAP_MAINNET,
+  etherscanLink: process.env.RAZZLE_ETHERSCAN_LINK!
 };
 
 render(

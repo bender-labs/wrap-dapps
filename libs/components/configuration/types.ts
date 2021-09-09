@@ -23,6 +23,7 @@ export interface Config {
   environmentName: string;
   indexerUrl: string;
   statisticsUrl: string;
+  tzktLink: string;
   ethereum: EthereumConfig;
   tezos: TezosConfig;
   wrapSignatureThreshold: number;
@@ -33,6 +34,7 @@ export interface Config {
   farms: FarmConfig[];
   farmInput: FarmStakedToken;
   oldFarms: FarmConfig[];
+  etherscanLink: string;
 }
 
 export interface InitialConfig {
@@ -53,6 +55,7 @@ export interface InitialConfig {
   };
   tzktLink: string;
   farmInput: FarmStakedToken;
+  etherscanLink: string;
 }
 
 export enum Environment {

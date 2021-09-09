@@ -52,6 +52,7 @@ export default function Farm() {
   const { farm } = useFarm(farm_address);
 
   const { farmBalances, farmLoading, refreshFarmingContract } = useFarmingContract(farm.farmContractAddress);
+
   const {
     balance,
     loading,

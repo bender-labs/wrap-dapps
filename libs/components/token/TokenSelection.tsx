@@ -75,7 +75,7 @@ export function TokenSelection({
           </MenuItem>
         ))}
       </Select>
-      <FormHelperText sx={{ paddingTop: 2 }}>Only supported token are listed</FormHelperText>
+      <FormHelperText sx={{ paddingTop: 2 }}>Only supported tokens are listed</FormHelperText>
     </FormControl>
   );
 }

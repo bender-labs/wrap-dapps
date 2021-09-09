@@ -8,7 +8,7 @@ import {
   PaperNav,
   PaperTitle
 } from '@wrap-dapps/components';
-import { Checkbox, IconButton, styled, Typography } from '@mui/material';
+import { Box, Checkbox, IconButton, styled, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import React from 'react';
 import BigNumber from 'bignumber.js';
@@ -22,13 +22,15 @@ const Description = styled(Typography)(() => ({
   fontWeight: 'bold'
 }));
 
-// const Background = styled(PaperContent)(() => ({
-//   backgroundColor: '#C4C4C4'
-// }));
+const PaperAlternate = styled(Box)(({theme}) => ({
+  padding: theme.spacing(2),
+  backgroundColor: '#C4C4C4'
+}));
 
-// const PaperWithoutPadding = styled(PaperContent)(() => ({
-//   padding: '0'
-// }));
+const PaperWithoutPadding = styled(Box)(() => ({
+  backgroundColor: '#E5E5E5',
+  padding: '0'
+}));
 
 export type WrapConfirmStepProps = {
   token: FungibleToken;
@@ -103,7 +105,7 @@ export function WrapConfirmStep({
         <LabelAndValue label={'From'} value={sendingAddress} />
         <LabelAndValue label={'To'} value={recipientAddress} />
       </PaperContent>
-      <PaperContent>
+      <PaperAlternate>
         <Description variant={'body2'}>
           Fees
         </Description>
@@ -118,19 +120,18 @@ export function WrapConfirmStep({
           decimals={18}
           value={networkFees}
           symbol={'ETH'}
-          emptyState={networkFees.lte(0)}
+          emptyState={networkFees.isNaN() || networkFees.lte(0)}
           emptyStatePlaceHolder={'Awaiting for allowance'}
         />
-      </PaperContent>
-
-      <PaperContent>
+      </PaperAlternate>
+      <PaperWithoutPadding>
         <AssetSummary
           label={'You will receive'}
           value={amount.minus(currentFees)}
           decimals={token.decimals}
           symbol={token.tezosSymbol}
         />
-      </PaperContent>
+      </PaperWithoutPadding>
       <PaperContent style={{ display: 'flex', padding: '20px 26px 0px 26px' }}>
         <Checkbox
           disabled={disabled}

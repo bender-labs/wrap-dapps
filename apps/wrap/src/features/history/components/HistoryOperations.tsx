@@ -59,7 +59,9 @@ const itemIcon = (
 
 const renderRow = (
   op: ERC20Operation,
-  tokensByEthAddress: Record<string, FungibleToken>
+  tokensByEthAddress: Record<string, FungibleToken>,
+  tzktLink: string,
+  etherscanLink: string
 ) => {
   switch (op.type) {
     case OperationType.WRAP:
@@ -78,7 +80,7 @@ const renderRow = (
           <StyledTableCellBody align='center'>{op.status.type}</StyledTableCellBody>
           <StyledTableCellBody align='center'>
             <Link
-              href={`https://etherscan.io/tx/${op.hash}`}
+              href={`${etherscanLink}tx/${op.hash}`}
               rel='noreferrer'
               target='_blank'
               color='inherit'
@@ -104,7 +106,7 @@ const renderRow = (
           <StyledTableCellBody align='center'>{op.status.type}</StyledTableCellBody>
           <StyledTableCellBody align='center'>
             <Link
-              href={`https://tzkt.io/${op.hash}`}
+              href={`${tzktLink}${op.hash}`}
               rel='noreferrer'
               color='inherit'
               target='_blank'
@@ -120,9 +122,11 @@ const renderRow = (
 export type OperationsProps = {
   operations: ERC20Operation[];
   fungibleTokens: Record<string, FungibleToken>;
+  tzktLink: string;
+  etherscanLink: string;
 };
 
-export default function HistoryOperations({ operations, fungibleTokens }: OperationsProps) {
+export default function HistoryOperations({ operations, fungibleTokens, tzktLink, etherscanLink }: OperationsProps) {
   const tokensByEthAddress = useMemo(
     () =>
       Object.entries(fungibleTokens).reduce<Record<string, FungibleToken>>(
@@ -153,7 +157,7 @@ export default function HistoryOperations({ operations, fungibleTokens }: Operat
             </TableHead>
             <TableBody>
               {active ? (
-                operations.map((op) => renderRow(op, tokensByEthAddress))
+                operations.map((op) => renderRow(op, tokensByEthAddress, tzktLink, etherscanLink))
               ) : (
                 <TableRow>
                   <TableCell>No data to display...</TableCell>

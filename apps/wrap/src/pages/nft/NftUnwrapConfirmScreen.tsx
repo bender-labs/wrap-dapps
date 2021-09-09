@@ -60,7 +60,7 @@ export function NftUnwrapConfirmScreen() {
 
   useEffect(() => {
     if (!nftUnwrapConfirmState.loading && !nftInstance) {
-      history.push(paths.TEZOS_DASHBOARD);
+      history.push(paths.UNWRAP_NFT);
     }
   }, [nftUnwrapConfirmState]);
 
@@ -69,7 +69,7 @@ export function NftUnwrapConfirmScreen() {
                           sendingAddress={tezosAccount()!}
                           recipientAddress={ethereumAccount()!}
                           onPrevious={() => {
-                            history.push(paths.TEZOS_DASHBOARD);
+                            history.push(paths.UNWRAP_NFT);
                           }}
                           networkFees={networkFees}
                           status={status}

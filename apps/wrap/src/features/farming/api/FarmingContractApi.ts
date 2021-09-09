@@ -92,7 +92,6 @@ export default class FarmingContractApi {
       views.get_earned().executeView(owner),
       views.total_supply().executeView()
     ]);
-
     return { totalSupply, staked, reward };
   }
 

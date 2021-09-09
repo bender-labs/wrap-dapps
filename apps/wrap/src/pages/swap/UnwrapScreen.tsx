@@ -7,7 +7,7 @@ import {
   usePendingOperationsActions,
   useUnwrap
 } from '@wrap-dapps/features';
-import { unwrapPage } from '../routes';
+import { unwrapOperationPage } from '../routes';
 import { SwapDirectionTab } from '../../features/swap/components/SwapDirectionTab';
 import { Container } from '@mui/material';
 
@@ -48,7 +48,7 @@ export function UnwrapScreen() {
     }
     const nextStep = async () => {
       await addOperation(operation);
-      history.push(unwrapPage(operation));
+      history.push(unwrapOperationPage(operation));
     };
     // noinspection JSIgnoredPromiseFromCall
     nextStep();
@@ -67,7 +67,7 @@ export function UnwrapScreen() {
       return;
     }
     await addOperation(op);
-    history.push(unwrapPage(op));
+    history.push(unwrapOperationPage(op));
     return op;
   };
 

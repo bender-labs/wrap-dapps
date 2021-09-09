@@ -20,18 +20,17 @@ import { UnwrapOperationScreen } from './swap/UnwrapOperationScreen';
 import HistoryWrapOperationsScreen from './history/HistoryWrapOperationsScreen';
 import HistoryUnwrapOperationsScreen from './history/HistoryUnwrapOperationsScreen';
 
+const wrapNftPath = '/wrap-nft';
+const unwrapNftPath = '/unwrap-nft';
 const confirmWrapNftPath = '/confirm-wrap-nft';
 const confirmUnwrapNftPath = '/confirm-unwrap-nft';
-const wrapNftOperationPath = '/wrap-nft';
-const unwrapNftOperationPath = '/unwrap-nft';
 
+const WRAP_NFT = wrapNftPath;
+const UNWRAP_NFT = unwrapNftPath;
 const CONFIRM_NFT_WRAP = confirmWrapNftPath + '/:nftCollectionAddress/:tokenId';
-const NFT_WRAP_OPERATION = wrapNftOperationPath + '/:transactionHash';
 const CONFIRM_NFT_UNWRAP = confirmUnwrapNftPath + '/:nftCollectionAddress/:tokenId';
-const NFT_UNWRAP_OPERATION = unwrapNftOperationPath + '/:transactionHash';
-
-const ETHEREUM_DASHBOARD = '/ethereum';
-const TEZOS_DASHBOARD = '/tezos';
+const NFT_WRAP_OPERATION = wrapNftPath + '/:transactionHash';
+const NFT_UNWRAP_OPERATION = unwrapNftPath + '/:transactionHash';
 
 const HISTORY_WRAP = '/history/wrap';
 const HISTORY_UNWRAP = '/history/unwrap';
@@ -49,15 +48,15 @@ const ALL_FARMS_UNSTAKE = `${FARMING_ROOT}/all_farms/unstake`;
 const ALL_FARMS_CLAIM = `${FARMING_ROOT}/all_farms/claim`;
 
 const WRAP = '/wrap';
-const WRAP_FINALIZE = '/wrap/:transactionHash';
-const UNWRAP_FINALIZE = '/unwrap/:transactionHash';
 const UNWRAP = '/unwrap';
+const WRAP_OPERATION = '/wrap/:transactionHash';
+const UNWRAP_OPERATION = '/unwrap/:transactionHash';
 
 export const paths = {
   CONFIRM_NFT_WRAP,
   NFT_WRAP_OPERATION,
-  ETHEREUM_DASHBOARD,
-  TEZOS_DASHBOARD,
+  WRAP_NFT,
+  UNWRAP_NFT,
   HISTORY_WRAP,
   HISTORY_UNWRAP,
   HISTORY_WRAP_NFT,
@@ -72,21 +71,19 @@ export const paths = {
   ALL_FARMS_UNSTAKE,
   ALL_FARMS_CLAIM,
   WRAP,
-  WRAP_FINALIZE,
-  UNWRAP_FINALIZE,
+  WRAP_OPERATION,
+  UNWRAP_OPERATION,
   UNWRAP
 };
 
-export const nftWrapOperationPage = (op: Operation) => `${wrapNftOperationPath}/${op.hash}`;
-export const nftUnwrapOperationPage = (op: Operation) => `${unwrapNftOperationPath}/${op.hash}`;
+export const nftWrapOperationPage = (op: Operation) => `${wrapNftPath}/${op.hash}`;
+export const nftUnwrapOperationPage = (op: Operation) => `${unwrapNftPath}/${op.hash}`;
 export const confirmNftWrap = (nftInstance: NftInstance) => `${confirmWrapNftPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
 export const confirmNftUnwrap = (nftInstance: NftInstance) => `${confirmUnwrapNftPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
-export const farmStakePageRoute = (farmContract: string) =>
-  FARM_STAKE.replace(':farm_address', farmContract);
-export const oldFarmUnstakePageRoute = (farmContract: string) =>
-  OLD_FARM_UNSTAKE.replace(':farm_address', farmContract);
-export const wrapPage = (op: Operation) => `/wrap/${op.hash}`;
-export const unwrapPage = (op: Operation) => `/unwrap/${op.hash}`;
+export const farmStakePageRoute = (farmContract: string) => FARM_STAKE.replace(':farm_address', farmContract);
+export const oldFarmUnstakePageRoute = (farmContract: string) => OLD_FARM_UNSTAKE.replace(':farm_address', farmContract);
+export const wrapOperationPage = (op: Operation) => `/wrap/${op.hash}`;
+export const unwrapOperationPage = (op: Operation) => `/unwrap/${op.hash}`;
 
 export const routes: AppRoute[] = [
   {
@@ -97,7 +94,7 @@ export const routes: AppRoute[] = [
     navRoute: true
   }, {
     component: WrapOperationScreen,
-    path: WRAP_FINALIZE,
+    path: WRAP_OPERATION,
     external: false,
     navRoute: false
   }, {
@@ -107,18 +104,18 @@ export const routes: AppRoute[] = [
     navRoute: false
   }, {
     component: UnwrapOperationScreen,
-    path: UNWRAP_FINALIZE,
+    path: UNWRAP_OPERATION,
     external: false,
     navRoute: false
   }, {
     name: 'NFT Wrap',
     component: NftWrapSelectorScreen,
-    path: ETHEREUM_DASHBOARD,
+    path: WRAP_NFT,
     external: false,
     navRoute: true
   }, {
     component: NftUnwrapSelectorScreen,
-    path: TEZOS_DASHBOARD,
+    path: UNWRAP_NFT,
     external: false,
     navRoute: false
   }, {

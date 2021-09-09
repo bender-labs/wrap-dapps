@@ -149,6 +149,8 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         environmentName: initConfig.environmentName,
         indexerUrl: initConfig.indexerUrl,
         statisticsUrl: initConfig.statisticsUrl,
+        tzktLink: initConfig.tzktLink,
+        etherscanLink: initConfig.etherscanLink,
         ethereum: {
           ...initConfig.ethereum,
           custodianContractAddress: indexerConfig.ethereumWrapContract

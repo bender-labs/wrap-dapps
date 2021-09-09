@@ -5,8 +5,11 @@ import { styled, Tab, Tabs } from '@mui/material';
 import { paths } from '../../../pages/routes';
 
 const StyledTabs = styled(Tabs)(() => ({
-  color: 'white',
   marginBottom: '10px'
+}));
+
+const StyledTab = styled(Tab)(() => ({
+  color: 'white'
 }));
 
 export default function HistoryTab() {
@@ -20,9 +23,9 @@ export default function HistoryTab() {
   );
 
   return <StyledTabs value={path} onChange={onTabChange} indicatorColor='primary'>
-    <Tab label='Wraps' value={paths.HISTORY_WRAP} />
-    <Tab label='Unwraps' value={paths.HISTORY_UNWRAP} />
-    <Tab label='NFT Wraps' value={paths.HISTORY_WRAP_NFT} />
-    <Tab label='NFT Unwraps' value={paths.HISTORY_UNWRAP_NFT} />
+    <StyledTab label='Wraps' value={paths.HISTORY_WRAP} />
+    <StyledTab label='Unwraps' value={paths.HISTORY_UNWRAP} />
+    <StyledTab label='NFT Wraps' value={paths.HISTORY_WRAP_NFT} />
+    <StyledTab label='NFT Unwraps' value={paths.HISTORY_UNWRAP_NFT} />
   </StyledTabs>;
 }

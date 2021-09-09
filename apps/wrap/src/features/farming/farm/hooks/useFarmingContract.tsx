@@ -25,7 +25,7 @@ export default function useFarmingContract(farmingContractAddress: string) {
   }, [tezosLibrary, farmingContractAddress, tezosAccount]);
 
   useEffect(() => {
-    if (state.type === TezosStateType.CONNECTED || !tezosAccount) {
+    if (state.type !== TezosStateType.CONNECTED || !tezosAccount) {
       setBalances(initialState);
       return;
     }

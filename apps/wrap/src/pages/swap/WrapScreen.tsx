@@ -7,7 +7,7 @@ import {
 } from '@wrap-dapps/features';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { wrapPage } from '../routes';
+import { wrapOperationPage } from '../routes';
 import { SwapDirectionTab } from '../../features/swap/components/SwapDirectionTab';
 import { Container } from '@mui/material';
 
@@ -48,7 +48,7 @@ export function WrapScreen() {
       return;
     }
     await addOperation(op);
-    history.push(wrapPage(op));
+    history.push(wrapOperationPage(op));
     return op;
   };
   useEffect(() => {
