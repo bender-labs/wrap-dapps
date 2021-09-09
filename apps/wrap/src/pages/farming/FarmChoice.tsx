@@ -2,12 +2,12 @@ import { Box, Container, Grid, IconButton, styled, Typography } from '@mui/mater
 import React from 'react';
 import FarmList, { FarmStyle } from './FarmList';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { PaperContent, useConfig } from '@wrap-dapps/components';
+import { useConfig } from '@wrap-dapps/components';
 import { useHistory } from 'react-router';
 import { farmStakePageRoute, oldFarmUnstakePageRoute, paths } from '../routes';
 import BigNumber from 'bignumber.js';
 
-const StyledPaperContent = styled(PaperContent)(() => ({
+const StyledPaperContent = styled(Box)(() => ({
   borderRadius: '10px 10px 10px 10px',
   backgroundColor: 'white',
   marginBottom: '17px',
@@ -84,10 +84,12 @@ export default function FarmChoice() {
     };
 
     return (
-      <StyledPaperContent>
-        <Grid container alignItems={'center'} onClick={changeUri} justifyContent={'space-between'} sx={{'&:hover': {
+      <StyledPaperContent p={2}>
+        <Grid container alignItems={'center'} onClick={changeUri} justifyContent={'space-between'} sx={{
+          '&:hover': {
             cursor: 'pointer'
-          }}}>
+          }
+        }}>
           <GridImages item>
             <img alt={'stake all'} src='/static/images/wrap3gif.gif' />
           </GridImages>

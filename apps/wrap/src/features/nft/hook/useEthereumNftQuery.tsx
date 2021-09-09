@@ -25,12 +25,14 @@ export function useEthereumNftQuery(props: Props): NftQuery {
 
   useEffect(() => {
     const fetch = async () => {
-      setState({ ...state, loading: true });
-      const result = await nftApi.fetchNftTokensWithMetadata(nftCollection, ethereumAccount, {
-        limit: limitPerPage,
-        offset: limitPerPage * (currentPage - 1)
-      });
-      setState({ loading: false, tokens: result.results, totalTokens: result.total });
+      if (nftCollection) {
+        setState({ ...state, loading: true });
+        const result = await nftApi.fetchNftTokensWithMetadata(nftCollection, ethereumAccount, {
+          limit: limitPerPage,
+          offset: limitPerPage * (currentPage - 1)
+        });
+        setState({ loading: false, tokens: result.results, totalTokens: result.total });
+      }
     };
     // noinspection JSIgnoredPromiseFromCall
     fetch();

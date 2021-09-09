@@ -35,7 +35,7 @@ export const NftWrapSelectorScreen = () => {
           <CardContent sx={{ padding: 4 }}>
             <Typography>Choose an NFT Collection :</Typography>
             <TokenSelection
-              token={selectedNftCollection.ethereumSymbol}
+              token={selectedNftCollection?.ethereumSymbol ?? ''}
               disabled={false}
               onTokenSelect={(tokenId) => {
                 setSelectedNftCollection(nonFungibleTokens[tokenId]);

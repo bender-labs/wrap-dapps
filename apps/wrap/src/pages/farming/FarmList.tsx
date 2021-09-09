@@ -1,5 +1,5 @@
-import { FarmConfig, PaperContent, TezosTokenIcon, useTezosWalletContext } from '@wrap-dapps/components';
-import { Grid, IconButton, styled, Typography } from '@mui/material';
+import { FarmConfig, TezosTokenIcon, useTezosWalletContext } from '@wrap-dapps/components';
+import { Box, Grid, IconButton, styled, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
@@ -10,7 +10,7 @@ export enum FarmStyle {
   OLD
 }
 
-const MainPaperContent = styled(PaperContent)(() => ({
+const MainPaperContent = styled(Box)(() => ({
   borderRadius: '10px 10px 10px 10px',
   backgroundColor: 'white',
   transition: 'background-color 1s ease',
@@ -19,7 +19,7 @@ const MainPaperContent = styled(PaperContent)(() => ({
   }
 }));
 
-const OldPaperContent = styled(PaperContent)(() => ({
+const OldPaperContent = styled(Box)(() => ({
   borderRadius: '10px 10px 10px 10px',
   backgroundColor: '#B1B1B1',
   transition: 'background-color 1s ease',
@@ -158,7 +158,7 @@ function MainFarmSelector({ currentTezosLevel, farmConfig, onClick }: {
   onClick: () => void;
 }) {
   return (
-    <MainPaperContent>
+    <MainPaperContent p={2}>
       <FarmSelector currentTezosLevel={currentTezosLevel} farmConfig={farmConfig} onClick={onClick} />
     </MainPaperContent>
   );
@@ -170,7 +170,7 @@ function OldFarmSelector({ currentTezosLevel, farmConfig, onClick }: {
   onClick: () => void;
 }) {
   return (
-    <OldPaperContent>
+    <OldPaperContent p={2}>
       <FarmSelector currentTezosLevel={currentTezosLevel} farmConfig={farmConfig} onClick={onClick} />
     </OldPaperContent>
   );

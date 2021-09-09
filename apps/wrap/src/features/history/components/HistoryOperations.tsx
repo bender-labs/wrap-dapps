@@ -52,7 +52,7 @@ const renderRow = (
       return (
         <StyledTableRow key={op.hash}>
           <StyledTableCellBody align='center'>
-            {tokensByEthAddress[op.token].ethereumName}
+            {tokensByEthAddress[op.token]?.ethereumName}
           </StyledTableCellBody>
           <StyledTableCellBody align='center'>
             {op.tokenId}
@@ -76,7 +76,7 @@ const renderRow = (
       return (
         <StyledTableRow key={op.hash}>
           <StyledTableCellBody align='center'>
-            {tokensByEthAddress[op.token].ethereumName}
+            {tokensByEthAddress[op.token]?.ethereumName}
           </StyledTableCellBody>
           <StyledTableCellBody align='center'>
             {op.tokenId}

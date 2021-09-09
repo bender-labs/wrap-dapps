@@ -104,8 +104,7 @@ export const routes: AppRoute[] = [
     path: UNWRAP_FINALIZE,
     external: false,
     navRoute: false
-  },
-  {
+  }, {
     name: 'NFT Wrap',
     component: NftWrapSelectorScreen,
     path: ETHEREUM_DASHBOARD,

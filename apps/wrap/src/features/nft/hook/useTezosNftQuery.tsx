@@ -27,13 +27,15 @@ export function useTezosNftQuery(props: Props): NftQuery {
 
   useEffect(() => {
     const fetch = async () => {
-      setState({ ...state, loading: true });
-      const indexerTezosNftPayload = await indexerApi.fetchTezosNft(tezosAccount, nftCollection.tezosWrappingContract);
-      const currentOffset = limitPerPage * (currentPage - 1);
-      const results = await Promise.all(indexerTezosNftPayload.result.slice(currentOffset, currentOffset + limitPerPage).map(async (payload): Promise<NftInstance> => {
-        return await nftApi.fetchNftTokenMetadata(nftCollection, payload.tokenId);
-      }));
-      setState({ loading: false, tokens: results, totalTokens: indexerTezosNftPayload.result.length });
+      if (nftCollection) {
+        setState({ ...state, loading: true });
+        const indexerTezosNftPayload = await indexerApi.fetchTezosNft(tezosAccount, nftCollection.tezosWrappingContract);
+        const currentOffset = limitPerPage * (currentPage - 1);
+        const results = await Promise.all(indexerTezosNftPayload.result.slice(currentOffset, currentOffset + limitPerPage).map(async (payload): Promise<NftInstance> => {
+          return await nftApi.fetchNftTokenMetadata(nftCollection, payload.tokenId);
+        }));
+        setState({ loading: false, tokens: results, totalTokens: indexerTezosNftPayload.result.length });
+      }
     };
     // noinspection JSIgnoredPromiseFromCall
     fetch();

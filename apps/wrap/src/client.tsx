@@ -8,7 +8,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
   ConfigProvider,
-  EthereumWalletProvider, InitialConfig,
+  DisplayEnvironment,
+  EthereumWalletProvider,
+  InitialConfig,
   NavBar,
   TezosWalletProvider,
   ThemeProvider
@@ -39,7 +41,7 @@ const WRAP_MAINNET: FarmStakedToken = {
   decimals: 8,
   symbol: 'WRAP',
   name: 'WRAP',
-  tokenId: 0,
+  tokenId: 0
 };
 
 const WRAP_GRANADA_TESTNET: FarmStakedToken = {
@@ -48,7 +50,7 @@ const WRAP_GRANADA_TESTNET: FarmStakedToken = {
   decimals: 8,
   symbol: 'WRAP',
   name: 'WRAP',
-  tokenId: 0,
+  tokenId: 0
 };
 
 const initConfig: InitialConfig = {
@@ -83,6 +85,7 @@ render(
                   <NavBar routes={routes} showEthereumWallet={true} showTezosWallet={true}
                           showOperationHistory={true} />
                   <App />
+                  <DisplayEnvironment />
                 </BrowserRouter>
               </EthereumWalletProvider>
             </TezosWalletProvider>

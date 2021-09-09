@@ -83,6 +83,28 @@ export default (props: Props) => {
     ));
   };
 
+  const externalLinks = () => {
+    return (
+      <>
+        <Grid item key='liquidity-external'>
+          <StyledTypography variant='h6'>
+            <Link component={RouterLink} target="_blank" color='inherit' to={{ pathname: 'https://liquidity.tzwrap.com/' }}
+                  underline='none'>
+              Liquidity <StyledLaunchIcon />
+            </Link>
+          </StyledTypography>
+        </Grid>
+        <Grid item key='info-external'>
+          <StyledTypography variant='h6'>
+            <Link component={RouterLink} target="_blank" color='inherit' to={{ pathname: 'https://info.tzwrap.com/' }} underline='none'>
+              Info <StyledLaunchIcon />
+            </Link>
+          </StyledTypography>
+        </Grid>
+      </>
+    );
+  };
+
   return (
     <>
       <AppBar position='static'>
@@ -93,6 +115,7 @@ export default (props: Props) => {
             </Grid>
             <Box sx={{ display: { xs: 'none', md: 'inherit' } }}>
               {buildNavLinks(routes)}
+              {externalLinks()}
             </Box>
           </Grid>
           <Grid container direction='row' justifyContent='flex-end' alignItems='center'
@@ -102,12 +125,12 @@ export default (props: Props) => {
               <OperationHistoryDialog />
             </Grid>}
             {showTezosWallet && <Grid item>
-              <Box sx={{margin: 1}}>
+              <Box sx={{ margin: 1 }}>
                 <TezosConnectionButton />
               </Box>
             </Grid>}
             {showEthereumWallet && <Grid item>
-              <Box sx={{margin: 1}}>
+              <Box sx={{ margin: 1 }}>
                 <EthereumConnectionButton />
               </Box>
             </Grid>}

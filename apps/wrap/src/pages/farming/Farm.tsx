@@ -19,6 +19,7 @@ const StyledTabs = styled(Tabs)(() => ({
 }));
 
 const StyledTab = styled(Tab)(() => ({
+  color: 'white',
   textTransform: 'none',
   fontWeight: 900
 }));
