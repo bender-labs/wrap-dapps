@@ -28,12 +28,16 @@ async function getTokenMetadata(contract: ethers.Contract, tokenId: string): Pro
 
 function ipfsUrlToHttpsUrl(url: string): string {
   if (url.startsWith('ipfs://')) {
-    return `https://cloudflare-ipfs.com/ipfs/${url.replace('ipfs://', '')}`;
+    return `https://ipfs.io/ipfs/${url.replace('ipfs://', '')}`;
   }
   return url;
 }
 
 async function fetchMetadata(url: string, indexerUrl: string): Promise<any> {
+  if (url.startsWith('ipfs://')) {
+    const metadata = await axios.get(`https://ipfs.io/ipfs/${url.replace('ipfs://', '')}`);
+    return metadata.data;
+  }
   const metadata = await axios.get(`${indexerUrl}/nfts/metadata-proxy?url=${url}`);
   return metadata.data;
 }
