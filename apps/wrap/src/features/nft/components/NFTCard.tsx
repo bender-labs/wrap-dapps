@@ -23,12 +23,15 @@ export const NFTCard = ({ token, link, linkLabel }: NFTCardProps) => {
           <CardContent>
             <CardMedia sx={{
               height: 0,
-              backgroundImage: '100%',
+              backgroundSize: 'contain',
               paddingTop: '100%'
             }} image={thumbnailUri} title={name}
             />
+            <Typography sx={{ color: shadeOfBlack, paddingTop: 1, fontSize: '10px' }} align='center'>
+              {nftCollection.ethereumName}
+            </Typography>
             <Typography sx={{ color: shadeOfBlack, paddingTop: 3 }} align='center'>
-              {nftCollection.ethereumName} - {name}
+              {name}
             </Typography>
           </CardContent>
           <CardActions sx={{display: 'flex', justifyContent: 'center', paddingBottom: 3}}>
