@@ -26,15 +26,15 @@ async function getTokenMetadata(contract: ethers.Contract, tokenId: string): Pro
   return { tokenId, metadataUrl: await contract.tokenURI(tokenId) };
 }
 
-async function fetchMetadata(url: string, indexerUrl: string): Promise<any> {
-  if (url.startsWith('https://')) {
-    const metadata = await axios.get(`${indexerUrl}/nfts/metadata-proxy?url=${url}`);
-    return metadata.data;
-  } else if (url.startsWith('ipfs://')) {
-    const metadata = await axios.get(`https://cloudflare-ipfs.com/ipfs/${url.replace('ipfs://', '')}`);
-    return metadata.data;
+function ipfsUrlToHttpsUrl(url: string): string {
+  if (url.startsWith('ipfs://')) {
+    return `https://cloudflare-ipfs.com/ipfs/${url.replace('ipfs://', '')}`;
   }
-  const metadata = await axios.get(url);
+  return url;
+}
+
+async function fetchMetadata(url: string, indexerUrl: string): Promise<any> {
+  const metadata = await axios.get(`${indexerUrl}/nfts/metadata-proxy?url=${url}`);
   return metadata.data;
 }
 
@@ -50,9 +50,9 @@ export const createEthereumNftApi: (toolkit: ethers.providers.Provider) => Ether
       const data = await fetchMetadata(metadataInfos.metadataUrl, indexerUrl);
       return {
         id: tokenId,
-        name: data.name,
+        name: data.name ? data.name : tokenId,
         description: data.description,
-        thumbnailUri: data.image,
+        thumbnailUri: ipfsUrlToHttpsUrl(data.image),
         attributes: [],
         nftCollection: nftCollection
       };
@@ -70,9 +70,9 @@ export const createEthereumNftApi: (toolkit: ethers.providers.Provider) => Ether
           return fetchMetadata(metadataUrl, indexerUrl)
             .then((data): NftInstance => ({
                 id: tokenId,
-                name: data.name,
+                name: data.name ? data.name : tokenId,
                 description: data.description,
-                thumbnailUri: data.image,
+                thumbnailUri: ipfsUrlToHttpsUrl(data.image),
                 attributes: [],
                 nftCollection: nftCollection
               })
