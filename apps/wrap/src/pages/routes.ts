@@ -7,8 +7,8 @@ import { NftWrapConfirmScreen } from './nft/NftWrapConfirmScreen';
 import NftWrapOperationScreen from './nft/NftWrapOperationScreen';
 import { NftUnwrapConfirmScreen } from './nft/NftUnwrapConfirmScreen';
 import NftUnwrapOperationScreen from './nft/NftUnwrapOperationScreen';
-import HistoryWrapOperationsScreen from './HistoryWrapOperationsScreen';
-import HistoryUnwrapOperationsScreen from './HistoryUnwrapOperationsScreen';
+import HistoryNftWrapOperationsScreen from './history/HistoryNftWrapOperationsScreen';
+import HistoryNftUnwrapOperationsScreen from './history/HistoryNftUnwrapOperationsScreen';
 import FarmChoice from './farming/FarmChoice';
 import Farm from './farming/Farm';
 import OldFarm from './farming/OldFarm';
@@ -17,6 +17,8 @@ import { WrapScreen } from './swap/WrapScreen';
 import { WrapOperationScreen } from './swap/WrapOperationScreen';
 import { UnwrapScreen } from './swap/UnwrapScreen';
 import { UnwrapOperationScreen } from './swap/UnwrapOperationScreen';
+import HistoryWrapOperationsScreen from './history/HistoryWrapOperationsScreen';
+import HistoryUnwrapOperationsScreen from './history/HistoryUnwrapOperationsScreen';
 
 const confirmWrapNftPath = '/confirm-wrap-nft';
 const confirmUnwrapNftPath = '/confirm-unwrap-nft';
@@ -33,6 +35,8 @@ const TEZOS_DASHBOARD = '/tezos';
 
 const HISTORY_WRAP = '/history/wrap';
 const HISTORY_UNWRAP = '/history/unwrap';
+const HISTORY_WRAP_NFT = '/history/wrap/nft';
+const HISTORY_UNWRAP_NFT = '/history/unwrap/nft';
 
 const FARMING_ROOT = '/farming';
 const FARM_PARAMETER = '/farm/:farm_address';
@@ -56,6 +60,8 @@ export const paths = {
   TEZOS_DASHBOARD,
   HISTORY_WRAP,
   HISTORY_UNWRAP,
+  HISTORY_WRAP_NFT,
+  HISTORY_UNWRAP_NFT,
   FARMING_ROOT,
   FARM_PARAMETER,
   FARM_STAKE,
@@ -144,6 +150,16 @@ export const routes: AppRoute[] = [
   }, {
     component: HistoryUnwrapOperationsScreen,
     path: HISTORY_UNWRAP,
+    external: false,
+    navRoute: false
+  }, {
+    component: HistoryNftWrapOperationsScreen,
+    path: HISTORY_WRAP_NFT,
+    external: false,
+    navRoute: false
+  }, {
+    component: HistoryNftUnwrapOperationsScreen,
+    path: HISTORY_UNWRAP_NFT,
     external: false,
     navRoute: false
   }, {

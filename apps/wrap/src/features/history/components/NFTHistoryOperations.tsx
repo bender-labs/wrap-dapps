@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { useMemo } from 'react';
 import { Link, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { ellipsizeAddress, ERC20Operation, OperationType, SupportedBlockchain } from '@wrap-dapps/features';
-import { FungibleToken, Token } from '@wrap-dapps/api';
-import { Amount } from '@wrap-dapps/components';
-import EthereumTokenIcon from '@wrap-dapps/components/token/ethereum/EthereumTokenIcon';
-import TezosTokenIcon from '@wrap-dapps/components/token/tezos/TezosTokenIcon';
+import { ellipsizeAddress, ERC721Operation, OperationType } from '@wrap-dapps/features';
+import { NonFungibleToken } from '@wrap-dapps/api';
 
 const StyledTableCellBody = styled(TableCell)(() => ({
   fontSize: 14,
@@ -46,32 +43,19 @@ const StyledTable = styled(Table)(() => ({
   borderCollapse: 'separate'
 }));
 
-const itemIcon = (
-  blockchainTarget: SupportedBlockchain,
-  tokenMetadata: Token
-) => {
-  return blockchainTarget === SupportedBlockchain.Ethereum ? (
-    <EthereumTokenIcon tokenMetadata={tokenMetadata} />
-  ) : (
-    <TezosTokenIcon url={tokenMetadata.thumbnailUri ?? ''} />
-  );
-};
-
 const renderRow = (
-  op: ERC20Operation,
-  tokensByEthAddress: Record<string, FungibleToken>
+  op: ERC721Operation,
+  tokensByEthAddress: Record<string, NonFungibleToken>
 ) => {
   switch (op.type) {
-    case OperationType.WRAP:
+    case OperationType.WRAP_NFT:
       return (
         <StyledTableRow key={op.hash}>
-          <StyledTableCellBody align='left'>
-            {itemIcon(SupportedBlockchain.Ethereum, tokensByEthAddress[op.token])}
-            <Amount
-              symbol={tokensByEthAddress[op.token].ethereumSymbol}
-              value={op.amount}
-              decimals={tokensByEthAddress[op.token].decimals}
-            />
+          <StyledTableCellBody align='center'>
+            {tokensByEthAddress[op.token]?.ethereumName}
+          </StyledTableCellBody>
+          <StyledTableCellBody align='center'>
+            {op.tokenId}
           </StyledTableCellBody>
           <StyledTableCellBody align='center'>{op.source}</StyledTableCellBody>
           <StyledTableCellBody align='center'>{op.destination}</StyledTableCellBody>
@@ -88,16 +72,14 @@ const renderRow = (
           </StyledTableCellBody>
         </StyledTableRow>
       );
-    case OperationType.UNWRAP:
+    case OperationType.UNWRAP_NFT:
       return (
         <StyledTableRow key={op.hash}>
-          <StyledTableCellBody align='left'>
-            {itemIcon(SupportedBlockchain.Tezos, tokensByEthAddress[op.token])}
-            <Amount
-              symbol={tokensByEthAddress[op.token].tezosSymbol}
-              value={op.amount}
-              decimals={tokensByEthAddress[op.token].decimals}
-            />
+          <StyledTableCellBody align='center'>
+            {tokensByEthAddress[op.token]?.ethereumName}
+          </StyledTableCellBody>
+          <StyledTableCellBody align='center'>
+            {op.tokenId}
           </StyledTableCellBody>
           <StyledTableCellBody align='center'>{op.source}</StyledTableCellBody>
           <StyledTableCellBody align='center'>{op.destination}</StyledTableCellBody>
@@ -118,21 +100,21 @@ const renderRow = (
 };
 
 export type OperationsProps = {
-  operations: ERC20Operation[];
-  fungibleTokens: Record<string, FungibleToken>;
+  operations: ERC721Operation[];
+  nonFungibleTokens: Record<string, NonFungibleToken>;
 };
 
-export default function HistoryOperations({ operations, fungibleTokens }: OperationsProps) {
+export default function NFTHistoryOperations({ operations, nonFungibleTokens }: OperationsProps) {
   const tokensByEthAddress = useMemo(
     () =>
-      Object.entries(fungibleTokens).reduce<Record<string, FungibleToken>>(
+      Object.entries(nonFungibleTokens).reduce<Record<string, NonFungibleToken>>(
         (acc, [, metadata]) => {
           acc[metadata.ethereumContractAddress] = metadata;
           return acc;
         },
         {}
       ),
-    [fungibleTokens]
+    [nonFungibleTokens]
   );
 
   let active = operations.length > 0;
@@ -144,7 +126,8 @@ export default function HistoryOperations({ operations, fungibleTokens }: Operat
           <StyledTable aria-label='customized table'>
             <TableHead>
               <TableRow>
-                <StyledTableCellHead align='center'>Amount</StyledTableCellHead>
+                <StyledTableCellHead align='center'>Collection</StyledTableCellHead>
+                <StyledTableCellHead align='center'>Token</StyledTableCellHead>
                 <StyledTableCellHead align='center'>Source</StyledTableCellHead>
                 <StyledTableCellHead align='center'>Destination</StyledTableCellHead>
                 <StyledTableCellHead align='center'>Status</StyledTableCellHead>

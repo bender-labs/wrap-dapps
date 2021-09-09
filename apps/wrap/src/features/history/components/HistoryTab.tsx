@@ -22,5 +22,7 @@ export default function HistoryTab() {
   return <StyledTabs value={path} onChange={onTabChange} indicatorColor='primary'>
     <Tab label='Wraps' value={paths.HISTORY_WRAP} />
     <Tab label='Unwraps' value={paths.HISTORY_UNWRAP} />
+    <Tab label='NFT Wraps' value={paths.HISTORY_WRAP_NFT} />
+    <Tab label='NFT Unwraps' value={paths.HISTORY_UNWRAP_NFT} />
   </StyledTabs>;
 }

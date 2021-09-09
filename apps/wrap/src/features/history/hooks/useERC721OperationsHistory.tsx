@@ -14,7 +14,7 @@ export type AllOperationsHistoryState = {
   burns: UnwrapERC721Operation[];
 };
 
-export const useAllNFTOperationsHistory = () => {
+export const useERC721OperationsHistory = () => {
   const { ethereumAccount } = useEthereumWalletContext();
   const { tezosAccount } = useTezosWalletContext();
   const { nonFungibleTokens, fees, wrapSignatureThreshold } = useConfig();

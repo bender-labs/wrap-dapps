@@ -1,27 +1,23 @@
 import { useEffect, useState } from 'react';
-import { UnwrapErc20Operation, WrapErc20Operation } from '../state';
-import { unwrapToOperations, wrapsToOperations } from '../state';
 import {
-  EthereumStateType,
-  TezosStateType,
-  useConfig,
+  UnwrapErc20Operation,
+  unwrapToOperations,
   useEthereumWalletContext,
-  useIndexerApi,
-  useTezosWalletContext
-} from '@wrap-dapps/components';
+  useTezosWalletContext,
+  WrapErc20Operation,
+  wrapsToOperations
+} from '@wrap-dapps/features';
+import { useConfig, useIndexerApi } from '@wrap-dapps/components';
 
 export type AllOperationsHistoryState = {
   mints: WrapErc20Operation[];
   burns: UnwrapErc20Operation[];
 };
 
-export const useAllOperationsHistory = () => {
-  const { state: tezosState } = useTezosWalletContext();
-  const tzAccount = tezosState.type === TezosStateType.CONNECTED ? tezosState.tezosAccount : '';
-  const { state: ethereumState } = useEthereumWalletContext();
-  const ethAccount = ethereumState.type === EthereumStateType.CONNECTED ? ethereumState.ethereumAccount : '';
+export const useERC20OperationsHistory = () => {
+  const { tezosAccount } = useTezosWalletContext();
+  const { ethereumAccount } = useEthereumWalletContext();
   const indexerApi = useIndexerApi();
-  const [canFetch, setCanFetch] = useState(false);
   const [operations, setOperations] = useState<AllOperationsHistoryState>({
     mints: [],
     burns: []
@@ -30,14 +26,13 @@ export const useAllOperationsHistory = () => {
 
   useEffect(() => {
     const loadFinalizedOperations = async () => {
-      if (!ethAccount && !tzAccount) {
+      if (!ethereumAccount() && !tezosAccount()) {
         setOperations({ burns: [], mints: [] });
         return;
       }
-
       const [finalizedWraps, finalizedUnwraps] = await Promise.all([
-        indexerApi.fetchFinalizedWraps(ethAccount, tzAccount),
-        indexerApi.fetchFinalizedUnwraps(ethAccount, tzAccount)
+        indexerApi.fetchFinalizedWraps(ethereumAccount(), tezosAccount()),
+        indexerApi.fetchFinalizedUnwraps(ethereumAccount(), tezosAccount())
       ]);
       const mintsFromIndexer = wrapsToOperations(
         fees,
@@ -59,12 +54,7 @@ export const useAllOperationsHistory = () => {
     const intervalId = setInterval(loadFinalizedOperations, 30000);
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ethAccount, tzAccount]);
+  }, [ethereumAccount, tezosAccount]);
 
-  useEffect(
-    () => setCanFetch(tzAccount !== undefined || ethAccount !== undefined),
-    [tzAccount, ethAccount]
-  );
-
-  return { operations, canFetch, fungibleTokens };
+  return { operations, fungibleTokens };
 };

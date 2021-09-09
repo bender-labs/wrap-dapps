@@ -66,15 +66,17 @@ export interface BaseOperation {
   fees: BigNumber;
 }
 
-export interface WrapErc20Operation extends BaseOperation {
-  type: OperationType.WRAP;
+export interface ERC20Operation extends BaseOperation {
   amount: BigNumber;
+}
+
+export interface WrapErc20Operation extends ERC20Operation {
+  type: OperationType.WRAP;
   transactionHash: string;
 }
 
-export interface UnwrapErc20Operation extends BaseOperation {
+export interface UnwrapErc20Operation extends ERC20Operation {
   type: OperationType.UNWRAP;
-  amount: BigNumber;
   operationHash: string;
 }
 
