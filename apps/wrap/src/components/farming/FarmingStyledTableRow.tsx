@@ -5,7 +5,6 @@ const FarmingStyledTableRow = styled(TableRow)(() =>
   ({
     root: {
       margin: '50px',
-
       border: '2px solid red'
     }
   })

@@ -12,6 +12,7 @@ import BigNumber from 'bignumber.js';
 import { paths } from '../../../pages/routes';
 import FarmingContractHeader from '../../../components/farming/FarmingContractHeader';
 import FarmingStyledTableCell from '../../../components/farming/FarmingStyledCell';
+import FarmingStyledCellHead from '../../../components/farming/FarmingStyledCellHead';
 import FarmingStyledTableRow from '../../../components/farming/FarmingStyledTableRow';
 import useStakeAll, { NewStake, StakeAllStatus } from './hook/useStakeAll';
 import { changeBalances } from '../balance-actions';
@@ -196,13 +197,13 @@ export default function StakeAll({ balances, balanceDispatch, balance, loading, 
           <StyledTable>
             <TableHead>
               <TableRow>
-                <FarmingStyledTableCell align='center'>Symbol</FarmingStyledTableCell>
-                <FarmingStyledTableCell align='center'>Token Name</FarmingStyledTableCell>
-                <FarmingStyledTableCell align='center'>APY</FarmingStyledTableCell>
-                <FarmingStyledTableCell align='center'>APR</FarmingStyledTableCell>
-                <FarmingStyledTableCell align='center'>Global Stake</FarmingStyledTableCell>
-                <FarmingStyledTableCell align='center'>Your current Stake</FarmingStyledTableCell>
-                <FarmingStyledTableCell align='center'>New Stake</FarmingStyledTableCell>
+                <FarmingStyledCellHead align='center'>Symbol</FarmingStyledCellHead>
+                <FarmingStyledCellHead align='center'>Token Name</FarmingStyledCellHead>
+                <FarmingStyledCellHead align='center'>APY</FarmingStyledCellHead>
+                <FarmingStyledCellHead align='center'>APR</FarmingStyledCellHead>
+                <FarmingStyledCellHead align='center'>Global Stake</FarmingStyledCellHead>
+                <FarmingStyledCellHead align='center'>Your current Stake</FarmingStyledCellHead>
+                <FarmingStyledCellHead align='center'>New Stake</FarmingStyledCellHead>
               </TableRow>
             </TableHead>
             <TableBody>

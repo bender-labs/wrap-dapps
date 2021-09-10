@@ -10,6 +10,7 @@ import React from 'react';
 import IconSelect from '../../../pages/farming/FarmToken';
 import useClaimAll, { ClaimAllStatus } from './hook/useClaimAll';
 import FarmingStyledTableCell from '../../../components/farming/FarmingStyledCell';
+import FarmingStyledCellHead from '../../../components/farming/FarmingStyledCellHead';
 import FarmingStyledTableRow from '../../../components/farming/FarmingStyledTableRow';
 import BigNumber from 'bignumber.js';
 
@@ -68,9 +69,9 @@ export default function ClaimAll() {
           <StyledTable>
             <TableHead>
               <TableRow>
-                <FarmingStyledTableCell align='center'>Symbol</FarmingStyledTableCell>
-                <FarmingStyledTableCell align='center'>Token Name</FarmingStyledTableCell>
-                <FarmingStyledTableCell align='center'>Your pending reward</FarmingStyledTableCell>
+                <FarmingStyledCellHead align='center'>Symbol</FarmingStyledCellHead>
+                <FarmingStyledCellHead align='center'>Token Name</FarmingStyledCellHead>
+                <FarmingStyledCellHead align='center'>Your pending reward</FarmingStyledCellHead>
               </TableRow>
             </TableHead>
             <TableBody>

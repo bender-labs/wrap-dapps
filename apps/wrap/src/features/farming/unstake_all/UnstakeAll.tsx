@@ -11,6 +11,7 @@ import IconSelect from '../../../pages/farming/FarmToken';
 import BigNumber from 'bignumber.js';
 import useUnstakeAll, { UnstakeAllStatus } from './hook/useUnstakeAll';
 import FarmingStyledTableCell from '../../../components/farming/FarmingStyledCell';
+import FarmingStyledCellHead from '../../../components/farming/FarmingStyledCellHead';
 import FarmingStyledTableRow from '../../../components/farming/FarmingStyledTableRow';
 import { changeBalances } from '../balance-actions';
 import { FarmAllProps } from '../../../pages/farming/WithBalancesScreen';
@@ -81,9 +82,9 @@ export default function UnstakeAll({ balances, balanceDispatch, balance, loading
           <StyledTable>
             <TableHead>
               <TableRow>
-                <FarmingStyledTableCell align='center'>Symbol</FarmingStyledTableCell>
-                <FarmingStyledTableCell align='center'>Token Name</FarmingStyledTableCell>
-                <FarmingStyledTableCell align='center'>Your current Stake</FarmingStyledTableCell>
+                <FarmingStyledCellHead align='center'>Symbol</FarmingStyledCellHead>
+                <FarmingStyledCellHead align='center'>Token Name</FarmingStyledCellHead>
+                <FarmingStyledCellHead align='center'>Your current Stake</FarmingStyledCellHead>
               </TableRow>
             </TableHead>
             <TableBody>
