@@ -21,7 +21,7 @@ export function TezosAddressInput({ onRecipientChange }: { onRecipientChange: (t
   }
 
   useEffect(() => {
-    const tezosAddressRegex = /tz1[A-Za-z0-9]{33}$/ig;
+    const tezosAddressRegex = /tz[1-3][A-Za-z0-9]{33}$/ig;
     if (tezosAddressRegex.test(inputValue)) {
       onRecipientChange(inputValue);
     } else {

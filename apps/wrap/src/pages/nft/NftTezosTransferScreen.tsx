@@ -102,12 +102,6 @@ export function NftTezosTransferScreen() {
     state.tezosNftTransferApi?.transferNft(state.tezosRecipientAddress);
   };
 
-  const getButtonLabel = (): string => {
-    return state.nftInstance ?
-      state.nftInstance.nftCollection.ethereumName + ' #' + state.nftInstance?.id :
-      '';
-  };
-
   const onRecipientChange = (tezosRecipientAddress: string) => {
     setState({ ...state, tezosRecipientAddress });
   };
@@ -151,8 +145,7 @@ export function NftTezosTransferScreen() {
           emptyStatePlaceHolder={'Awaiting recipient address'}
         />
       </PaperContent>
-      <NftTransferAction onTransfer={transferNFT} loading={state.loading} ready={state.ready}
-                         label={getButtonLabel()} />
+      <NftTransferAction onTransfer={transferNFT} loading={state.loading} ready={state.ready} />
     </Container>
   );
 }
