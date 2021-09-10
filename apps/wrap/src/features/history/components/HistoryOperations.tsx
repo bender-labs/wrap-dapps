@@ -53,7 +53,7 @@ const itemIcon = (
   return blockchainTarget === SupportedBlockchain.Ethereum ? (
     <EthereumTokenIcon tokenMetadata={tokenMetadata} />
   ) : (
-    <TezosTokenIcon url={tokenMetadata.thumbnailUri ?? ''} />
+    <TezosTokenIcon url={tokenMetadata.thumbnailUri ?? ''} width={28} height={28}/>
   );
 };
 

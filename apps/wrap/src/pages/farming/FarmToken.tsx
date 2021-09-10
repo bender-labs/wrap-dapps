@@ -14,7 +14,7 @@ export default function IconSelect({ src }: IconProps) {
       alt={''}
       onError={(e: any) => {
         e.target.onerror = null;
-        e.target.src = `${process.env.PUBLIC_URL}/icons/default.png`;
+        e.target.src = `/icons/default.png`;
       }}
     />
   );

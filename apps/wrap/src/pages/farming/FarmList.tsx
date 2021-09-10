@@ -35,12 +35,6 @@ const GridItem = styled(Grid)(() => ({
 }));
 
 const GridImages = styled(Grid)(() => ({
-  '& img': {
-    width: 60,
-    height: 60,
-    marginRight: 5,
-    verticalAlign: 'middle'
-  },
   '& :first-child': { left: '0', position: 'relative' }
 }));
 
@@ -134,7 +128,7 @@ function FarmSelector({ currentTezosLevel, farmConfig, onClick }: {
     <>
       <GridItem container justify={'space-between'} alignItems={'center'} onClick={onClick}>
         <GridImages item>
-          <TezosTokenIcon url={farmConfig.rewardTokenThumbnailUri ?? 'ipfs://'} />
+          <TezosTokenIcon url={farmConfig.rewardTokenThumbnailUri ?? 'ipfs://'} width={60} height={60}/>
         </GridImages>
         <LeftGridItem item>
           <OptionTypography>
