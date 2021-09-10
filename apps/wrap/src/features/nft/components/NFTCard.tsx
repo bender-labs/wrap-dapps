@@ -7,13 +7,19 @@ type NFTCardProps = {
   token: NftInstance;
   link: string;
   linkLabel: string;
+  transferLink?: string;
 }
 
 const StyledLink = styled(Link)(() => ({
-  textDecoration: 'none'
+  textDecoration: 'none',
+  marginLeft: '0 !important'
 }));
 
-export const NFTCard = ({ token, link, linkLabel }: NFTCardProps) => {
+const StyledButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(1)
+}));
+
+export const NFTCard = ({ token, link, linkLabel, transferLink }: NFTCardProps) => {
   const { name, thumbnailUri, id, nftCollection } = token;
 
   return (
@@ -34,12 +40,17 @@ export const NFTCard = ({ token, link, linkLabel }: NFTCardProps) => {
               {name}
             </Typography>
           </CardContent>
-          <CardActions sx={{display: 'flex', justifyContent: 'center', paddingBottom: 3}}>
+          <CardActions sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: 3 }}>
             <StyledLink to={link}>
-              <Button>
+              <StyledButton>
                 {linkLabel}
-              </Button>
+              </StyledButton>
             </StyledLink>
+            {transferLink &&
+            <StyledLink to={transferLink}>
+              <StyledButton>Tezos Transfer</StyledButton>
+            </StyledLink>
+            }
           </CardActions>
         </Card>
       </Box>

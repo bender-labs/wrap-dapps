@@ -19,11 +19,13 @@ import { UnwrapScreen } from './swap/UnwrapScreen';
 import { UnwrapOperationScreen } from './swap/UnwrapOperationScreen';
 import HistoryWrapOperationsScreen from './history/HistoryWrapOperationsScreen';
 import HistoryUnwrapOperationsScreen from './history/HistoryUnwrapOperationsScreen';
+import { NftTezosTransferScreen } from './nft/NftTezosTransferScreen';
 
 const wrapNftPath = '/wrap-nft';
 const unwrapNftPath = '/unwrap-nft';
 const confirmWrapNftPath = '/confirm-wrap-nft';
 const confirmUnwrapNftPath = '/confirm-unwrap-nft';
+const tezosTransferPath = '/transfer';
 
 const WRAP_NFT = wrapNftPath;
 const UNWRAP_NFT = unwrapNftPath;
@@ -52,6 +54,8 @@ const UNWRAP = '/unwrap';
 const WRAP_OPERATION = '/wrap/:transactionHash';
 const UNWRAP_OPERATION = '/unwrap/:transactionHash';
 
+const TEZOS_TRANSFER = tezosTransferPath + '/:nftCollectionAddress/:tokenId';
+
 export const paths = {
   CONFIRM_NFT_WRAP,
   NFT_WRAP_OPERATION,
@@ -73,7 +77,8 @@ export const paths = {
   WRAP,
   WRAP_OPERATION,
   UNWRAP_OPERATION,
-  UNWRAP
+  UNWRAP,
+  TEZOS_TRANSFER
 };
 
 export const nftWrapOperationPage = (op: Operation) => `${wrapNftPath}/${op.hash}`;
@@ -84,6 +89,7 @@ export const farmStakePageRoute = (farmContract: string) => FARM_STAKE.replace('
 export const oldFarmUnstakePageRoute = (farmContract: string) => OLD_FARM_UNSTAKE.replace(':farm_address', farmContract);
 export const wrapOperationPage = (op: Operation) => `/wrap/${op.hash}`;
 export const unwrapOperationPage = (op: Operation) => `/unwrap/${op.hash}`;
+export const tezosTransfer = (nftInstance: NftInstance) => `${tezosTransferPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
 
 export const routes: AppRoute[] = [
   {
@@ -198,6 +204,11 @@ export const routes: AppRoute[] = [
   }, {
     component: AllFarms,
     path: ALL_FARMS_CLAIM,
+    external: false,
+    navRoute: false
+  }, {
+    component: NftTezosTransferScreen,
+    path: TEZOS_TRANSFER,
     external: false,
     navRoute: false
   }];

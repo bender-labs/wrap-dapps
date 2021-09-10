@@ -1,7 +1,7 @@
-import { Container, Typography } from '@mui/material';
+import { Backdrop, Container, Typography } from '@mui/material';
 import { NFTCard } from './NFTCard';
 import { NftQuery } from '../hook/useEthereumNftQuery';
-import { confirmNftUnwrap, confirmNftWrap } from '../../../pages/routes';
+import { confirmNftUnwrap, confirmNftWrap, tezosTransfer } from '../../../pages/routes';
 
 export enum GalleryDirection {
   WRAP,
@@ -15,11 +15,12 @@ type GalleryProps = {
 }
 
 export default function Gallery({ nftQuery, direction, linkLabel }: GalleryProps) {
-  const { tokens } = nftQuery;
+  const { tokens: nftInstances } = nftQuery;
 
-  if (tokens.length === 0) {
+  if (nftInstances.length === 0) {
     return (
-      <Container maxWidth='lg' sx={{ display: 'flex', padding: 10, justifyContent: 'center', alignItems: 'center', paddingTop: 20 }}>
+      <Container maxWidth='lg'
+                 sx={{ display: 'flex', padding: 10, justifyContent: 'center', alignItems: 'center', paddingTop: 20 }}>
         <Typography variant='h5' sx={{ color: 'white', display: 'flex' }}>You don't have any NFT tokens in this
           collection</Typography>
       </Container>
@@ -27,9 +28,16 @@ export default function Gallery({ nftQuery, direction, linkLabel }: GalleryProps
   } else {
     return (
       <Container maxWidth='lg' sx={{ display: 'flex', padding: 10 }}>
-        {tokens.map((token) => {
-          const link = direction === GalleryDirection.WRAP ? confirmNftWrap(token) : confirmNftUnwrap(token);
-          return <NFTCard token={token} link={link} linkLabel={linkLabel} key={token.id} />;
+        <Backdrop open={false}>
+        </Backdrop>
+        {nftInstances.map((nftInstance) => {
+          if (direction === GalleryDirection.WRAP) {
+            return <NFTCard token={nftInstance} link={confirmNftWrap(nftInstance)} linkLabel={linkLabel}
+                            key={nftInstance.id} />;
+          } else {
+            return <NFTCard token={nftInstance} link={confirmNftUnwrap(nftInstance)} linkLabel={linkLabel}
+                            key={nftInstance.id} transferLink={tezosTransfer(nftInstance)} />;
+          }
         })}
       </Container>
     );

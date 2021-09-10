@@ -5,3 +5,4 @@ export * from './AssetSummary';
 export * from './LabelAndAsset';
 export * from './LabelAndValue';
 export * from './numberFormat';
+export * from './TezosAddressInput';
