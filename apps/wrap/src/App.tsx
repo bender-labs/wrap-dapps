@@ -7,7 +7,7 @@ import {
   useEthereumWalletContext,
   useTezosWalletContext
 } from '@wrap-dapps/components';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { routes } from './pages/routes';
 import { Card, CardContent, Container } from '@mui/material';
 
@@ -27,7 +27,8 @@ const App = () => {
     return routes.map((route) => (<Route exact path={route.path} component={route.component} key={route.path} />));
   };
 
-  if (connected) {
+  const location = useLocation();
+  if (connected || location.pathname.startsWith('/farming')) {
     return (
       <Switch>
         {buildRoutes(routes)}
