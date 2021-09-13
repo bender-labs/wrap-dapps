@@ -66,7 +66,7 @@ export const sideEffectReducer = (indexerApi: IndexerApi) => (
 ) => async (next: Dispatch) => {
   if (isType(action, fetchBalances)) {
     const { tezosAccount } = action.payload;
-    const stakingBalances = await indexerApi.fetchCurrentUserFarmingConfiguration(tezosAccount);
+    const stakingBalances = await indexerApi.fetchCurrentUserFarmBalances(tezosAccount);
     dispatch(balancesReceived({ balances: stakingBalances }));
     return;
   }

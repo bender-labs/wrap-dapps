@@ -13,6 +13,7 @@ import FarmingStyledTableCell from '../../../components/farming/FarmingStyledCel
 import FarmingStyledCellHead from '../../../components/farming/FarmingStyledCellHead';
 import FarmingStyledTableRow from '../../../components/farming/FarmingStyledTableRow';
 import BigNumber from 'bignumber.js';
+import { Route } from 'react-router-dom';
 
 const BoxWrapper = styled(Box)(() => ({
   borderRadius: '0 0 10px 10px',
@@ -30,75 +31,85 @@ const StyledPaperFooter = styled(PaperFooter)(() => ({
 }));
 
 export default function ClaimAll() {
-  const { farms } = useConfig();
-  const { claimAllStatus, claimAll, setClaimBalances, claimBalances } = useClaimAll(farms);
+  const { farms, oldFarms } = useConfig();
 
-  const findCurrentPendingReward = (farm: FarmConfig): string => {
-    const farmWithEarnings = claimBalances.find((claimBalance) => {
-      return claimBalance.farmContractAddress === farm.farmContractAddress;
-    });
-    return farmWithEarnings ? farmWithEarnings.earned.shiftedBy(-farmWithEarnings.rewardTokenDecimals).toString(10) : 'loading ...';
-  };
+  const ClaimWithFarms = (farmsToUse: FarmConfig[]) => {
+    const { claimAllStatus, claimAll, setClaimBalances, claimBalances } = useClaimAll(farmsToUse);
 
-  const renderRow = (farm: FarmConfig, index: number) => {
+    const findCurrentPendingReward = (farm: FarmConfig): string => {
+      const farmWithEarnings = claimBalances.find((claimBalance) => {
+        return claimBalance.farmContractAddress === farm.farmContractAddress;
+      });
+      return farmWithEarnings ? farmWithEarnings.earned.shiftedBy(-farmWithEarnings.rewardTokenDecimals).toString(10) : 'loading ...';
+    };
+
+    const renderRow = (farm: FarmConfig, index: number) => {
+      return (
+        <FarmingStyledTableRow key={farm.farmContractAddress}>
+          <FarmingStyledTableCell align='center'>
+            <IconSelect src={farm.rewardTokenThumbnailUri} />
+          </FarmingStyledTableCell>
+          <FarmingStyledTableCell align='center'>
+            {farm.rewardTokenSymbol}
+          </FarmingStyledTableCell>
+          <FarmingStyledTableCell align='center'>{findCurrentPendingReward(farm)}</FarmingStyledTableCell>
+        </FarmingStyledTableRow>
+      );
+    };
+
+    const reset = () => {
+      setClaimBalances(claimBalances.map((claimBalance) => {
+        claimBalance.earned = new BigNumber(0);
+        return claimBalance;
+      }));
+    };
+
     return (
-      <FarmingStyledTableRow key={farm.farmContractAddress}>
-        <FarmingStyledTableCell align='center'>
-          <IconSelect src={farm.rewardTokenThumbnailUri} />
-        </FarmingStyledTableCell>
-        <FarmingStyledTableCell align='center'>
-          {farm.rewardTokenSymbol}
-        </FarmingStyledTableCell>
-        <FarmingStyledTableCell align='center'>{findCurrentPendingReward(farm)}</FarmingStyledTableCell>
-      </FarmingStyledTableRow>
+      <>
+        <FarmingContractHeader title='All farms' path={paths.FARMING_ROOT} />
+        <BoxWrapper>
+          <TableContainer>
+            <StyledTable>
+              <TableHead>
+                <TableRow>
+                  <FarmingStyledCellHead align='center'>Symbol</FarmingStyledCellHead>
+                  <FarmingStyledCellHead align='center'>Token Name</FarmingStyledCellHead>
+                  <FarmingStyledCellHead align='center'>Your pending reward</FarmingStyledCellHead>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {farmsToUse.length > 0 ?
+                  farmsToUse.map((farmConfig, index) => renderRow(farmConfig, index)) :
+                  <TableRow><TableCell>No data to display...</TableCell></TableRow>
+                }
+              </TableBody>
+            </StyledTable>
+          </TableContainer>
+          <StyledPaperFooter>
+            {claimAllStatus !== ClaimAllStatus.NOT_CONNECTED && (
+              <LoadableButton
+                loading={claimAllStatus === ClaimAllStatus.CLAIMING}
+                onClick={async () => {
+                  await claimAll(reset);
+                }}
+                disabled={claimAllStatus !== ClaimAllStatus.READY}
+                text={'Claim from all farms'}
+                variant={'contained'}
+              />
+            )}
+            {claimAllStatus === ClaimAllStatus.NOT_CONNECTED && (
+              <TezosConnectionButton />
+            )}
+          </StyledPaperFooter>
+        </BoxWrapper>
+      </>
     );
-  };
-
-  const reset = () => {
-    setClaimBalances(claimBalances.map((claimBalance) => {
-      claimBalance.earned = new BigNumber(0);
-      return claimBalance;
-    }));
   };
 
   return (
     <>
-      <FarmingContractHeader title='All farms' path={paths.FARMING_ROOT} />
-      <BoxWrapper>
-        <TableContainer>
-          <StyledTable>
-            <TableHead>
-              <TableRow>
-                <FarmingStyledCellHead align='center'>Symbol</FarmingStyledCellHead>
-                <FarmingStyledCellHead align='center'>Token Name</FarmingStyledCellHead>
-                <FarmingStyledCellHead align='center'>Your pending reward</FarmingStyledCellHead>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {farms.length > 0 ?
-                farms.map((farmConfig, index) => renderRow(farmConfig, index)) :
-                <TableRow><TableCell>No data to display...</TableCell></TableRow>
-              }
-            </TableBody>
-          </StyledTable>
-        </TableContainer>
-        <StyledPaperFooter>
-          {claimAllStatus !== ClaimAllStatus.NOT_CONNECTED && (
-            <LoadableButton
-              loading={claimAllStatus === ClaimAllStatus.CLAIMING}
-              onClick={async () => {
-                await claimAll(reset);
-              }}
-              disabled={claimAllStatus !== ClaimAllStatus.READY}
-              text={'Claim from all farms'}
-              variant={'contained'}
-            />
-          )}
-          {claimAllStatus === ClaimAllStatus.NOT_CONNECTED && (
-            <TezosConnectionButton />
-          )}
-        </StyledPaperFooter>
-      </BoxWrapper>
+      <Route path={paths.ALL_FARMS_CLAIM} exact component={() => ClaimWithFarms(farms)} />
+      <Route path={paths.OLD_ALL_FARMS_CLAIM} exact component={() => ClaimWithFarms(oldFarms)} />
     </>
   );
 }

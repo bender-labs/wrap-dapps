@@ -1,15 +1,17 @@
 import React, { useCallback } from 'react';
 import { useHistory, useParams, useRouteMatch } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
-import { Container, styled, Tab, Tabs } from '@mui/material';
-import { paths } from '../routes';
+import { Alert, AlertTitle, Box, Container, styled, Tab, Tabs } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { paths, farmStakePageRoute } from '../routes';
 import BigNumber from 'bignumber.js';
-import { FarmConfig } from '@wrap-dapps/components';
+import { FarmConfig, useConfig } from '@wrap-dapps/components';
 import { FarmingContractActionsProps } from '../../features/farming/types';
 import useFarmingContract from '../../features/farming/farm/hooks/useFarmingContract';
 import { useTokenBalance } from '@wrap-dapps/features';
 import { Unstake } from '../../features/farming/unstake/Unstake';
 import { useOldFarm } from '../../features/farming/farm/hooks/useOldFarm';
+import Claim from '../../features/farming/claim/Claim';
 
 const StyledTabs = styled(Tabs)(() => ({
   color: 'white',
@@ -17,8 +19,13 @@ const StyledTabs = styled(Tabs)(() => ({
 }));
 
 const StyledTab = styled(Tab)(() => ({
+  color: 'white',
   textTransform: 'none',
   fontWeight: 900
+}));
+
+const StyledLink = styled(Link)(({theme}) => ({
+  color: theme.palette.primary.main
 }));
 
 function WithFarm(
@@ -44,6 +51,7 @@ function WithFarm(
 }
 
 export default function OldFarm() {
+  const { farms } = useConfig();
   const { path } = useRouteMatch();
   const { farm_address } = useParams() as { farm_address: string };
   const { farm } = useOldFarm(farm_address);
@@ -69,8 +77,20 @@ export default function OldFarm() {
     refresh();
   };
 
+  const newFarm = farms.find(validFarm => (validFarm.rewardTokenContractAddress === farm.rewardTokenContractAddress && validFarm.rewardTokenId === farm.rewardTokenId));
+
   return (
     <Container maxWidth='sm'>
+      <Box marginBottom={2} marginTop={2}>
+        <Alert severity='info'>
+          <AlertTitle>This is a deactivated farm!</AlertTitle>
+          <p>You can still unstake your $WRAP tokens and claim your rewards.</p>
+          {newFarm ?
+            <p>you can find the new {farm.rewardTokenSymbol} farm <StyledLink to={farmStakePageRoute(newFarm.farmContractAddress)}>here</StyledLink></p>
+            :null
+          }
+        </Alert>
+      </Box>
       <StyledTabs
         value={path}
         onChange={onTabChange}
@@ -78,6 +98,7 @@ export default function OldFarm() {
         variant='fullWidth'
       >
         <StyledTab label='Unstake' value={paths.OLD_FARM_UNSTAKE} />
+        <StyledTab label='Claim' value={paths.OLD_FARM_CLAIM} />
       </StyledTabs>
       <Switch>
         <Route
@@ -92,6 +113,20 @@ export default function OldFarm() {
             },
             { value: balance, loading },
             Unstake
+          )}
+        />
+        <Route
+          path={paths.OLD_FARM_CLAIM}
+          exact
+          component={WithFarm(
+            farm,
+            onApply,
+            {
+              ...farmBalances,
+              loading: farmLoading
+            },
+            { value: balance, loading },
+            Claim
           )}
         />
       </Switch>

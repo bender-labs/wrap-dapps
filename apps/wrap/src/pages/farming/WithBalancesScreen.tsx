@@ -20,7 +20,7 @@ export interface FarmAllProps {
 
 function WithBalancesScreen() {
   const { balances, balanceDispatch } = useBalances();
-  const { farms } = useConfig();
+  const { farms, oldFarms } = useConfig();
   const {
     balance,
     loading,
@@ -43,6 +43,10 @@ function WithBalancesScreen() {
              component={() => <UnstakeAll balances={balances} balanceDispatch={balanceDispatch} balance={balance}
                                           loading={loading}
                                           refresh={refresh} farms={farms} />} />
+      <Route path={paths.OLD_ALL_FARMS_UNSTAKE} exact
+             component={() => <UnstakeAll balances={balances} balanceDispatch={balanceDispatch} balance={balance}
+                                          loading={loading}
+                                          refresh={refresh} farms={oldFarms} />} />
     </>
   );
 }

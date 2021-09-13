@@ -1,11 +1,14 @@
-import { Box, Container, Grid, IconButton, styled, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, Container, Grid, IconButton, styled, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import FarmList, { FarmStyle } from './FarmList';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import InfoIcon from '@mui/icons-material/Info';
 import { useConfig } from '@wrap-dapps/components';
 import { useHistory } from 'react-router';
-import { farmStakePageRoute, oldFarmUnstakePageRoute, paths } from '../routes';
+import { farmStakePageRoute, paths } from '../routes';
 import BigNumber from 'bignumber.js';
+
 
 const StyledPaperContent = styled(Box)(() => ({
   borderRadius: '10px 10px 10px 10px',
@@ -64,9 +67,13 @@ const SecondSubtitle = styled(Typography)(() => ({
   paddingTop: '20px'
 }));
 
+const StyledLink = styled(Link)(({theme}) => ({
+  color: theme.palette.background.default
+}));
+
 export default function FarmChoice() {
   const history = useHistory();
-  const { farms, oldFarms } = useConfig();
+  const { farms } = useConfig();
 
   const totalStaked = farms
     .reduce((total, farm) => {
@@ -111,6 +118,39 @@ export default function FarmChoice() {
     );
   };
 
+  const OldFarmsButton = () => {
+    const changeUri = () => {
+      history.push(paths.OLD_ALL_FARMS_UNSTAKE);
+    };
+
+    return (
+      <StyledPaperContent p={2} sx={{ backgroundColor: '#B1B1B1' }}>
+        <Grid container alignItems={'center'} onClick={changeUri} justifyContent={'space-between'} sx={{
+          '&:hover': {
+            cursor: 'pointer'
+          }
+        }}>
+          <GridImages item>
+            <InfoIcon sx={{ width: 60, height: 60 }} />
+          </GridImages>
+          <Grid item>
+            <Typography sx={{ fontSize: '20px' }}>
+              Manage deactivated farms
+            </Typography>
+            <Typography sx={{ fontSize: '12px' }}>
+              Unstake your $WRAP tokens and claim your fees from old farms
+            </Typography>
+          </Grid>
+          <Grid item>
+            <IconButton>
+              <ArrowForwardIcon />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </StyledPaperContent>
+    );
+  };
+
   return (
     <Container maxWidth={'sm'}>
       <BoxTitle my={2}>
@@ -121,10 +161,17 @@ export default function FarmChoice() {
           Total $WRAP staked : {totalStaked}
         </Total>
       </BoxTitle>
+      <BoxTitle my={6}>
+        <Alert severity='warning'>
+          <AlertTitle>New farms warning</AlertTitle>
+          <p>New farms will start on 2021-09-14</p>
+          <p>You will still be able to unstake and claim from old farms through our <StyledLink to={paths.OLD_ALL_FARMS_UNSTAKE}>dedicated interface</StyledLink></p>
+        </Alert>
+      </BoxTitle>
       <ContainBox>
         <StakeAllButton />
-        <FirstSubtitle variant={'subtitle1'}>Or select a farm to stake, unstake or claim your
-          fees share.</FirstSubtitle>
+        <FirstSubtitle variant={'subtitle1'}>Or select a farm to stake, unstake or claim your fees share
+          :</FirstSubtitle>
         <FarmList
           farms={farms}
           onProgramSelect={(farmContract) => {
@@ -133,15 +180,9 @@ export default function FarmChoice() {
           style={FarmStyle.CLASSIC}
         />
         <SecondSubtitle variant={'subtitle1'}>
-          or select an old farm to unstake.
+          Or unstake and claim from old deactivated farms :
         </SecondSubtitle>
-        <FarmList
-          farms={oldFarms}
-          onProgramSelect={(farmContract) => {
-            history.push(oldFarmUnstakePageRoute(farmContract));
-          }}
-          style={FarmStyle.OLD}
-        />
+        <OldFarmsButton />
       </ContainBox>
     </Container>
   );

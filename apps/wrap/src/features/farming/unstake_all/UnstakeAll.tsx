@@ -57,7 +57,7 @@ export default function UnstakeAll({ balances, balanceDispatch, balance, loading
   };
 
   const total = () => {
-    return balances.balances.reduce((total, contract) => {
+    return balances.balances.filter(balance => farms.findIndex(f => f.farmContractAddress === balance.contract) != -1).reduce((total, contract) => {
       return total.plus(contract.balance ?? '0');
     }, new BigNumber(0)).shiftedBy(-8).toString(10);
   };

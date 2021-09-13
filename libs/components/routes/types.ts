@@ -4,6 +4,6 @@ export type AppRoute = {
   name?: string;
   component: React.ComponentType<any>;
   path: string;
-  external: boolean;
-  navRoute: boolean;
+  external: boolean | false;
+  navRoute: boolean | false;
 }

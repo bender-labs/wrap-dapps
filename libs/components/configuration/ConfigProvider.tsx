@@ -1,7 +1,14 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { Config, FarmConfig, InitialConfig } from './types';
-import { FungibleToken, IndexerApi, NonFungibleToken, StatisticsApi, TokenType } from '@wrap-dapps/api';
-import {LoadingScreen} from './LoadingScreen';
+import {
+  FungibleToken,
+  IndexerApi,
+  IndexerFarmConfigurationPayload,
+  NonFungibleToken,
+  StatisticsApi,
+  TokenType
+} from '@wrap-dapps/api';
+import { LoadingScreen } from './LoadingScreen';
 
 type ContextValue = undefined | Config;
 const ConfigContext = React.createContext<ContextValue>(undefined);
@@ -35,22 +42,27 @@ export function useIndexerApi() {
 
 const getTimeFromRetryCounter = (counter: number) => Math.pow(2, counter) - 1;
 
-const stoppedFarms = {
-  contracts: [
+const stoppedFarms: IndexerFarmConfigurationPayload[] =
+  [
     {
+      rewards: undefined,
+      maxLevelProcessed: 0,
       totalStaked: '0',
       contract: 'KT1SZVLvLDQvqx6qMbF8oXZe2tfP7bJMASy2',
       token: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
-      tokenId: '19'
+      tokenId: '19',
+      old: true
     },
     {
+      rewards: undefined,
+      maxLevelProcessed: 0,
       totalStaked: '0',
       contract: 'KT1AnsHEdYKEdM62QCNpZGc5PfpXhftcdu22',
       token: 'KT1LRboPna9yQY9BrjtQYDS1DVxhKESK4VVd',
-      tokenId: '0'
+      tokenId: '0',
+      old: true
     }
-  ]
-};
+  ];
 
 export enum ConfigStatus {
   UNINITIALIZED,
@@ -87,28 +99,29 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
       const farmingConfiguration = await indexerApi.fetchFarmingConfiguration();
       const stakingApies = await statisticsApi.fetchStakingApy();
 
-      const farms = farmingConfiguration.contracts.reduce(
+      const farms = farmingConfiguration.contracts.filter(contract => !contract.old).reduce(
         (validFarms: FarmConfig[], farmConfiguration) => {
-          const tokenMetadata = indexerConfig.tokens.find(
+          const tokenInfos = indexerConfig.tokens.find(
             (t) =>
               t.tezosWrappingContract === farmConfiguration.token &&
-              t.tezosTokenId === farmConfiguration.tokenId
+              t.tezosTokenId.toString() === farmConfiguration.tokenId
           );
-          if (tokenMetadata) {
+          if (tokenInfos) {
+            const tokenMedata = tokenInfos as FungibleToken;
             const apy = stakingApies.find(s => s.farmingContract === farmConfiguration.contract);
             validFarms.push({
               maxTotalStakedLevelProcessed: farmConfiguration.maxLevelProcessed,
               farmContractAddress: farmConfiguration.contract,
               farmContractLink:
                 initConfig.tzktLink + farmConfiguration.contract,
-              farmTotalStaked: farmConfiguration.totalStaked,
+              farmTotalStaked: farmConfiguration.totalStaked ?? '0',
               farmStakedToken: initConfig.farmInput,
-              rewardTokenName: tokenMetadata.tezosName,
-              rewardTokenThumbnailUri: tokenMetadata.thumbnailUri,
+              rewardTokenName: tokenMedata.tezosName,
+              rewardTokenThumbnailUri: tokenMedata.thumbnailUri ?? '',
               rewardTokenContractAddress: farmConfiguration.token,
               rewardTokenId: parseInt(farmConfiguration.tokenId),
-              rewardTokenDecimals: tokenMetadata.decimals,
-              rewardTokenSymbol: tokenMetadata.tezosSymbol,
+              rewardTokenDecimals: tokenMedata.decimals,
+              rewardTokenSymbol: tokenMedata.tezosSymbol,
               rewards: farmConfiguration.rewards,
               apy: apy ? parseFloat(apy.apy).toFixed(0) : undefined,
               apr: apy ? parseFloat(apy.apr).toFixed(0) : undefined
@@ -119,29 +132,30 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         []
       );
 
-      const oldFarms = stoppedFarms.contracts.reduce((validFarms: FarmConfig[], farmConfiguration) => {
-        const tokenMetadata = indexerConfig.tokens.find(
+      const oldFarms = farmingConfiguration.contracts.filter(contract => contract.old).concat(stoppedFarms).reduce((oldFarms: FarmConfig[], farmConfiguration) => {
+        const tokenInfos = indexerConfig.tokens.find(
           (t) =>
             t.tezosWrappingContract === farmConfiguration.token &&
-            t.tezosTokenId === farmConfiguration.tokenId
+            t.tezosTokenId.toString() === farmConfiguration.tokenId
         );
-        if (tokenMetadata) {
-          validFarms.push({
+        if (tokenInfos) {
+          const tokenMedata = tokenInfos as FungibleToken;
+          oldFarms.push({
             maxTotalStakedLevelProcessed: 0,
             farmContractAddress: farmConfiguration.contract,
             farmContractLink: initConfig.tzktLink + farmConfiguration.contract,
-            farmTotalStaked: farmConfiguration.totalStaked,
+            farmTotalStaked: farmConfiguration.totalStaked ?? '0',
             farmStakedToken: initConfig.farmInput,
-            rewardTokenName: tokenMetadata.tezosName,
-            rewardTokenThumbnailUri: tokenMetadata.thumbnailUri,
+            rewardTokenName: tokenMedata.tezosName,
+            rewardTokenThumbnailUri: tokenMedata.thumbnailUri ?? '',
             rewardTokenContractAddress: farmConfiguration.token,
             rewardTokenId: parseInt(farmConfiguration.tokenId),
-            rewardTokenDecimals: tokenMetadata.decimals,
-            rewardTokenSymbol: tokenMetadata.tezosSymbol,
+            rewardTokenDecimals: tokenMedata.decimals,
+            rewardTokenSymbol: tokenMedata.tezosSymbol,
             rewards: undefined
           });
         }
-        return validFarms;
+        return oldFarms;
       }, []);
 
 
@@ -204,15 +218,15 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
       }
     };
 
-  // noinspection JSIgnoredPromiseFromCall
+    // noinspection JSIgnoredPromiseFromCall
     loadingWithRetries();
   }, []);
 
   return (
     <>
       {configStatus !== ConfigStatus.LOADED ? (
-          <LoadingScreen retryTime={retryTime}/>
-        ):(
+        <LoadingScreen retryTime={retryTime} />
+      ) : (
         <ConfigContext.Provider value={config}>
           {children}
         </ConfigContext.Provider>

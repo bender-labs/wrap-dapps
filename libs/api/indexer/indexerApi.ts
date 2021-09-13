@@ -24,7 +24,7 @@ export class IndexerApi {
     return this.client.get('/staking-configuration').then(({data}) => data);
   }
 
-  public fetchCurrentUserFarmingConfiguration(tezosAddress: string): Promise<IndexerContractBalance[]> {
+  public fetchCurrentUserFarmBalances(tezosAddress: string): Promise<IndexerContractBalance[]> {
     return this.client.get('/staking-balances?tezosAddress=' + tezosAddress).then(({data}: { data: IndexerContractBalancesPayload }) => data.result);
   }
 

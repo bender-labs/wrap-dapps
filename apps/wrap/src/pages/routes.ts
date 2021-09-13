@@ -20,6 +20,7 @@ import { UnwrapOperationScreen } from './swap/UnwrapOperationScreen';
 import HistoryWrapOperationsScreen from './history/HistoryWrapOperationsScreen';
 import HistoryUnwrapOperationsScreen from './history/HistoryUnwrapOperationsScreen';
 import { NftTezosTransferScreen } from './nft/NftTezosTransferScreen';
+import OldAllFarms from './farming/OldAllFarms';
 
 const wrapNftPath = '/wrap-nft';
 const unwrapNftPath = '/unwrap-nft';
@@ -44,10 +45,13 @@ const FARM_PARAMETER = '/farm/:farm_address';
 const FARM_STAKE = `${FARMING_ROOT}${FARM_PARAMETER}/stake`;
 const FARM_UNSTAKE = `${FARMING_ROOT}${FARM_PARAMETER}/unstake`;
 const FARM_CLAIM = `${FARMING_ROOT}${FARM_PARAMETER}/claim`;
-const OLD_FARM_UNSTAKE = `${FARMING_ROOT}/old-farm/:farm_address/unstake`;
 const ALL_FARMS_STAKE = `${FARMING_ROOT}/all_farms/stake`;
 const ALL_FARMS_UNSTAKE = `${FARMING_ROOT}/all_farms/unstake`;
 const ALL_FARMS_CLAIM = `${FARMING_ROOT}/all_farms/claim`;
+const OLD_FARM_UNSTAKE = `${FARMING_ROOT}/old-farm/:farm_address/unstake`;
+const OLD_FARM_CLAIM = `${FARMING_ROOT}/old-farm/:farm_address/claim`;
+const OLD_ALL_FARMS_UNSTAKE = `${FARMING_ROOT}/all_farms/old/unstake`;
+const OLD_ALL_FARMS_CLAIM = `${FARMING_ROOT}/all_farms/old/claim`;
 
 const WRAP = '/wrap';
 const UNWRAP = '/unwrap';
@@ -71,6 +75,7 @@ export const paths = {
   FARM_UNSTAKE,
   FARM_CLAIM,
   OLD_FARM_UNSTAKE,
+  OLD_FARM_CLAIM,
   ALL_FARMS_STAKE,
   ALL_FARMS_UNSTAKE,
   ALL_FARMS_CLAIM,
@@ -78,7 +83,9 @@ export const paths = {
   WRAP_OPERATION,
   UNWRAP_OPERATION,
   UNWRAP,
-  TEZOS_TRANSFER
+  TEZOS_TRANSFER,
+  OLD_ALL_FARMS_CLAIM,
+  OLD_ALL_FARMS_UNSTAKE
 };
 
 export const nftWrapOperationPage = (op: Operation) => `${wrapNftPath}/${op.hash}`;
@@ -192,6 +199,11 @@ export const routes: AppRoute[] = [
     external: false,
     navRoute: false
   }, {
+    component: OldFarm,
+    path: OLD_FARM_CLAIM,
+    external: false,
+    navRoute: false
+  }, {
     component: AllFarms,
     path: ALL_FARMS_STAKE,
     external: false,
@@ -209,6 +221,16 @@ export const routes: AppRoute[] = [
   }, {
     component: NftTezosTransferScreen,
     path: TEZOS_TRANSFER,
+    external: false,
+    navRoute: false
+  }, {
+    component: OldAllFarms,
+    path: OLD_ALL_FARMS_UNSTAKE,
+    external: false,
+    navRoute: false
+  }, {
+    component: OldAllFarms,
+    path: OLD_ALL_FARMS_CLAIM,
     external: false,
     navRoute: false
   }];
