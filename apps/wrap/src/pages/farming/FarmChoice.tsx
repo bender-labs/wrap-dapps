@@ -164,7 +164,7 @@ export default function FarmChoice() {
       <BoxTitle my={6}>
         <Alert severity='warning'>
           <AlertTitle>New farms warning</AlertTitle>
-          <p>New farms will start on 2021-09-14</p>
+          <p>New farms will start on 2021-09-15</p>
           <p>You will still be able to unstake and claim from old farms through our <StyledLink to={paths.OLD_ALL_FARMS_UNSTAKE}>dedicated interface</StyledLink></p>
         </Alert>
       </BoxTitle>
