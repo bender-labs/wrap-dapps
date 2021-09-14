@@ -104,7 +104,8 @@ export const routes: AppRoute[] = [
     component: WrapScreen,
     path: WRAP,
     external: false,
-    navRoute: true
+    navRoute: true,
+    activePaths: [WRAP, UNWRAP, WRAP_OPERATION, UNWRAP_OPERATION]
   }, {
     component: WrapOperationScreen,
     path: WRAP_OPERATION,
@@ -125,7 +126,8 @@ export const routes: AppRoute[] = [
     component: NftWrapSelectorScreen,
     path: WRAP_NFT,
     external: false,
-    navRoute: true
+    navRoute: true,
+    activePaths: [WRAP_NFT, UNWRAP_NFT, CONFIRM_NFT_UNWRAP, CONFIRM_NFT_WRAP, TEZOS_TRANSFER, NFT_WRAP_OPERATION, NFT_UNWRAP_OPERATION]
   }, {
     component: NftUnwrapSelectorScreen,
     path: UNWRAP_NFT,
@@ -156,7 +158,8 @@ export const routes: AppRoute[] = [
     component: HistoryWrapOperationsScreen,
     path: HISTORY_WRAP,
     external: false,
-    navRoute: true
+    navRoute: true,
+    activePaths: [HISTORY_WRAP, HISTORY_UNWRAP, HISTORY_WRAP_NFT, HISTORY_UNWRAP_NFT]
   }, {
     component: HistoryUnwrapOperationsScreen,
     path: HISTORY_UNWRAP,
@@ -177,7 +180,8 @@ export const routes: AppRoute[] = [
     component: FarmChoice,
     path: FARMING_ROOT,
     external: false,
-    navRoute: true
+    navRoute: true,
+    activePaths: [FARMING_ROOT, FARM_STAKE, FARM_CLAIM, FARM_UNSTAKE, ALL_FARMS_CLAIM, ALL_FARMS_UNSTAKE, ALL_FARMS_STAKE, OLD_FARM_CLAIM, OLD_FARM_UNSTAKE, OLD_ALL_FARMS_UNSTAKE, OLD_ALL_FARMS_CLAIM]
   }, {
     component: Farm,
     path: FARM_STAKE,

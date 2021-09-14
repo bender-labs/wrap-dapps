@@ -6,4 +6,5 @@ export type AppRoute = {
   path: string;
   external: boolean | false;
   navRoute: boolean | false;
+  activePaths?: string[];
 }

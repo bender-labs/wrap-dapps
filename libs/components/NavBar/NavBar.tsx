@@ -2,7 +2,7 @@ import { AppBar, Box, Grid, IconButton, Link, styled, Toolbar, Typography } from
 import MenuIcon from '@mui/icons-material/Menu';
 import DrawerComp from '../drawer/DrawerComp';
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, matchPath, useLocation } from 'react-router-dom';
 import logo from './logo.png';
 import { EthereumConnectionButton, TezosConnectionButton } from '../../features/wallet';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -37,6 +37,10 @@ const StyledTypography = styled(Typography)(({ theme }) => (
   )
 );
 
+const ActiveRoute = styled('span')(({ theme }) => ({
+  color: theme.palette.primary.main
+}));
+
 const Logo = styled('img')(({ theme }) => ({
   width: 50,
   marginLeft: theme.spacing(4),
@@ -66,6 +70,11 @@ type Props = {
 export default (props: Props) => {
   const { routes, showEthereumWallet, showTezosWallet, showOperationHistory } = props;
   const [mobileOpen, setMobileOpen] = React.useState(true);
+  const location = useLocation();
+
+  const isActive = (path: string, activePaths: string[]) => {
+    return activePaths.findIndex(activePath => matchPath(path, activePath)) !== -1;
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -75,9 +84,17 @@ export default (props: Props) => {
     return routes.filter(route => route.navRoute).map((route) => (
       <Grid item key={route.path}>
         <StyledTypography variant='h6'>
-          <Link component={RouterLink} color='inherit' to={route.path} underline='none'>
-            {route.name} {route.external ? <StyledLaunchIcon /> : null}
-          </Link>
+          {isActive(location.pathname, route.activePaths!) ?
+            <Link component={RouterLink} color='inherit' to={route.path} underline='none'>
+              <ActiveRoute>
+                {route.name} {route.external ? <StyledLaunchIcon /> : null}
+              </ActiveRoute>
+            </Link>
+            :
+            <Link component={RouterLink} color='inherit' to={route.path} underline='none'>
+              {route.name} {route.external ? <StyledLaunchIcon /> : null}
+            </Link>
+          }
         </StyledTypography>
       </Grid>
     ));
@@ -88,7 +105,8 @@ export default (props: Props) => {
       <>
         <Grid item key='liquidity-external'>
           <StyledTypography variant='h6'>
-            <Link component={RouterLink} target="_blank" color='inherit' to={{ pathname: 'https://liquidity.tzwrap.com/' }}
+            <Link component={RouterLink} target='_blank' color='inherit'
+                  to={{ pathname: 'https://liquidity.tzwrap.com/' }}
                   underline='none'>
               Liquidity <StyledLaunchIcon />
             </Link>
@@ -96,7 +114,8 @@ export default (props: Props) => {
         </Grid>
         <Grid item key='info-external'>
           <StyledTypography variant='h6'>
-            <Link component={RouterLink} target="_blank" color='inherit' to={{ pathname: 'https://info.tzwrap.com/' }} underline='none'>
+            <Link component={RouterLink} target='_blank' color='inherit' to={{ pathname: 'https://info.tzwrap.com/' }}
+                  underline='none'>
               Info <StyledLaunchIcon />
             </Link>
           </StyledTypography>

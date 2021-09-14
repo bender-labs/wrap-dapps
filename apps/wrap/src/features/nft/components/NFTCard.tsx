@@ -18,7 +18,23 @@ const StyledLink = styled(Link)(() => ({
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  margin: theme.spacing(1)
+  margin: theme.spacing(1),
+  color: 'black',
+  backgroundColor: '#ffffff',
+  borderRadius: '25px',
+  boxShadow: 'none',
+  textTransform: 'none',
+  fontWeight: 900,
+  '&:active': {
+    boxShadow: 'none'
+  },
+  '&:hover': {
+    backgroundColor: theme.palette.primary.main,
+    boxShadow: 'none'
+  },
+  '&:disabled': {
+    backgroundColor: 'rgba(0, 0, 0, 0.05)'
+  }
 }));
 
 export const NFTCard = ({ token, link, direction, transferLink }: NFTCardProps) => {
@@ -31,7 +47,7 @@ export const NFTCard = ({ token, link, direction, transferLink }: NFTCardProps) 
     } else {
       return (
         <StyledLink to={link}>
-          <StyledButton>
+          <StyledButton variant={'contained'} color={'primary'}>
             Send to Tezos
           </StyledButton>
         </StyledLink>
@@ -42,7 +58,7 @@ export const NFTCard = ({ token, link, direction, transferLink }: NFTCardProps) 
   const EthereumButton = () => {
     return (
       <StyledLink to={link}>
-        <StyledButton>
+        <StyledButton variant={'contained'} color={'primary'}>
           Send to Ethereum
         </StyledButton>
       </StyledLink>
@@ -71,7 +87,7 @@ export const NFTCard = ({ token, link, direction, transferLink }: NFTCardProps) 
             {direction === GalleryDirection.WRAP ? TezosButton() : EthereumButton()}
             {transferLink &&
             <StyledLink to={transferLink}>
-              <StyledButton>Tezos Transfer</StyledButton>
+              <StyledButton variant={'contained'} color={'primary'}>Tezos Transfer</StyledButton>
             </StyledLink>
             }
           </CardActions>
