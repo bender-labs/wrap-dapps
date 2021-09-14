@@ -3,7 +3,14 @@ import { shadeOfBlack } from '@wrap-dapps/components/theme/theme';
 import { NftInstance } from '../api/types';
 import { Link } from 'react-router-dom';
 import { GalleryDirection } from './Gallery';
-import { TezosConnectionButton, TezosStateType, useTezosWalletContext } from '@wrap-dapps/features';
+import {
+  EthereumConnectionButton,
+  EthereumStateType,
+  TezosConnectionButton,
+  TezosStateType,
+  useEthereumWalletContext,
+  useTezosWalletContext
+} from '@wrap-dapps/features';
 
 type NFTCardProps = {
   token: NftInstance;
@@ -39,6 +46,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 export const NFTCard = ({ token, link, direction, transferLink }: NFTCardProps) => {
   const { state: tezosState } = useTezosWalletContext();
+  const { state: ethereumState } = useEthereumWalletContext();
   const { name, thumbnailUri, id, nftCollection } = token;
 
   const TezosButton = () => {
@@ -56,13 +64,17 @@ export const NFTCard = ({ token, link, direction, transferLink }: NFTCardProps) 
   };
 
   const EthereumButton = () => {
-    return (
-      <StyledLink to={link}>
-        <StyledButton variant={'contained'} color={'primary'}>
-          Send to Ethereum
-        </StyledButton>
-      </StyledLink>
-    );
+    if (ethereumState.type !== EthereumStateType.CONNECTED) {
+      return <EthereumConnectionButton />;
+    } else {
+      return (
+        <StyledLink to={link}>
+          <StyledButton variant={'contained'} color={'primary'}>
+            Send to Ethereum
+          </StyledButton>
+        </StyledLink>
+      );
+    }
   };
 
   return (

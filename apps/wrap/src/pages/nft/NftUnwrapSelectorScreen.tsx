@@ -7,25 +7,28 @@ import {
   useEthereumWalletContext,
   useTezosWalletContext
 } from '@wrap-dapps/features';
-import { HalfCard, TokenSelection, useNonFungibleTokens } from '@wrap-dapps/components';
+import { HalfCard, TokenSelection, useEthereumConfig, useNonFungibleTokens } from '@wrap-dapps/components';
 import { useTezosNftQuery } from '../../features/nft/hook/useTezosNftQuery';
 import Gallery, { GalleryDirection } from '../../features/nft/components/Gallery';
 import Pagination from '@mui/material/Pagination';
 import CircularProgress from '@mui/material/CircularProgress';
 import { NftSwapDirectionTab } from '../../features/nft/components/NftSwapDirectionTab';
 import { NftQuery } from '../../features/nft/hook/useEthereumNftQuery';
+import { ethers } from 'ethers';
 
 export const NftUnwrapSelectorScreen = () => {
   const { tezosAccount, state: tezosState } = useTezosWalletContext();
-  const { ethereumLibrary, state: ethereumState } = useEthereumWalletContext();
+  const { state: ethereumState } = useEthereumWalletContext();
   const nonFungibleTokens = useNonFungibleTokens();
   const [selectedNftCollection, setSelectedNftCollection] = useState(nonFungibleTokens[Object.keys(nonFungibleTokens)[0]]);
   const [pagination, setPagination] = useState({ currentPage: 1, limitPerPage: 4 });
+  const ethereumConfig = useEthereumConfig();
+  const infuraProvider = new ethers.providers.JsonRpcProvider(ethereumConfig.rpcUrl);
 
   const nftQuery = useTezosNftQuery({
     tezosAccount: tezosAccount()!,
     nftCollection: selectedNftCollection,
-    ethereumToolkit: ethereumLibrary()!,
+    ethereumToolkit: infuraProvider,
     ...pagination
   });
 
@@ -80,7 +83,7 @@ export const NftUnwrapSelectorScreen = () => {
           </CardContent>
         </HalfCard>
       </Container>
-      {tezosState.type === TezosStateType.CONNECTED && ethereumState.type === EthereumStateType.CONNECTED ?
+      {tezosState.type === TezosStateType.CONNECTED ?
         renderNftQuery(nftQuery)
         :
         <Container maxWidth='lg'
@@ -91,8 +94,7 @@ export const NftUnwrapSelectorScreen = () => {
                      alignItems: 'center',
                      paddingTop: 20
                    }}>
-          <Typography variant='h5' sx={{ color: 'white', display: 'flex' }}>Please connect both your Ethereum wallet and
-            your Tezos wallet</Typography>
+          <Typography variant='h5' sx={{ color: 'white', display: 'flex' }}>Please connect your Tezos wallet</Typography>
         </Container>
       }
     </>
