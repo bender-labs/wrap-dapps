@@ -6,6 +6,7 @@ import { Fees, FungibleToken, Token } from '@wrap-dapps/api';
 import { Box, Button, styled } from '@mui/material';
 import { wrapERC20Fees } from '../../fees/fees';
 import { WrapStatus } from '../hooks';
+import { MultiConnect } from '@wrap-dapps/features';
 
 const StyledButton = styled(Button)(({ theme }) => ({
   color: 'black',
@@ -58,6 +59,11 @@ export default function WrapInitialStep({
 
   return (
     <>
+      {!connected && (
+        <Box sx={{ borderBottom: '3px solid #E0E0E0', boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.25)', backgroundColor: '#E5E5E5', }} p={2}>
+          <MultiConnect />
+        </Box>
+      )}
       <Box sx={{ padding: '34px 50px 0 50px', backgroundColor: '#E5E5E5' }} padding={2}>
         <TokenSelection
           token={token.ethereumSymbol}

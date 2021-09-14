@@ -10,7 +10,10 @@ import {
   PaperHeader,
   PaperNav,
   PaperTitle,
-  useConfig
+  TezosState,
+  TezosStateType,
+  useConfig,
+  useTezosWalletContext
 } from '@wrap-dapps/components';
 import { OperationStatusType, ReceiptStatus, WrapERC721Operation } from '@wrap-dapps/features';
 import { NonFungibleToken } from '@wrap-dapps/api';
@@ -34,7 +37,8 @@ function wrapStatus(
   operation: WrapERC721Operation,
   signaturesThreshold: number,
   onMint: () => any,
-  status: ReceiptStatus
+  status: ReceiptStatus,
+  tezosState: TezosState
 ) {
   const step = 100 / 4;
   switch (operation.status.type) {
@@ -76,13 +80,18 @@ function wrapStatus(
     case OperationStatusType.READY:
       return (
         <PaperContent>
-          <LoadableButton
-            variant={'contained'}
-            disabled={false}
-            loading={status === ReceiptStatus.WAITING_FOR_APPLY}
-            onClick={onMint}
-            text={'Mint'}
-          />
+          {tezosState.type === TezosStateType.CONNECTED ?
+            <LoadableButton
+              variant={'contained'}
+              disabled={false}
+              loading={status === ReceiptStatus.WAITING_FOR_APPLY}
+              onClick={onMint}
+              text={'Mint'}
+            />
+          :
+            <Typography sx={{ display: 'flex', textAlign: 'center' }} p={2}>Please connect your Tezos wallet to
+              mint this nft</Typography>
+          }
         </PaperContent>
       );
     case OperationStatusType.DONE:
@@ -103,6 +112,7 @@ function wrapStatus(
 
 export default function NftWrapReceipt({ operation, onMint, status, signaturesThreshold }: NftWrapReceiptProps) {
   const { nonFungibleTokens } = useConfig();
+  const { state: tezosState } = useTezosWalletContext();
 
   const nftByEthAddress = useMemo(
     () =>
@@ -149,7 +159,8 @@ export default function NftWrapReceipt({ operation, onMint, status, signaturesTh
             operation,
             signaturesThreshold,
             onMint,
-            status
+            status,
+            tezosState
           )}
         </div>
       </PaperContent>

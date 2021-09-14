@@ -6,6 +6,7 @@ import {ellipsizeAddress} from '../address';
 
 export default function TezosConnectionButton() {
   const { state, activate, deactivate } = useTezosWalletContext();
+
   switch (state.type) {
     case TezosStateType.NOT_CONNECTED:
       return (

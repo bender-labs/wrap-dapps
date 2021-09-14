@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { Fees, FungibleToken, Token } from '@wrap-dapps/api';
 import React, { useEffect, useState } from 'react';
 import { wrapERC20Fees } from '../../fees/fees';
-import { AssetSummary, TokenSelection } from '@wrap-dapps/components';
+import { AssetSummary, MultiConnect, TokenSelection } from '@wrap-dapps/components';
 import { SupportedBlockchain } from '../../wallet';
 import AmountToWrapInput from '../../../components/formatting/AmountToWrapInput';
 import { Box, Button, styled } from '@mui/material';
@@ -60,6 +60,11 @@ export default function UnwrapInitialStep({
 
   return (
     <>
+      {!connected && (
+        <Box sx={{ borderBottom: '3px solid #E0E0E0', boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.25)', backgroundColor: '#E5E5E5', }} p={2}>
+          <MultiConnect />
+        </Box>
+      )}
       <Box sx={{ padding: '34px 50px 0 50px', backgroundColor: '#E5E5E5' }} padding={2}>
         <TokenSelection
           token={token.ethereumSymbol}

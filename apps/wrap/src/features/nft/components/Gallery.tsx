@@ -11,10 +11,9 @@ export enum GalleryDirection {
 type GalleryProps = {
   nftQuery: NftQuery;
   direction: GalleryDirection;
-  linkLabel: string;
 }
 
-export default function Gallery({ nftQuery, direction, linkLabel }: GalleryProps) {
+export default function Gallery({ nftQuery, direction }: GalleryProps) {
   const { tokens: nftInstances } = nftQuery;
 
   if (nftInstances.length === 0) {
@@ -28,14 +27,12 @@ export default function Gallery({ nftQuery, direction, linkLabel }: GalleryProps
   } else {
     return (
       <Container maxWidth='lg' sx={{ display: 'flex', padding: 10 }}>
-        <Backdrop open={false}>
-        </Backdrop>
         {nftInstances.map((nftInstance) => {
           if (direction === GalleryDirection.WRAP) {
-            return <NFTCard token={nftInstance} link={confirmNftWrap(nftInstance)} linkLabel={linkLabel}
+            return <NFTCard token={nftInstance} link={confirmNftWrap(nftInstance)} direction={direction}
                             key={nftInstance.id} />;
           } else {
-            return <NFTCard token={nftInstance} link={confirmNftUnwrap(nftInstance)} linkLabel={linkLabel}
+            return <NFTCard token={nftInstance} link={confirmNftUnwrap(nftInstance)} direction={direction}
                             key={nftInstance.id} transferLink={tezosTransfer(nftInstance)} />;
           }
         })}

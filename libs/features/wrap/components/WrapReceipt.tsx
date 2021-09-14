@@ -8,7 +8,10 @@ import {
   PaperContent,
   PaperHeader,
   PaperNav,
-  PaperTitle
+  PaperTitle,
+  TezosState,
+  TezosStateType,
+  useTezosWalletContext
 } from '@wrap-dapps/components';
 import React, { useMemo } from 'react';
 import { Container, Typography } from '@mui/material';
@@ -34,7 +37,8 @@ function wrapStatus(
   operation: WrapErc20Operation,
   signaturesThreshold: number,
   onMint: () => any,
-  status: ReceiptStatus
+  status: ReceiptStatus,
+  tezosState: TezosState
 ) {
   const step = 100 / 4;
   switch (operation.status.type) {
@@ -76,13 +80,17 @@ function wrapStatus(
     case OperationStatusType.READY:
       return (
         <PaperContent>
-          <LoadableButton
-            variant={'contained'}
-            disabled={false}
-            loading={status === ReceiptStatus.WAITING_FOR_APPLY}
-            onClick={onMint}
-            text={'Mint'}
-          />
+          {tezosState.type === TezosStateType.CONNECTED ?
+            <LoadableButton
+              variant={'contained'}
+              disabled={false}
+              loading={status === ReceiptStatus.WAITING_FOR_APPLY}
+              onClick={onMint}
+              text={'Mint'}
+            /> :
+            <Typography sx={{ display: 'flex', textAlign: 'center' }} p={2}>Please connect your Tezos wallet to
+              mint this token</Typography>
+          }
         </PaperContent>
       );
     case OperationStatusType.DONE:
@@ -108,6 +116,7 @@ export default function WrapReceipt({
                                       status,
                                       signaturesThreshold
                                     }: WrapReceiptProps) {
+  const { state: tezosState } = useTezosWalletContext();
   const tokensByEthAddress = useMemo(
     () =>
       Object.entries(tokens).reduce<Record<string, FungibleToken>>(
@@ -154,7 +163,8 @@ export default function WrapReceipt({
             operation,
             signaturesThreshold,
             onMint,
-            status
+            status,
+            tezosState
           )}
         </div>
       </PaperContent>

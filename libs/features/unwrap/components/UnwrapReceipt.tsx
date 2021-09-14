@@ -1,6 +1,8 @@
 import { OperationStatusType, UnwrapErc20Operation } from '../../operations/';
 import {
   CircularProgressWithLabel,
+  EthereumState,
+  EthereumStateType,
   LabelAndAsset,
   LabelAndValue,
   LoadableButton,
@@ -8,7 +10,8 @@ import {
   PaperContent,
   PaperHeader,
   PaperNav,
-  PaperTitle
+  PaperTitle,
+  useEthereumWalletContext
 } from '@wrap-dapps/components';
 import React, { useMemo } from 'react';
 import { Container, Typography } from '@mui/material';
@@ -35,7 +38,8 @@ function unwrapStatus(
   operation: UnwrapErc20Operation,
   signaturesThreshold: number,
   onRelease: () => any,
-  status: ReceiptStatus
+  status: ReceiptStatus,
+  ethereumState: EthereumState
 ) {
   const step = 100 / 4;
   switch (operation.status.type) {
@@ -77,13 +81,18 @@ function unwrapStatus(
     case OperationStatusType.READY:
       return (
         <PaperContent>
-          <LoadableButton
-            variant={'contained'}
-            disabled={false}
-            loading={status === ReceiptStatus.WAITING_FOR_APPLY}
-            onClick={onRelease}
-            text={'Release'}
-          />
+          {ethereumState.type === EthereumStateType.CONNECTED ?
+            <LoadableButton
+              variant={'contained'}
+              disabled={false}
+              loading={status === ReceiptStatus.WAITING_FOR_APPLY}
+              onClick={onRelease}
+              text={'Release'}
+            />
+            :
+            <Typography sx={{ display: 'flex', textAlign: 'center' }} p={2}>Please connect your Ethereum wallet to
+              release this token</Typography>
+          }
         </PaperContent>
       );
 
@@ -110,6 +119,7 @@ export default function UnwrapReceipt({
                                         status,
                                         onRelease
                                       }: UnwrapReceiptProps) {
+  const { state: ethereumState } = useEthereumWalletContext();
   const tokensByEthAddress = useMemo(
     () =>
       Object.entries(tokens).reduce<Record<string, FungibleToken>>(
@@ -156,7 +166,8 @@ export default function UnwrapReceipt({
             operation,
             signaturesThreshold,
             onRelease,
-            status
+            status,
+            ethereumState
           )}
         </div>
       </PaperContent>

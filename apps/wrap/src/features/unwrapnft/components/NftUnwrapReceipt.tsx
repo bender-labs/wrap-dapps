@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import { Container, Typography } from '@mui/material';
 import {
   CircularProgressWithLabel,
+  EthereumState,
+  EthereumStateType,
   LabelAndAsset,
   LabelAndValue,
   LoadableButton,
@@ -12,7 +14,12 @@ import {
   PaperTitle,
   useConfig
 } from '@wrap-dapps/components';
-import { OperationStatusType, ReceiptStatus, UnwrapERC721Operation } from '@wrap-dapps/features';
+import {
+  OperationStatusType,
+  ReceiptStatus,
+  UnwrapERC721Operation,
+  useEthereumWalletContext
+} from '@wrap-dapps/features';
 import { NonFungibleToken } from '@wrap-dapps/api';
 
 export type NftUnwrapReceiptProps = {
@@ -34,7 +41,8 @@ function unwrapNftStatus(
   operation: UnwrapERC721Operation,
   signaturesThreshold: number,
   onMint: () => any,
-  status: ReceiptStatus
+  status: ReceiptStatus,
+  ethereumState: EthereumState
 ) {
   const step = 100 / 4;
   switch (operation.status.type) {
@@ -76,13 +84,18 @@ function unwrapNftStatus(
     case OperationStatusType.READY:
       return (
         <PaperContent>
-          <LoadableButton
-            variant={'contained'}
-            disabled={false}
-            loading={status === ReceiptStatus.WAITING_FOR_APPLY}
-            onClick={onMint}
-            text={'Release'}
-          />
+          {ethereumState.type === EthereumStateType.CONNECTED ?
+            <LoadableButton
+              variant={'contained'}
+              disabled={false}
+              loading={status === ReceiptStatus.WAITING_FOR_APPLY}
+              onClick={onMint}
+              text={'Release'}
+            />
+            :
+            <Typography sx={{ display: 'flex', textAlign: 'center' }} p={2}>Please connect your Ethereum wallet to
+              release this nft</Typography>
+          }
         </PaperContent>
       );
     case OperationStatusType.DONE:
@@ -103,6 +116,7 @@ function unwrapNftStatus(
 
 export default function NftUnwrapReceipt({ operation, onMint, status, signaturesThreshold }: NftUnwrapReceiptProps) {
   const { nonFungibleTokens } = useConfig();
+  const { state: ethereumState } = useEthereumWalletContext();
 
   const nftByEthAddress = useMemo(
     () =>
@@ -149,7 +163,8 @@ export default function NftUnwrapReceipt({ operation, onMint, status, signatures
             operation,
             signaturesThreshold,
             onMint,
-            status
+            status,
+            ethereumState
           )}
         </div>
       </PaperContent>

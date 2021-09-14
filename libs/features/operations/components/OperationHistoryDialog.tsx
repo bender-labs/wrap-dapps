@@ -339,12 +339,12 @@ export default function OperationHistoryDialog() {
           Pending operations
         </StyledDialogTitle>
         {!canFetch && (
-          <PaperContent>
-            <Typography variant={'body1'}>
+          <StyledListItem>
+            <StyledTypography variant={'body1'}>
               Please connect to at least one wallet to see your pending
               operations
-            </Typography>
-          </PaperContent>
+            </StyledTypography>
+          </StyledListItem>
         )}
         {canFetch && (
           <List style={{ padding: '0px' }}>
