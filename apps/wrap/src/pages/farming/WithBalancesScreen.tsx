@@ -21,11 +21,12 @@ export interface FarmAllProps {
 function WithBalancesScreen() {
   const { balances, balanceDispatch } = useBalances();
   const { farms, oldFarms } = useConfig();
+
   const {
     balance,
     loading,
     refresh
-  } = useTokenBalance(farms[0].farmStakedToken.contractAddress, farms[0].farmStakedToken.tokenId);
+  } = useTokenBalance(oldFarms[0].farmStakedToken.contractAddress, oldFarms[0].farmStakedToken.tokenId);
 
   useEffect(() => {
     if (!balances.isDirty && balances.balances.length > 0) {
