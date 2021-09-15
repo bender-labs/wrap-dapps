@@ -73,9 +73,9 @@ const StyledLink = styled(Link)(({theme}) => ({
 
 export default function FarmChoice() {
   const history = useHistory();
-  const { farms } = useConfig();
+  const { farms, oldFarms } = useConfig();
 
-  const totalStaked = farms
+  const totalStaked = farms.concat(oldFarms)
     .reduce((total, farm) => {
       const staked = new BigNumber(farm.farmTotalStaked ?? 0).shiftedBy(
         -farm.farmStakedToken.decimals
