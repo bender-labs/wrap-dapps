@@ -24,6 +24,7 @@ type Props = {
   amountToWrap: BigNumber;
   balanceLoading: boolean;
   disabled?: boolean;
+  icon?: React.ComponentType<any>;
 };
 
 export default function AmountToWrapInput({
@@ -33,7 +34,8 @@ export default function AmountToWrapInput({
                                             symbol,
                                             onChange,
                                             balanceLoading,
-                                            disabled
+                                            disabled,
+                                            icon
                                           }: Props) {
   const [[error, helperText], setUserError] = useState<[boolean, string]>([
     false,
@@ -110,6 +112,7 @@ export default function AmountToWrapInput({
           }
           </>
         }
+        icon={icon}
       />
     </>
   );

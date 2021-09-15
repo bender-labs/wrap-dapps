@@ -3,9 +3,7 @@ import { useMemo } from 'react';
 import { Link, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { ellipsizeAddress, ERC20Operation, OperationType, SupportedBlockchain } from '@wrap-dapps/features';
 import { FungibleToken, Token } from '@wrap-dapps/api';
-import { Amount } from '@wrap-dapps/components';
-import EthereumTokenIcon from '@wrap-dapps/components/token/ethereum/EthereumTokenIcon';
-import TezosTokenIcon from '@wrap-dapps/components/token/tezos/TezosTokenIcon';
+import { Amount, EthereumTokenIcon, TezosTokenIcon } from '@wrap-dapps/components';
 
 const StyledTableCellBody = styled(TableCell)(() => ({
   fontSize: 14,

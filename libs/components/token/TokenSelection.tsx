@@ -1,8 +1,7 @@
 import { FormControl, FormHelperText, MenuItem, Select } from '@mui/material';
 import React from 'react';
 import { SupportedBlockchain } from '@wrap-dapps/features/wallet/blockchain';
-import EthereumTokenIcon from './ethereum/EthereumTokenIcon';
-import TezosTokenIcon from './tezos/TezosTokenIcon';
+import { EthereumTokenIcon, TezosTokenIcon } from '../icons';
 import { Token } from '@wrap-dapps/api';
 
 type Props = {
@@ -28,7 +27,7 @@ const itemIcon = (
   return blockchainTarget === SupportedBlockchain.Ethereum ? (
     <EthereumTokenIcon tokenMetadata={tokenMetadata} />
   ) : (
-    <TezosTokenIcon url={tokenMetadata.thumbnailUri ?? ''} width={28} height={28}/>
+    <TezosTokenIcon url={tokenMetadata.thumbnailUri ?? ''} width={28} height={28} />
   );
 };
 

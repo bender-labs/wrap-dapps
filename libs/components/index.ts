@@ -11,3 +11,4 @@ export * from './token';
 export * from './stepper';
 export * from './formatting';
 export * from './progress';
+export * from './icons';

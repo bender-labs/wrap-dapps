@@ -1,6 +1,29 @@
-import { FungibleToken, IndexerFarmConfigurationRewardsPayload, NonFungibleToken } from '@wrap-dapps/api';
+import { Fees, FungibleToken, IndexerFarmConfigurationRewardsPayload, NonFungibleToken } from '@wrap-dapps/api';
 import { NetworkType } from '@airgap/beacon-sdk';
-import {Fees} from "@wrap-dapps/api";
+
+export enum Environment {
+  TESTNET = 'TESTNET',
+  MAINNET = 'MAINNET',
+}
+
+export interface FarmStakedToken {
+  contractAddress: string;
+  thumbnailUri: string;
+  tokenId: number;
+  symbol: string;
+  name: string;
+  decimals: number;
+}
+
+export interface ProgramConfig {
+  pool: {
+    contract: string;
+    base: FarmStakedToken;
+    quote: 'xtz';
+  };
+  reward: FarmStakedToken;
+  farmingContract: string;
+}
 
 export interface EthereumConfig {
   rpcUrl: string;
@@ -35,6 +58,7 @@ export interface Config {
   farmInput: FarmStakedToken;
   oldFarms: FarmConfig[];
   etherscanLink: string;
+  programs: ProgramConfig[];
 }
 
 export interface InitialConfig {
@@ -56,11 +80,7 @@ export interface InitialConfig {
   tzktLink: string;
   farmInput: FarmStakedToken;
   etherscanLink: string;
-}
-
-export enum Environment {
-  TESTNET = 'TESTNET',
-  MAINNET = 'MAINNET',
+  programs: ProgramConfig[]
 }
 
 export interface FarmConfig {
@@ -78,13 +98,4 @@ export interface FarmConfig {
   rewards: IndexerFarmConfigurationRewardsPayload | undefined;
   apy?: string;
   apr?: string;
-}
-
-interface FarmStakedToken {
-  contractAddress: string;
-  thumbnailUri: string;
-  tokenId: number;
-  symbol: string;
-  name: string;
-  decimals: number;
 }

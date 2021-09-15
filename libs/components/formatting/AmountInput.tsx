@@ -28,6 +28,7 @@ export type AmountInputProps = {
   helperText?: React.ReactNode;
   focus?: boolean;
   disabled?: boolean;
+  icon?: React.ComponentType<any>;
 };
 
 export default function AmountInput({
@@ -38,7 +39,8 @@ export default function AmountInput({
                                       error,
                                       helperText,
                                       focus = false,
-                                      disabled = false
+                                      disabled = false,
+                                      icon
                                     }: AmountInputProps) {
   const handleOnChange = (e: NumberFormatValues) => {
     onChange(e.value);

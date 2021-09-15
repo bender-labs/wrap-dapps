@@ -13,7 +13,11 @@ import {
   InitialConfig,
   NavBar,
   TezosWalletProvider,
-  ThemeProvider
+  ThemeProvider,
+  WRAP_TOKEN_GRANADA_TESTNET,
+  WRAP_TOKEN_MAINNET,
+  Environment,
+  programs
 } from '@wrap-dapps/components';
 import './main.css';
 import { NetworkType } from '@airgap/beacon-sdk';
@@ -26,32 +30,11 @@ function getLibrary(provider: ExternalProvider): Web3Provider {
   return library;
 }
 
-interface FarmStakedToken {
-  contractAddress: string;
-  thumbnailUri: string;
-  tokenId: number;
-  symbol: string;
-  name: string;
-  decimals: number;
-}
-
-const WRAP_MAINNET: FarmStakedToken = {
-  contractAddress: 'KT1LRboPna9yQY9BrjtQYDS1DVxhKESK4VVd',
-  thumbnailUri: 'ipfs://Qma2o69VRZe8aPsuCUN1VRUE5k67vw2mFDXb35uDkqn17o',
-  decimals: 8,
-  symbol: 'WRAP',
-  name: 'WRAP',
-  tokenId: 0
-};
-
-const WRAP_GRANADA_TESTNET: FarmStakedToken = {
-  contractAddress: 'KT1M6RSfdbWL6RH5tPdxekrZhtXUh67x2N9Y',
-  thumbnailUri: 'ipfs://Qma2o69VRZe8aPsuCUN1VRUE5k67vw2mFDXb35uDkqn17o',
-  decimals: 8,
-  symbol: 'WRAP',
-  name: 'WRAP',
-  tokenId: 0
-};
+const env =
+  Environment[
+    (process.env.RAZZLE_WRAP_ENVIRONMENT ||
+      'TESTNET') as keyof typeof Environment
+    ];
 
 const initConfig: InitialConfig = {
   environmentName: process.env.RAZZLE_WRAP_ENVIRONMENT!,
@@ -70,8 +53,9 @@ const initConfig: InitialConfig = {
     networkName: process.env.RAZZLE_TZ_NETWORK_NAME!
   },
   tzktLink: process.env.RAZZLE_TZKT_LINK!,
-  farmInput: process.env.RAZZLE_FARM_INPUT! === WRAP_GRANADA_TESTNET.contractAddress ? WRAP_GRANADA_TESTNET : WRAP_MAINNET,
-  etherscanLink: process.env.RAZZLE_ETHERSCAN_LINK!
+  farmInput: process.env.RAZZLE_FARM_INPUT! === WRAP_TOKEN_GRANADA_TESTNET.contractAddress ? WRAP_TOKEN_GRANADA_TESTNET : WRAP_TOKEN_MAINNET,
+  etherscanLink: process.env.RAZZLE_ETHERSCAN_LINK!,
+  programs: programs[env]
 };
 
 render(

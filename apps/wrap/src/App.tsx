@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppRoute } from '@wrap-dapps/components';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { routes } from './pages/routes';
+import { FARMING_ROOT, routes } from './pages/routes';
 
 const App = () => {
   const buildRoutes = (routes: AppRoute[]): JSX.Element[] => {
@@ -11,6 +11,9 @@ const App = () => {
   return (
     <Switch>
       {buildRoutes(routes)}
+      <Route path='/farming'>
+        <Redirect to={FARMING_ROOT} />
+      </Route>
       <Route path='*'>
         <Redirect to='/wrap' />
       </Route>

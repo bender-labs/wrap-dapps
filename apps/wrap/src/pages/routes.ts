@@ -1,26 +1,30 @@
-import { NftUnwrapSelectorScreen } from './nft/NftUnwrapSelectorScreen';
-import { NftWrapSelectorScreen } from './nft/NftWrapSelectorScreen';
+import { NftUnwrapSelectorScreen } from './wrap_nft/NftUnwrapSelectorScreen';
+import { NftWrapSelectorScreen } from './wrap_nft/NftWrapSelectorScreen';
 import { AppRoute } from '@wrap-dapps/components';
 import { Operation } from '@wrap-dapps/features';
 import { NftInstance } from '../features/nft/api/types';
-import { NftWrapConfirmScreen } from './nft/NftWrapConfirmScreen';
-import NftWrapOperationScreen from './nft/NftWrapOperationScreen';
-import { NftUnwrapConfirmScreen } from './nft/NftUnwrapConfirmScreen';
-import NftUnwrapOperationScreen from './nft/NftUnwrapOperationScreen';
+import { NftWrapConfirmScreen } from './wrap_nft/NftWrapConfirmScreen';
+import NftWrapOperationScreen from './wrap_nft/NftWrapOperationScreen';
+import { NftUnwrapConfirmScreen } from './wrap_nft/NftUnwrapConfirmScreen';
+import NftUnwrapOperationScreen from './wrap_nft/NftUnwrapOperationScreen';
 import HistoryNftWrapOperationsScreen from './history/HistoryNftWrapOperationsScreen';
 import HistoryNftUnwrapOperationsScreen from './history/HistoryNftUnwrapOperationsScreen';
-import FarmChoice from './farming/FarmChoice';
-import Farm from './farming/Farm';
-import OldFarm from './farming/OldFarm';
-import AllFarms from './farming/AllFarms';
-import { WrapScreen } from './swap/WrapScreen';
-import { WrapOperationScreen } from './swap/WrapOperationScreen';
-import { UnwrapScreen } from './swap/UnwrapScreen';
-import { UnwrapOperationScreen } from './swap/UnwrapOperationScreen';
+import FarmChoice from './fees_farming/FarmChoice';
+import Farm from './fees_farming/Farm';
+import OldFarm from './fees_farming/OldFarm';
+import AllFarms from './fees_farming/AllFarms';
+import { WrapScreen } from './wrap/WrapScreen';
+import { WrapOperationScreen } from './wrap/WrapOperationScreen';
+import { UnwrapScreen } from './wrap/UnwrapScreen';
+import { UnwrapOperationScreen } from './wrap/UnwrapOperationScreen';
 import HistoryWrapOperationsScreen from './history/HistoryWrapOperationsScreen';
 import HistoryUnwrapOperationsScreen from './history/HistoryUnwrapOperationsScreen';
-import { NftTezosTransferScreen } from './nft/NftTezosTransferScreen';
-import OldAllFarms from './farming/OldAllFarms';
+import { NftTezosTransferScreen } from './wrap_nft/NftTezosTransferScreen';
+import OldAllFarms from './fees_farming/OldAllFarms';
+import LiquidityMiningPrograms from './liquidity_mining/LiquidityMiningPrograms';
+import { WrapStackingPool } from './wrap_stacking/WrapStackingPool';
+import { LiquidityMiningProgram } from './liquidity_mining/LiquidityMiningProgram';
+
 
 const wrapNftPath = '/wrap-nft';
 const unwrapNftPath = '/unwrap-nft';
@@ -40,7 +44,7 @@ const HISTORY_UNWRAP = '/history/unwrap';
 const HISTORY_WRAP_NFT = '/history/wrap/nft';
 const HISTORY_UNWRAP_NFT = '/history/unwrap/nft';
 
-const FARMING_ROOT = '/farming';
+export const FARMING_ROOT = '/fees-farming';
 const FARM_PARAMETER = '/farm/:farm_address';
 const FARM_STAKE = `${FARMING_ROOT}${FARM_PARAMETER}/stake`;
 const FARM_UNSTAKE = `${FARMING_ROOT}${FARM_PARAMETER}/unstake`;
@@ -59,6 +63,13 @@ const WRAP_OPERATION = '/wrap/:transactionHash';
 const UNWRAP_OPERATION = '/unwrap/:transactionHash';
 
 const TEZOS_TRANSFER = tezosTransferPath + '/:nftCollectionAddress/:tokenId';
+
+const WRAP_STACKING = 'wrap-stacking';
+
+const LIQUIDITY_MINING_ROOT = '/liquidity-mining';
+const LIQUIDITY_MINING_STAKE = `${LIQUIDITY_MINING_ROOT}/op/:token/stake`;
+const LIQUIDITY_MINING_UNSTAKE = `${LIQUIDITY_MINING_ROOT}/op/:token/unstake`;
+const LIQUIDITY_MINING_CLAIM = `${LIQUIDITY_MINING_ROOT}/op/:token/claim`;
 
 export const paths = {
   CONFIRM_NFT_WRAP,
@@ -85,7 +96,12 @@ export const paths = {
   UNWRAP,
   TEZOS_TRANSFER,
   OLD_ALL_FARMS_CLAIM,
-  OLD_ALL_FARMS_UNSTAKE
+  OLD_ALL_FARMS_UNSTAKE,
+  WRAP_STACKING,
+  LIQUIDITY_MINING_ROOT,
+  LIQUIDITY_MINING_STAKE,
+  LIQUIDITY_MINING_UNSTAKE,
+  LIQUIDITY_MINING_CLAIM
 };
 
 export const nftWrapOperationPage = (op: Operation) => `${wrapNftPath}/${op.hash}`;
@@ -97,6 +113,7 @@ export const oldFarmUnstakePageRoute = (farmContract: string) => OLD_FARM_UNSTAK
 export const wrapOperationPage = (op: Operation) => `/wrap/${op.hash}`;
 export const unwrapOperationPage = (op: Operation) => `/unwrap/${op.hash}`;
 export const tezosTransfer = (nftInstance: NftInstance) => `${tezosTransferPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
+export const liquidityMiningOperationPage = (v: string) => LIQUIDITY_MINING_STAKE.replace(':token', v);
 
 export const routes: AppRoute[] = [
   {
@@ -176,7 +193,7 @@ export const routes: AppRoute[] = [
     external: false,
     navRoute: false
   }, {
-    name: 'Farming',
+    name: 'Fees Farming',
     component: FarmChoice,
     path: FARMING_ROOT,
     external: false,
@@ -235,6 +252,28 @@ export const routes: AppRoute[] = [
   }, {
     component: OldAllFarms,
     path: OLD_ALL_FARMS_CLAIM,
+    external: false,
+    navRoute: false
+  }, {
+    name: 'Liquidity mining',
+    component: LiquidityMiningPrograms,
+    path: LIQUIDITY_MINING_ROOT,
+    external: false,
+    navRoute: true,
+    activePaths: [LIQUIDITY_MINING_ROOT, LIQUIDITY_MINING_STAKE, LIQUIDITY_MINING_UNSTAKE, LIQUIDITY_MINING_CLAIM]
+  }, {
+    component: LiquidityMiningProgram,
+    path: LIQUIDITY_MINING_STAKE,
+    external: false,
+    navRoute: false
+  } ,{
+    component: LiquidityMiningProgram,
+    path: LIQUIDITY_MINING_UNSTAKE,
+    external: false,
+    navRoute: false
+  }, {
+    component: LiquidityMiningProgram,
+    path: LIQUIDITY_MINING_CLAIM,
     external: false,
     navRoute: false
   }];

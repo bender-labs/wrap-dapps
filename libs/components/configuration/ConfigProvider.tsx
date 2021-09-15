@@ -197,7 +197,8 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         fees: indexerConfig.fees,
         farms,
         farmInput: initConfig.farmInput,
-        oldFarms
+        oldFarms,
+        programs: initConfig.programs
       };
       localStorage.setItem(localConfigKey, JSON.stringify(config));
       setConfig(config);

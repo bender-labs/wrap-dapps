@@ -103,15 +103,6 @@ export default (props: Props) => {
   const externalLinks = () => {
     return (
       <>
-        <Grid item key='liquidity-external'>
-          <StyledTypography variant='h6'>
-            <Link component={RouterLink} target='_blank' color='inherit'
-                  to={{ pathname: 'https://liquidity.tzwrap.com/' }}
-                  underline='none'>
-              Liquidity <StyledLaunchIcon />
-            </Link>
-          </StyledTypography>
-        </Grid>
         <Grid item key='info-external'>
           <StyledTypography variant='h6'>
             <Link component={RouterLink} target='_blank' color='inherit' to={{ pathname: 'https://info.tzwrap.com/' }}
