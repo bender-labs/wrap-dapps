@@ -68,7 +68,7 @@ function Program({ program, apy, onClick }: {
   } = program;
   return (
     <StyledBox p={2} sx={(!apy || apy.running) ? {} : { backgroundColor: '#C1C1C1' }}>
-      <StyledGridContainer container justifyItems={'space-between'} alignItems={'center'} onClick={onClick}>
+      <StyledGridContainer container justifyContent={'space-between'} alignItems={'center'} onClick={onClick}>
         <StyledGridItem item>
           <TezosTokenIcon url={thumbnailUri} width={60} height={60} />
           <TezosIcon />

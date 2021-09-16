@@ -1,7 +1,7 @@
 import { formatOptions } from './numberFormat';
 import NumberFormat, { NumberFormatValues } from 'react-number-format';
 import React from 'react';
-import { styled, TextField } from '@mui/material';
+import { InputAdornment, styled, TextField } from '@mui/material';
 
 const StyledAmountInput = styled('div')(() => ({
   width: '100%',
@@ -40,7 +40,7 @@ export default function AmountInput({
                                       helperText,
                                       focus = false,
                                       disabled = false,
-                                      icon
+                                      icon: Icon
                                     }: AmountInputProps) {
   const handleOnChange = (e: NumberFormatValues) => {
     onChange(e.value);
@@ -48,21 +48,46 @@ export default function AmountInput({
 
   return (
     <StyledAmountInput>
-      <StyledNumberFormat
-        displayType='input'
-        placeholder={`0 ${symbol}`}
-        autoFocus={focus}
-        suffix={` ${symbol}`}
-        value={value}
-        decimalScale={decimals}
-        customInput={TextField}
-        fullWidth
-        error={error}
-        helperText={helperText}
-        variant={'filled'}
-        onValueChange={handleOnChange}
-        {...formatOptions}
-      />
+      {Icon ?
+        <StyledNumberFormat
+          displayType='input'
+          placeholder={`0 ${symbol}`}
+          autoFocus={focus}
+          suffix={` ${symbol}`}
+          value={value}
+          decimalScale={decimals}
+          customInput={TextField}
+          fullWidth
+          error={error}
+          helperText={helperText}
+          variant={'filled'}
+          onValueChange={handleOnChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position={'end'} disablePointerEvents={true}>
+                <Icon />
+              </InputAdornment>
+            )
+          }}
+          {...formatOptions}
+        />
+        :
+        <StyledNumberFormat
+          displayType='input'
+          placeholder={`0 ${symbol}`}
+          autoFocus={focus}
+          suffix={` ${symbol}`}
+          value={value}
+          decimalScale={decimals}
+          customInput={TextField}
+          fullWidth
+          error={error}
+          helperText={helperText}
+          variant={'filled'}
+          onValueChange={handleOnChange}
+          {...formatOptions}
+        />
+      }
     </StyledAmountInput>
   );
 }
