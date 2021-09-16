@@ -255,7 +255,7 @@ export const routes: AppRoute[] = [
     external: false,
     navRoute: false
   }, {
-    name: 'Liquidity mining',
+    name: 'Liquidity',
     component: LiquidityMiningPrograms,
     path: LIQUIDITY_MINING_ROOT,
     external: false,
