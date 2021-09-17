@@ -22,7 +22,7 @@ const theme = createTheme({
     },
     background: {
       default: black
-    }
+    },
   },
   components: {
     MuiAppBar: {
@@ -52,7 +52,7 @@ const theme = createTheme({
         root: {
           borderRadius: 25,
           textTransform: 'none'
-        }
+        },
       },
       defaultProps: {
         color: 'secondary',
@@ -150,7 +150,7 @@ const theme = createTheme({
           backgroundColor: '#FFFFFF',
         },
       }
-    },
+    }
   }
 });
 
