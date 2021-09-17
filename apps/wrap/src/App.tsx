@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AppRoute, TezosStateType, useConfig } from '@wrap-dapps/components';
 import { useTezosWalletContext } from '@wrap-dapps/features';
-import { Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { FARMING_ROOT, paths, routes } from './pages/routes';
 import {
   Button,
@@ -22,12 +22,11 @@ const App = () => {
   };
   const [showOldFarmModal, setShowOldFarmModal] = useState<boolean>(false);
   const history = useHistory();
-  const location = useLocation();
   const { oldFarms } = useConfig();
   const { balances } = useBalances();
 
   useEffect(() => {
-    if (!location.pathname.startsWith(paths.FARMING_ROOT) && tezosState.type === TezosStateType.CONNECTED && tezosAccount()) {
+    if (tezosState.type === TezosStateType.CONNECTED && tezosAccount()) {
       if (!balances.isDirty) {
         setShowOldFarmModal(balances.balances.filter(b => new BigNumber(b.balance).isGreaterThan(0, 10)).reduce((total, currentBalance) => {
           if (oldFarms.findIndex(oldFarm => oldFarm.farmContractAddress === currentBalance.contract) !== -1) {
