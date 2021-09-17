@@ -82,6 +82,7 @@ render(
             newestOnTop={false}
             closeOnClick
             rtl={false}
+            theme='colored'
           />
         </Web3ReactProvider>
       </ThemeProvider>
