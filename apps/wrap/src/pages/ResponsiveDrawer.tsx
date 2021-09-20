@@ -33,7 +33,7 @@ const MobileDrawer = styled(Drawer)(({ theme }) => ({
   width: drawerWidth,
   flexShrink: 0,
   '& .MuiDrawer-paper': {
-    paddingTop: theme.spacing(3),
+    paddingTop: theme.spacing(1),
     width: drawerWidth,
     backgroundColor: 'black',
     display: 'flex',
@@ -48,7 +48,7 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
   width: drawerWidth,
   flexShrink: 0,
   '& .MuiDrawer-paper': {
-    paddingTop: theme.spacing(3),
+    paddingTop: theme.spacing(1),
     width: drawerWidth,
     backgroundColor: 'rgba(0,0,0,0.3)',
     display: 'flex',
@@ -86,7 +86,7 @@ const ToolbarTitle = styled('div')(({ theme }) => ({
   fontSize: '18px',
   fontWeight: 900,
   toolbar: theme.mixins.toolbar,
-  marginBottom: theme.spacing(3)
+  marginBottom: theme.spacing(2)
 }));
 
 const Logo = styled('img')(({ theme }) => ({
@@ -175,18 +175,18 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
   };
 
   const header = (
-    <div>
+    <Box sx={{padding: 0, margin: 0}}>
       <ToolbarTitle>
         <Logo src={logo} alt='Logo' /> WRAP protocol
       </ToolbarTitle>
       <List>
         {buildNavLinks()}
       </List>
-    </div>
+    </Box>
   );
 
   const footer = (
-    <div>
+    <Box sx={{padding: 0, margin: 0}}>
       <Links>
         <List sx={{ fontSize: '14px' }}>
           <StyledListItem button={true} key={'tzwrap'}>
@@ -202,7 +202,7 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
         </List>
       </Links>
       <DisplayEnvironment />
-    </div>
+    </Box>
   );
 
   return (
@@ -231,7 +231,7 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
         </StyledDrawer>
       </Hidden>
       <Content>
-        <AppBar position='static' sx={{ padding: 2, marginBottom: 2 }}>
+        <AppBar position='static' sx={{ padding: 0, marginBottom: 0 }}>
           <Toolbar sx={{ padding: 1 }}>
             <IconButton
               color='inherit'
