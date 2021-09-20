@@ -183,10 +183,16 @@ export const routes: AppRoute[] = [
     component: HistoryNftUnwrapOperationsScreen,
     path: HISTORY_UNWRAP_NFT
   }, {
-    name: 'Fees Farming',
+    name: 'Farming',
     component: FarmChoice,
     path: FARMING_ROOT,
     navRoute: 1,
+    activePaths: [FARMING_ROOT, FARM_STAKE, FARM_CLAIM, FARM_UNSTAKE, ALL_FARMS_CLAIM, ALL_FARMS_UNSTAKE, ALL_FARMS_STAKE, OLD_FARM_CLAIM, OLD_FARM_UNSTAKE, OLD_ALL_FARMS_UNSTAKE, OLD_ALL_FARMS_CLAIM, LIQUIDITY_MINING_ROOT, LIQUIDITY_MINING_STAKE, LIQUIDITY_MINING_UNSTAKE, LIQUIDITY_MINING_CLAIM]
+  }, {
+    name: 'Fees Farming',
+    component: FarmChoice,
+    path: FARMING_ROOT,
+    navRoute: 2,
     activePaths: [FARMING_ROOT, FARM_STAKE, FARM_CLAIM, FARM_UNSTAKE, ALL_FARMS_CLAIM, ALL_FARMS_UNSTAKE, ALL_FARMS_STAKE, OLD_FARM_CLAIM, OLD_FARM_UNSTAKE, OLD_ALL_FARMS_UNSTAKE, OLD_ALL_FARMS_CLAIM]
   }, {
     component: Farm,
@@ -222,7 +228,7 @@ export const routes: AppRoute[] = [
     name: 'Liquidity mining',
     component: LiquidityMiningPrograms,
     path: LIQUIDITY_MINING_ROOT,
-    navRoute: 1,
+    navRoute: 2,
     activePaths: [LIQUIDITY_MINING_ROOT, LIQUIDITY_MINING_STAKE, LIQUIDITY_MINING_UNSTAKE, LIQUIDITY_MINING_CLAIM]
   }, {
     component: LiquidityMiningProgram,

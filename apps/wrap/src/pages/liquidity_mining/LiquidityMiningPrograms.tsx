@@ -5,6 +5,7 @@ import { useConfig } from '@wrap-dapps/components';
 import ProgramList from '../../features/liquidity_mining/ProgramList';
 import { useLiquidityMiningApy } from '../../features/liquidity_mining/hook/useLiquidityMiningApy';
 import { liquidityMiningOperationPage } from '../routes';
+import { HeaderExplanation } from '../HeaderExplanation';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   marginBottom: '20px'
@@ -39,6 +40,9 @@ export default function LiquidityMiningPrograms() {
       <Box justifyItems='center' my={2}>
         <TitleTypography>Liquidity Mining Programs</TitleTypography>
       </Box>
+      <HeaderExplanation>
+        <h4>Stake your prefered AMM LP tokens to earn $WRAP tokens</h4>
+      </HeaderExplanation>
       <ContainBox>
         <SubtitlteTypography variant={'subtitle1'}>Select an option to stake, unstake or claim your
           rewards.</SubtitlteTypography>

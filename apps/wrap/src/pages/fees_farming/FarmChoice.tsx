@@ -8,6 +8,7 @@ import { useConfig } from '@wrap-dapps/components';
 import { useHistory } from 'react-router';
 import { farmStakePageRoute, paths } from '../routes';
 import BigNumber from 'bignumber.js';
+import { HeaderExplanation } from '../HeaderExplanation';
 
 
 const StyledPaperContent = styled(Box)(() => ({
@@ -168,6 +169,9 @@ export default function FarmChoice() {
           <p>You will still be able to unstake and claim from old farms through our <StyledLink to={paths.OLD_ALL_FARMS_UNSTAKE}>dedicated interface</StyledLink></p>
         </Alert>
       </BoxTitle>
+      <HeaderExplanation>
+        <h4>Stake your $WRAP tokens to earn wTokens collected through fees</h4>
+      </HeaderExplanation>
       <ContainBox>
         <StakeAllButton />
         <FirstSubtitle variant={'subtitle1'}>Or select a farm to stake, unstake or claim your fees share
