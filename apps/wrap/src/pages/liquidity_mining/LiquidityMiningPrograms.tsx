@@ -5,18 +5,30 @@ import { useConfig } from '@wrap-dapps/components';
 import ProgramList from '../../features/liquidity_mining/ProgramList';
 import { useLiquidityMiningApy } from '../../features/liquidity_mining/hook/useLiquidityMiningApy';
 import { liquidityMiningOperationPage } from '../routes';
-import { HeaderExplanation } from '../HeaderExplanation';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   marginBottom: '20px'
 }));
 
+const TitleBox = styled(Box)(({ theme }) => ({
+  justifyItems: 'center',
+  borderBottom: '3px solid #ffd000',
+  marginBottom: theme.spacing(2),
+  paddingBottom: theme.spacing(2)
+}));
+
 const TitleTypography = styled(Typography)(() => ({
   color: 'white',
-  borderBottom: '3px solid #ffd000',
   textAlign: 'center',
   fontSize: '30px',
-  paddingBottom: '15px'
+}));
+
+const SubtitleTypography = styled(Typography)(({theme}) => ({
+  color: 'white',
+  textAlign: 'center',
+  fontSize: '16px',
+  fontWeight: 500,
+  padding: theme.spacing(1)
 }));
 
 const ContainBox = styled(Box)(() => ({
@@ -37,12 +49,10 @@ export default function LiquidityMiningPrograms() {
   const { liquidityMiningApys } = useLiquidityMiningApy();
   return (
     <StyledContainer maxWidth={'sm'}>
-      <Box justifyItems='center' my={2}>
-        <TitleTypography>Liquidity Mining Programs</TitleTypography>
-      </Box>
-      <HeaderExplanation>
-        <h4>Stake your prefered AMM LP tokens to earn $WRAP tokens</h4>
-      </HeaderExplanation>
+      <TitleBox>
+        <TitleTypography>Liquidity Mining</TitleTypography>
+        <SubtitleTypography>Stake your favorite AMM LP tokens to earn $WRAP tokens</SubtitleTypography>
+      </TitleBox>
       <ContainBox>
         <SubtitlteTypography variant={'subtitle1'}>Select an option to stake, unstake or claim your
           rewards.</SubtitlteTypography>

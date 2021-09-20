@@ -63,7 +63,7 @@ const UNWRAP_OPERATION = '/unwrap/:transactionHash';
 
 const TEZOS_TRANSFER = tezosTransferPath + '/:nftCollectionAddress/:tokenId';
 
-const WRAP_STACKING = 'wrap-stacking';
+const WRAP_STACKING = '/wrap-stacking';
 
 const LIQUIDITY_MINING_ROOT = '/liquidity-mining';
 const LIQUIDITY_MINING_STAKE = `${LIQUIDITY_MINING_ROOT}/op/:token/stake`;

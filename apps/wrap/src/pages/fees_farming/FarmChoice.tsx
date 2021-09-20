@@ -8,7 +8,6 @@ import { useConfig } from '@wrap-dapps/components';
 import { useHistory } from 'react-router';
 import { farmStakePageRoute, paths } from '../routes';
 import BigNumber from 'bignumber.js';
-import { HeaderExplanation } from '../HeaderExplanation';
 
 
 const StyledPaperContent = styled(Box)(() => ({
@@ -35,12 +34,25 @@ const BoxTitle = styled(Box)(() => ({
   justifyItems: 'center'
 }));
 
-const Title = styled(Typography)(() => ({
-  color: 'white',
+const TitleBox = styled(Box)(({ theme }) => ({
+  justifyItems: 'center',
   borderBottom: '3px solid #ffd000',
+  marginBottom: theme.spacing(2),
+  paddingBottom: theme.spacing(2)
+}));
+
+const TitleTypography = styled(Typography)(() => ({
+  color: 'white',
   textAlign: 'center',
-  fontSize: '30px',
-  paddingBottom: '15px'
+  fontSize: '30px'
+}));
+
+const SubtitleTypography = styled(Typography)(({ theme }) => ({
+  color: 'white',
+  textAlign: 'center',
+  fontSize: '16px',
+  fontWeight: 500,
+  padding: theme.spacing(1)
 }));
 
 const Total = styled(Typography)(() => ({
@@ -68,7 +80,7 @@ const SecondSubtitle = styled(Typography)(() => ({
   paddingTop: '20px'
 }));
 
-const StyledLink = styled(Link)(({theme}) => ({
+const StyledLink = styled(Link)(({ theme }) => ({
   color: theme.palette.background.default
 }));
 
@@ -154,9 +166,10 @@ export default function FarmChoice() {
 
   return (
     <Container maxWidth={'sm'}>
-      <BoxTitle my={2}>
-        <Title>Fees farming</Title>
-      </BoxTitle>
+      <TitleBox>
+        <TitleTypography>Fees farming</TitleTypography>
+        <SubtitleTypography>Stake your $WRAP tokens to earn wTokens collected through fees</SubtitleTypography>
+      </TitleBox>
       <BoxTitle my={2}>
         <Total>
           Total $WRAP staked : {totalStaked}
@@ -166,12 +179,10 @@ export default function FarmChoice() {
         <Alert severity='warning'>
           <AlertTitle>New farms warning</AlertTitle>
           <p>New farms have been deployed on 2021-09-15</p>
-          <p>You will still be able to unstake and claim from old farms through our <StyledLink to={paths.OLD_ALL_FARMS_UNSTAKE}>dedicated interface</StyledLink></p>
+          <p>You will still be able to unstake and claim from old farms through our <StyledLink
+            to={paths.OLD_ALL_FARMS_UNSTAKE}>dedicated interface</StyledLink></p>
         </Alert>
       </BoxTitle>
-      <HeaderExplanation>
-        <h4>Stake your $WRAP tokens to earn wTokens collected through fees</h4>
-      </HeaderExplanation>
       <ContainBox>
         <StakeAllButton />
         <FirstSubtitle variant={'subtitle1'}>Or select a farm to stake, unstake or claim your fees share
