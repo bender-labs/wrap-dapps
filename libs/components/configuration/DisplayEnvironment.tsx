@@ -3,8 +3,8 @@ import React from 'react';
 import { useConfig } from './ConfigProvider';
 
 const StyledDiv = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2),
+  marginTop: theme.spacing(1),
+  marginBottom: theme.spacing(1),
   textAlign: 'center',
   fontSize: 12,
   color: '#FFFFFF'

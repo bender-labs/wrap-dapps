@@ -8,7 +8,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
   ConfigProvider,
-  DisplayEnvironment,
   Environment,
   EthereumWalletProvider,
   InitialConfig,
@@ -68,7 +67,6 @@ render(
                 <BrowserRouter>
                   <ResponsiveDrawer>
                     <App />
-                    <DisplayEnvironment />
                   </ResponsiveDrawer>
                 </BrowserRouter>
               </EthereumWalletProvider>

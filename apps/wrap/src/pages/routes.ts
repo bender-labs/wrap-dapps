@@ -168,7 +168,7 @@ export const routes: AppRoute[] = [
     component: NftTezosTransferScreen,
     path: TEZOS_TRANSFER
   }, {
-    name: 'History',
+    name: 'My history',
     component: HistoryWrapOperationsScreen,
     path: HISTORY_WRAP,
     navRoute: 2,

@@ -20,6 +20,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import logo from './logo.png';
 import OperationHistoryDialog from '@wrap-dapps/features/operations/components/OperationHistoryDialog';
 import { EthereumConnectionButton, TezosConnectionButton } from '@wrap-dapps/features';
+import { DisplayEnvironment } from '@wrap-dapps/components';
+import LaunchIcon from '@mui/icons-material/Launch';
 
 const drawerWidth = 240;
 
@@ -62,7 +64,7 @@ const Content = styled('main')(({ theme }) => ({
 }));
 
 const Links = styled('div')(({ theme }) => ({
-  paddingBottom: theme.spacing(3)
+  paddingBottom: theme.spacing(2)
 }));
 
 const StyledLink = styled(Link)(() => ({
@@ -71,6 +73,7 @@ const StyledLink = styled(Link)(() => ({
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
+  paddingBottom: theme.spacing(0.5),
   paddingLeft: theme.spacing(4),
   color: 'white'
 }));
@@ -102,6 +105,10 @@ const ActiveRoute = styled('span')(({ theme }) => ({
   color: theme.palette.primary.main
 }));
 
+const StyledLaunchIcon = styled(LaunchIcon)(() => ({
+  fontSize: '0.8rem'
+}));
+
 export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -130,7 +137,7 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
             exact
             sx={{
               paddingLeft: route.navRoute === 1 ? theme.spacing(4) : theme.spacing(6),
-              paddingTop: route.navRoute === 1 ? theme.spacing(2) : 0
+              paddingTop: route.navRoute === 1 ? theme.spacing(0.5) : 0
             }}
           >
             <ActiveRoute>
@@ -148,14 +155,23 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
             exact
             sx={{
               paddingLeft: route.navRoute === 1 ? theme.spacing(4) : theme.spacing(6),
-              paddingTop: route.navRoute === 1 ? theme.spacing(2) : 0
+              paddingTop: route.navRoute === 1 ? theme.spacing(0.5) : 0
             }}
           >
             <StyledItemListText primary={route.name} />
           </StyledListItem>
         );
       }
-    });
+    }).concat([
+      <StyledListItem button={true} key={'info-dapp'} sx={{
+        paddingLeft: theme.spacing(4),
+        paddingTop: theme.spacing(0.5)
+      }}>
+        <StyledLink href={'https://info.tzwrap.com'} target={'_blank'} rel={'noreferrer'}>
+          <StyledItemListText primary={<>Statistics&nbsp;&nbsp;<StyledLaunchIcon/></>} />
+        </StyledLink>
+      </StyledListItem>
+    ]);
   };
 
   const header = (
@@ -170,25 +186,23 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
   );
 
   const footer = (
-    <Links>
-      <List sx={{ fontSize: '14px' }}>
-        <StyledListItem button={true} key={'info-dapp'}>
-          <StyledLink href={'https://info.tzwrap.com'} target={'_blank'} rel={'noreferrer'}>
-            Info
-          </StyledLink>
-        </StyledListItem>
-        <StyledListItem button={true} key={'tzwrap'}>
-          <StyledLink href={'https://www.tzwrap.com'} target={'_blank'} rel={'noreferrer'}>
-            tzwrap.com
-          </StyledLink>
-        </StyledListItem>
-        <StyledListItem button={true} key={'faq'}>
-          <StyledLink href={'https://www.tzwrap.com/docs/wrap-protocol'} target={'_blank'} rel={'noreferrer'}>
-            FAQ
-          </StyledLink>
-        </StyledListItem>
-      </List>
-    </Links>
+    <div>
+      <Links>
+        <List sx={{ fontSize: '14px' }}>
+          <StyledListItem button={true} key={'tzwrap'}>
+            <StyledLink href={'https://www.tzwrap.com'} target={'_blank'} rel={'noreferrer'}>
+              tzwrap.com
+            </StyledLink>
+          </StyledListItem>
+          <StyledListItem button={true} key={'faq'}>
+            <StyledLink href={'https://www.tzwrap.com/docs/wrap-protocol'} target={'_blank'} rel={'noreferrer'}>
+              FAQ
+            </StyledLink>
+          </StyledListItem>
+        </List>
+      </Links>
+      <DisplayEnvironment />
+    </div>
   );
 
   return (
