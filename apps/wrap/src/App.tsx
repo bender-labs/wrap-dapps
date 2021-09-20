@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { AppRoute, TezosStateType, useConfig } from '@wrap-dapps/components';
+import { TezosStateType, useConfig } from '@wrap-dapps/components';
 import { useTezosWalletContext } from '@wrap-dapps/features';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import { FARMING_ROOT, paths, routes } from './pages/routes';
+import { AppRoute, FARMING_ROOT, paths, routes } from './pages/routes';
 import {
   Button,
   Dialog,

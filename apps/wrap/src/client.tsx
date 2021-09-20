@@ -9,20 +9,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
   ConfigProvider,
   DisplayEnvironment,
+  Environment,
   EthereumWalletProvider,
   InitialConfig,
-  NavBar,
+  programs,
   TezosWalletProvider,
   ThemeProvider,
   WRAP_TOKEN_GRANADA_TESTNET,
-  WRAP_TOKEN_MAINNET,
-  Environment,
-  programs
+  WRAP_TOKEN_MAINNET
 } from '@wrap-dapps/components';
 import './main.css';
 import { NetworkType } from '@airgap/beacon-sdk';
-import { routes } from './pages/routes';
 import { RecoilRoot } from 'recoil';
+import { ResponsiveDrawer } from './pages/ResponsiveDrawer';
 
 function getLibrary(provider: ExternalProvider): Web3Provider {
   const library = new Web3Provider(provider);
@@ -67,10 +66,10 @@ render(
             <TezosWalletProvider name={'Wrap Protocol'}>
               <EthereumWalletProvider>
                 <BrowserRouter>
-                  <NavBar routes={routes} showEthereumWallet={true} showTezosWallet={true}
-                          showOperationHistory={true} />
-                  <App />
-                  <DisplayEnvironment />
+                  <ResponsiveDrawer>
+                    <App />
+                    <DisplayEnvironment />
+                  </ResponsiveDrawer>
                 </BrowserRouter>
               </EthereumWalletProvider>
             </TezosWalletProvider>

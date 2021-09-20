@@ -1,6 +1,5 @@
 import { NftUnwrapSelectorScreen } from './wrap_nft/NftUnwrapSelectorScreen';
 import { NftWrapSelectorScreen } from './wrap_nft/NftWrapSelectorScreen';
-import { AppRoute } from '@wrap-dapps/components';
 import { Operation } from '@wrap-dapps/features';
 import { NftInstance } from '../features/nft/api/types';
 import { NftWrapConfirmScreen } from './wrap_nft/NftWrapConfirmScreen';
@@ -22,8 +21,8 @@ import HistoryUnwrapOperationsScreen from './history/HistoryUnwrapOperationsScre
 import { NftTezosTransferScreen } from './wrap_nft/NftTezosTransferScreen';
 import OldAllFarms from './fees_farming/OldAllFarms';
 import LiquidityMiningPrograms from './liquidity_mining/LiquidityMiningPrograms';
-import { WrapStackingPool } from './wrap_stacking/WrapStackingPool';
 import { LiquidityMiningProgram } from './liquidity_mining/LiquidityMiningProgram';
+import React from 'react';
 
 
 const wrapNftPath = '/wrap-nft';
@@ -109,171 +108,129 @@ export const nftUnwrapOperationPage = (op: Operation) => `${unwrapNftPath}/${op.
 export const confirmNftWrap = (nftInstance: NftInstance) => `${confirmWrapNftPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
 export const confirmNftUnwrap = (nftInstance: NftInstance) => `${confirmUnwrapNftPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
 export const farmStakePageRoute = (farmContract: string) => FARM_STAKE.replace(':farm_address', farmContract);
-export const oldFarmUnstakePageRoute = (farmContract: string) => OLD_FARM_UNSTAKE.replace(':farm_address', farmContract);
 export const wrapOperationPage = (op: Operation) => `/wrap/${op.hash}`;
 export const unwrapOperationPage = (op: Operation) => `/unwrap/${op.hash}`;
 export const tezosTransfer = (nftInstance: NftInstance) => `${tezosTransferPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
 export const liquidityMiningOperationPage = (v: string) => LIQUIDITY_MINING_STAKE.replace(':token', v);
+
+export type AppRoute = {
+  name?: string;
+  component: React.ComponentType<any>;
+  path: string;
+  navRoute?: number;
+  activePaths?: string[];
+}
 
 export const routes: AppRoute[] = [
   {
     name: 'Wrap',
     component: WrapScreen,
     path: WRAP,
-    external: false,
-    navRoute: true,
-    activePaths: [WRAP, UNWRAP, WRAP_OPERATION, UNWRAP_OPERATION]
+    navRoute: 1,
+    activePaths: [WRAP, UNWRAP, WRAP_OPERATION, UNWRAP_OPERATION, WRAP_NFT, UNWRAP_NFT, CONFIRM_NFT_UNWRAP, CONFIRM_NFT_WRAP, TEZOS_TRANSFER, NFT_WRAP_OPERATION, NFT_UNWRAP_OPERATION, HISTORY_WRAP, HISTORY_UNWRAP, HISTORY_WRAP_NFT, HISTORY_UNWRAP_NFT]
   }, {
+    name: 'Tokens',
+    component: WrapScreen,
+    path: WRAP,
+    navRoute: 2,
+    activePaths: [WRAP, UNWRAP, WRAP_OPERATION, UNWRAP_OPERATION]
+  },{
     component: WrapOperationScreen,
     path: WRAP_OPERATION,
-    external: false,
-    navRoute: false
   }, {
     component: UnwrapScreen,
-    path: UNWRAP,
-    external: false,
-    navRoute: false
+    path: UNWRAP
   }, {
     component: UnwrapOperationScreen,
-    path: UNWRAP_OPERATION,
-    external: false,
-    navRoute: false
+    path: UNWRAP_OPERATION
   }, {
-    name: 'NFT Wrap',
+    name: 'NFTs',
     component: NftWrapSelectorScreen,
     path: WRAP_NFT,
-    external: false,
-    navRoute: true,
+    navRoute: 2,
     activePaths: [WRAP_NFT, UNWRAP_NFT, CONFIRM_NFT_UNWRAP, CONFIRM_NFT_WRAP, TEZOS_TRANSFER, NFT_WRAP_OPERATION, NFT_UNWRAP_OPERATION]
   }, {
     component: NftUnwrapSelectorScreen,
-    path: UNWRAP_NFT,
-    external: false,
-    navRoute: false
+    path: UNWRAP_NFT
   }, {
     component: NftWrapOperationScreen,
-    path: NFT_WRAP_OPERATION,
-    external: false,
-    navRoute: false
+    path: NFT_WRAP_OPERATION
   }, {
     component: NftUnwrapOperationScreen,
-    path: NFT_UNWRAP_OPERATION,
-    external: false,
-    navRoute: false
+    path: NFT_UNWRAP_OPERATION
   }, {
     component: NftWrapConfirmScreen,
-    path: CONFIRM_NFT_WRAP,
-    external: false,
-    navRoute: false
+    path: CONFIRM_NFT_WRAP
   }, {
     component: NftUnwrapConfirmScreen,
-    path: CONFIRM_NFT_UNWRAP,
-    external: false,
-    navRoute: false
+    path: CONFIRM_NFT_UNWRAP
+  }, {
+    component: NftTezosTransferScreen,
+    path: TEZOS_TRANSFER
   }, {
     name: 'History',
     component: HistoryWrapOperationsScreen,
     path: HISTORY_WRAP,
-    external: false,
-    navRoute: true,
+    navRoute: 2,
     activePaths: [HISTORY_WRAP, HISTORY_UNWRAP, HISTORY_WRAP_NFT, HISTORY_UNWRAP_NFT]
   }, {
     component: HistoryUnwrapOperationsScreen,
-    path: HISTORY_UNWRAP,
-    external: false,
-    navRoute: false
+    path: HISTORY_UNWRAP
   }, {
     component: HistoryNftWrapOperationsScreen,
-    path: HISTORY_WRAP_NFT,
-    external: false,
-    navRoute: false
+    path: HISTORY_WRAP_NFT
   }, {
     component: HistoryNftUnwrapOperationsScreen,
-    path: HISTORY_UNWRAP_NFT,
-    external: false,
-    navRoute: false
+    path: HISTORY_UNWRAP_NFT
   }, {
     name: 'Fees Farming',
     component: FarmChoice,
     path: FARMING_ROOT,
-    external: false,
-    navRoute: true,
+    navRoute: 1,
     activePaths: [FARMING_ROOT, FARM_STAKE, FARM_CLAIM, FARM_UNSTAKE, ALL_FARMS_CLAIM, ALL_FARMS_UNSTAKE, ALL_FARMS_STAKE, OLD_FARM_CLAIM, OLD_FARM_UNSTAKE, OLD_ALL_FARMS_UNSTAKE, OLD_ALL_FARMS_CLAIM]
   }, {
     component: Farm,
-    path: FARM_STAKE,
-    external: false,
-    navRoute: false
+    path: FARM_STAKE
   }, {
     component: Farm,
-    path: FARM_UNSTAKE,
-    external: false,
-    navRoute: false
+    path: FARM_UNSTAKE
   }, {
     component: Farm,
-    path: FARM_CLAIM,
-    external: false,
-    navRoute: false
+    path: FARM_CLAIM
   }, {
     component: OldFarm,
-    path: OLD_FARM_UNSTAKE,
-    external: false,
-    navRoute: false
+    path: OLD_FARM_UNSTAKE
   }, {
     component: OldFarm,
-    path: OLD_FARM_CLAIM,
-    external: false,
-    navRoute: false
+    path: OLD_FARM_CLAIM
   }, {
     component: AllFarms,
-    path: ALL_FARMS_STAKE,
-    external: false,
-    navRoute: false
+    path: ALL_FARMS_STAKE
   }, {
     component: AllFarms,
-    path: ALL_FARMS_UNSTAKE,
-    external: false,
-    navRoute: false
+    path: ALL_FARMS_UNSTAKE
   }, {
     component: AllFarms,
-    path: ALL_FARMS_CLAIM,
-    external: false,
-    navRoute: false
-  }, {
-    component: NftTezosTransferScreen,
-    path: TEZOS_TRANSFER,
-    external: false,
-    navRoute: false
+    path: ALL_FARMS_CLAIM
   }, {
     component: OldAllFarms,
-    path: OLD_ALL_FARMS_UNSTAKE,
-    external: false,
-    navRoute: false
+    path: OLD_ALL_FARMS_UNSTAKE
   }, {
     component: OldAllFarms,
-    path: OLD_ALL_FARMS_CLAIM,
-    external: false,
-    navRoute: false
+    path: OLD_ALL_FARMS_CLAIM
   }, {
-    name: 'Liquidity',
+    name: 'Liquidity mining',
     component: LiquidityMiningPrograms,
     path: LIQUIDITY_MINING_ROOT,
-    external: false,
-    navRoute: true,
+    navRoute: 1,
     activePaths: [LIQUIDITY_MINING_ROOT, LIQUIDITY_MINING_STAKE, LIQUIDITY_MINING_UNSTAKE, LIQUIDITY_MINING_CLAIM]
   }, {
     component: LiquidityMiningProgram,
-    path: LIQUIDITY_MINING_STAKE,
-    external: false,
-    navRoute: false
-  } ,{
-    component: LiquidityMiningProgram,
-    path: LIQUIDITY_MINING_UNSTAKE,
-    external: false,
-    navRoute: false
+    path: LIQUIDITY_MINING_STAKE
   }, {
     component: LiquidityMiningProgram,
-    path: LIQUIDITY_MINING_CLAIM,
-    external: false,
-    navRoute: false
+    path: LIQUIDITY_MINING_UNSTAKE
+  }, {
+    component: LiquidityMiningProgram,
+    path: LIQUIDITY_MINING_CLAIM
   }];
