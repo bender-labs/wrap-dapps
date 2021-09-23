@@ -16,12 +16,12 @@ export default function useFarmingContract(farmingContractAddress: string) {
 
   const refresh = useCallback(async () => {
     setLoading(true);
-    const r = await new FeesFarmingApi(tezosLibrary()!).extractBalances(
+    const newBalances = await new FeesFarmingApi(tezosLibrary()!).extractBalances(
       farmingContractAddress,
       tezosAccount()!
     );
     setLoading(false);
-    setBalances(r);
+    setBalances(newBalances);
   }, [tezosLibrary, farmingContractAddress, tezosAccount]);
 
   useEffect(() => {
@@ -34,8 +34,8 @@ export default function useFarmingContract(farmingContractAddress: string) {
   }, [refresh, state, tezosAccount]);
 
   return {
-    wrapStackingContractLoading: loading,
-    refreshWrapStackingContract: refresh,
-    wrapStackingBalances: balances
+    farmLoading: loading,
+    refreshFarmingContract: refresh,
+    farmBalances: balances
   };
 }

@@ -1,18 +1,13 @@
 import React, { useCallback } from 'react';
-import {
-  AmountToWrapInput,
-  AssetSummary,
-  LoadableButton,
-  PaperContent,
-  PaperFooter,
-  TezosConnectionButton
-} from '@wrap-dapps/components';
+import { AssetSummary, LoadableButton, PaperContent, PaperFooter, TezosConnectionButton } from '@wrap-dapps/components';
 import { WrapStackingContractActionProps } from './types';
 import { WrapStackingContractInfo } from './components/WrapStackingContractInfo';
 import { WrapStackingContractHeader } from './components/WrapStackingContractHeader';
+import { WrapStackingDenseAmount } from './components/WrapStackingDenseAmount';
 import useWrapStackingUnstake, { WrapStackingUnstakeStatus } from './hooks/useWrapStackingUnstake';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { paths } from '../../pages/routes';
+import { WrapStackingStakeInfo } from './api/WrapStackingApi';
 
 export function WrapStackingUnstake({
                                       stacking,
@@ -30,8 +25,11 @@ export function WrapStackingUnstake({
     onApply();
   }, [onApply, unstake]);
 
-  const orderByLevel = () => {
-
+  const orderByLevel = (stakes: WrapStackingStakeInfo[]): WrapStackingStakeInfo[] => {
+    if (stakes.length > 0) {
+      stakes.sort((a, b) => a.level.isGreaterThan(b.level) ? 1 : -1);
+    }
+    return stakes;
   };
 
   return (
@@ -49,7 +47,7 @@ export function WrapStackingUnstake({
               </TableRow>
             </TableHead>
             <TableBody>
-              {wrapStackingOwnerInfos?.stakes?.map((stake) => (
+              {wrapStackingOwnerInfos?.stakes && orderByLevel(wrapStackingOwnerInfos?.stakes).map((stake) => (
                 <TableRow
                   key={'stake-' + stake.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -61,7 +59,8 @@ export function WrapStackingUnstake({
                     {100 / stake.fees_ratio.toNumber()}%
                   </TableCell>
                   <TableCell align='right'>
-                    {stake.amount.toString(10)}
+                    <WrapStackingDenseAmount amount={stake.amount} onChange={() => {
+                    }} decimals={stacking.reward.decimals} />
                   </TableCell>
                   <TableCell align='right'>
 
@@ -71,19 +70,6 @@ export function WrapStackingUnstake({
             </TableBody>
           </Table>
         </TableContainer>
-        <AmountToWrapInput
-          balance={wrapStackingOwnerInfos.staked}
-          decimals={8}
-          symbol={'$WRAP'}
-          onChange={changeAmount}
-          amountToWrap={amount}
-          balanceLoading={wrapStackingOwnerInfos.loading}
-          disabled={
-            unstakeStatus === WrapStackingUnstakeStatus.NOT_CONNECTED ||
-            wrapStackingOwnerInfos.staked.isZero() ||
-            wrapStackingOwnerInfos.staked.isNaN()
-          }
-        />
       </PaperContent>
       <WrapStackingContractInfo
         wrapStackingOwnerInfos={wrapStackingOwnerInfos}

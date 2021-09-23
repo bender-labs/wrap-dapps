@@ -24,7 +24,8 @@ const computeNewStakingBalances = (balances: ContractBalance[], indexerStakingBa
     });
 
     if (existingBalance) {
-      if (!existingBalance.maxLevelProcessed || existingBalance.maxLevelProcessed < currentIndexerStakingBalance.maxLevelProcessed) {
+      if ((!existingBalance.maxLevelProcessed && currentIndexerStakingBalance.maxLevelProcessed)
+        || (existingBalance.maxLevelProcessed < currentIndexerStakingBalance.maxLevelProcessed)) {
         shouldUpdate = true;
         return {
           ...existingBalance,

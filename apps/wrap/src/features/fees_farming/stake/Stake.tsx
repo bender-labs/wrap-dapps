@@ -55,7 +55,6 @@ export default function Stake({ farm, farmBalances, onApply, inputBalance }: Far
       />
       <PaperFooter>
         {stakingStatus !== StakingStatus.NOT_CONNECTED && (
-
           <LoadableButton
             loading={stakingStatus === StakingStatus.STAKING}
             onClick={handleStake}
