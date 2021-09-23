@@ -12,10 +12,15 @@ export function WrapStackingClaim({
                                     balance,
                                     onApply
                                   }: WrapStackingContractActionProps) {
-  const { claim, claimStatus } = useWrapStackingClaim(stacking, wrapStackingOwnerInfos.reward);
+  const { claim, claimStatus, claimAndRestake } = useWrapStackingClaim(stacking, wrapStackingOwnerInfos.reward);
 
   const handleClaim = useCallback(async () => {
     await claim();
+    onApply();
+  }, [onApply, claim]);
+
+  const handleClaimAndRestake = useCallback(async () => {
+    await claimAndRestake();
     onApply();
   }, [onApply, claim]);
 
@@ -34,13 +39,22 @@ export function WrapStackingClaim({
       />
       <PaperFooter>
         {claimStatus !== WrapStackingClaimStatus.NOT_CONNECTED && (
-          <LoadableButton
-            loading={claimStatus === WrapStackingClaimStatus.CLAIMING}
-            onClick={handleClaim}
-            disabled={claimStatus !== WrapStackingClaimStatus.READY}
-            text={'Claim'}
-            variant={'contained'}
-          />
+          <>
+            <LoadableButton
+              loading={claimStatus === WrapStackingClaimStatus.CLAIMING}
+              onClick={handleClaim}
+              disabled={claimStatus !== WrapStackingClaimStatus.READY}
+              text={'Claim'}
+              variant={'contained'}
+            />
+            <LoadableButton
+              loading={claimStatus === WrapStackingClaimStatus.CLAIMING}
+              onClick={handleClaimAndRestake}
+              disabled={claimStatus !== WrapStackingClaimStatus.READY}
+              text={'Claim and restake'}
+              variant={'contained'}
+            />
+          </>
         )}
         {claimStatus === WrapStackingClaimStatus.NOT_CONNECTED && (
           <TezosConnectionButton />

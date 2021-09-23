@@ -1,9 +1,9 @@
 import {
   IndexerContractBalance, IndexerContractBalancesPayload,
-  IndexerFarmingConfigurationPayload,
+  IndexerFeesFarmingConfigurationPayload,
   IndexerTezosNftPayload,
   IndexerUnwrapPayload,
-  IndexerWrapPayload,
+  IndexerWrapPayload, IndexerWrapStackingPayload,
   WrapConfiguration
 } from './types';
 import axios, { AxiosInstance } from 'axios';
@@ -20,8 +20,12 @@ export class IndexerApi {
     return this.client.get('/configuration').then(({ data }) => data);
   }
 
-  public fetchFarmingConfiguration(): Promise<IndexerFarmingConfigurationPayload> {
+  public fetchFeesFarmingConfiguration(): Promise<IndexerFeesFarmingConfigurationPayload> {
     return this.client.get('/staking-configuration').then(({data}) => data);
+  }
+
+  public fetchWrapStackingConfiguration(): Promise<IndexerWrapStackingPayload> {
+    return this.client.get('/stacking-configuration').then(({data}) => data);
   }
 
   public fetchCurrentUserFarmBalances(tezosAddress: string): Promise<IndexerContractBalance[]> {

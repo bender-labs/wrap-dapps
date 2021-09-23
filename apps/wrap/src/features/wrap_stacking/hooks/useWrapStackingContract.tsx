@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { TezosStateType, useTezosWalletContext } from '@wrap-dapps/components';
-import { WrapStackingApi, WrapStackingFees, WrapStackingStakeInfo } from '../api/WrapStackingApi';
+import { WrapStackingApi, WrapStackingStakeInfo } from '../api/WrapStackingApi';
 
 const initialState = {
   totalSupply: new BigNumber(''),
@@ -14,11 +14,9 @@ export default function useWrapStackingContract(stackingContractAddress: string)
   wrapStackingContractLoading: boolean,
   refreshWrapStackingContract: any,
   wrapStackingOwnerInfos: any,
-  fees: WrapStackingFees | undefined
 } {
   const [loading, setLoading] = useState(false);
   const [contractInfos, setContractInfos] = useState(initialState);
-  const [fees, setFees] = useState<WrapStackingFees>();
   const { tezosAccount, tezosLibrary, state } = useTezosWalletContext();
 
   const wrapStackingApi = useMemo(() => {
@@ -39,13 +37,6 @@ export default function useWrapStackingContract(stackingContractAddress: string)
     }
   }, [wrapStackingApi, stackingContractAddress, tezosAccount]);
 
-  const refreshFees = useCallback(async () => {
-    if (wrapStackingApi) {
-      // const fees = await wrapStackingApi.getWrapStackingFees(stackingContractAddress);
-      //   setFees(fees);
-    }
-  }, [wrapStackingApi, stackingContractAddress, tezosAccount]);
-
   useEffect(() => {
     if (state.type !== TezosStateType.CONNECTED || !tezosAccount) {
       setContractInfos(initialState);
@@ -53,14 +44,11 @@ export default function useWrapStackingContract(stackingContractAddress: string)
     }
     // noinspection JSIgnoredPromiseFromCall
     refresh();
-    // noinspection JSIgnoredPromiseFromCall
-    refreshFees();
   }, [refresh, state, tezosAccount]);
 
   return {
     wrapStackingContractLoading: loading,
     refreshWrapStackingContract: refresh,
-    wrapStackingOwnerInfos: contractInfos,
-    fees: fees
+    wrapStackingOwnerInfos: contractInfos
   };
 }

@@ -4,16 +4,6 @@ import { StackingConfig } from '@wrap-dapps/components';
 import { tzip16 } from '@taquito/tzip16';
 import { WrapUnstakeInfo } from '../WrapStackingUnstake';
 
-export interface FeesLevel {
-  maxLevel: number,
-  feesPercent: number
-}
-
-export interface WrapStackingFees {
-  default: number,
-  levels: FeesLevel[]
-}
-
 export interface WrapStackingStakeInfo {
   id: BigNumber,
   level: BigNumber,
@@ -136,6 +126,21 @@ export class WrapStackingApi {
   public async claim(stackingContractAddress: string): Promise<string> {
     const stackingContract = await this.library.wallet.at(stackingContractAddress);
     const opg = await stackingContract.methods.claim({}).send();
+    await opg.receipt();
+    return opg.opHash;
+  }
+
+  public async claimAndRestake(stacking: StackingConfig, account: string, claimableAmount: BigNumber): Promise<string> {
+    const stackingContract = await this.library.wallet.at(stacking.stackingContract);
+    const claim = await stackingContract.methods.claim({});
+    const addOperator = WrapStackingApi.updateOperatorTransaction(stacking.reward.contractAddress, account, stacking.stackingContract);
+    const stake = WrapStackingApi.stakeOperation(stacking.stackingContract, claimableAmount.toString(10));
+    const opg = await this.library.wallet
+      .batch()
+      .withContractCall(claim)
+      .with([addOperator])
+      .with([stake])
+      .send();
     await opg.receipt();
     return opg.opHash;
   }

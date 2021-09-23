@@ -3,12 +3,13 @@ import { Config, FarmConfig, InitialConfig } from './types';
 import {
   FungibleToken,
   IndexerApi,
-  IndexerFarmConfigurationPayload,
+  IndexerFeesFarmConfigurationPayload,
   NonFungibleToken,
   StatisticsApi,
   TokenType
 } from '@wrap-dapps/api';
 import { LoadingScreen } from './LoadingScreen';
+import BigNumber from 'bignumber.js';
 
 type ContextValue = undefined | Config;
 const ConfigContext = React.createContext<ContextValue>(undefined);
@@ -42,7 +43,7 @@ export function useIndexerApi() {
 
 const getTimeFromRetryCounter = (counter: number) => Math.pow(2, counter) - 1;
 
-const stoppedFarms: IndexerFarmConfigurationPayload[] =
+const stoppedFarms: IndexerFeesFarmConfigurationPayload[] =
   [
     {
       rewards: undefined,
@@ -96,10 +97,11 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
 
     const loadConfig = async () => {
       const indexerConfig = await indexerApi.getConfiguration();
-      const farmingConfiguration = await indexerApi.fetchFarmingConfiguration();
+      const feesFarmingConfiguration = await indexerApi.fetchFeesFarmingConfiguration();
+      const wrapStackingConfiguration = await indexerApi.fetchWrapStackingConfiguration();
       const stakingApies = await statisticsApi.fetchStakingApy();
 
-      const farms = farmingConfiguration.contracts.filter(contract => !contract.old).reduce(
+      const farms = feesFarmingConfiguration.contracts.filter(contract => !contract.old).reduce(
         (validFarms: FarmConfig[], farmConfiguration) => {
           const tokenInfos = indexerConfig.tokens.find(
             (t) =>
@@ -132,7 +134,7 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         []
       );
 
-      const oldFarms = farmingConfiguration.contracts.filter(contract => contract.old).concat(stoppedFarms).reduce((oldFarms: FarmConfig[], farmConfiguration) => {
+      const oldFarms = feesFarmingConfiguration.contracts.filter(contract => contract.old).concat(stoppedFarms).reduce((oldFarms: FarmConfig[], farmConfiguration) => {
         const tokenInfos = indexerConfig.tokens.find(
           (t) =>
             t.tezosWrappingContract === farmConfiguration.token &&
@@ -199,10 +201,12 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         oldFarms,
         programs: initConfig.programs,
         stacking: {
-          // stackingContract: indexerConfig.tezosStackingContract,
-          stackingContract: 'KT1HM6KycpPoeL6nCmqv9dZeaoX61tSEjcFK',
+          stackingContract: indexerConfig.tezosStackingContract,
           stackingContractLink: initConfig.tzktLink + indexerConfig.tezosStackingContract + '/operations/',
-          reward: initConfig.farmInput
+          reward: initConfig.farmInput,
+          totalStaked: wrapStackingConfiguration.contracts.map(c => c.totalStaked).reduce((acc, t) => {
+            return acc.plus(t);
+          }, new BigNumber(0))
         }
       };
       localStorage.setItem(localConfigKey, JSON.stringify(config));

@@ -11,11 +11,15 @@ import {
 import { WrapStackingContractActionProps } from './types';
 import { WrapStackingContractInfo } from './components/WrapStackingContractInfo';
 import { WrapStackingContractHeader } from './components/WrapStackingContractHeader';
-import { WrapStackingFeesInfo } from './components/WrapStackingFeesInfo';
 import useWrapStackingContract from './hooks/useWrapStackingContract';
 import { paths } from '../../pages/routes';
 
-export function WrapStackingStake({ stacking, wrapStackingOwnerInfos, balance, onApply }: WrapStackingContractActionProps) {
+export function WrapStackingStake({
+                                    stacking,
+                                    wrapStackingOwnerInfos,
+                                    balance,
+                                    onApply
+                                  }: WrapStackingContractActionProps) {
   const { fees } = useWrapStackingContract(stacking.stackingContract);
   const { amount, changeAmount, stakingStatus, stake } = useWrapStackingStake(
     stacking,
@@ -29,7 +33,7 @@ export function WrapStackingStake({ stacking, wrapStackingOwnerInfos, balance, o
 
   return (
     <>
-      <WrapStackingContractHeader path={paths.WRAP_STACKING}/>
+      <WrapStackingContractHeader path={paths.WRAP_STACKING} />
       <PaperContent>
         <AmountToWrapInput
           balance={balance.value}

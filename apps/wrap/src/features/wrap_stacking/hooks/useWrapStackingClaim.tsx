@@ -61,8 +61,22 @@ export default function useWrapStackingClaim(stacking: StackingConfig, balance: 
     }
   }, [tezosLibrary, notify]);
 
+  const claimAndRestake = useCallback(async () => {
+    const api = new WrapStackingApi(tezosLibrary()!);
+    setStatus(WrapStackingClaimStatus.CLAIMING);
+    try {
+      await api.claimAndRestake(stacking, tezosAccount(),balance );
+      setStatus(WrapStackingClaimStatus.READY);
+      notify(NotificationLevel.SUCCESS, 'Claiming done');
+    } catch (error) {
+      notify(NotificationLevel.ERROR, error.description);
+      setStatus(WrapStackingClaimStatus.READY);
+    }
+  }, [tezosLibrary, notify]);
+
   return {
     claimStatus,
-    claim
+    claim,
+    claimAndRestake
   };
 }

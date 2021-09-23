@@ -156,7 +156,7 @@ export default function WrapStackingList() {
       </TitleBox>
       <BoxTitle my={2}>
         <Total>
-          Total $WRAP staked : {totalStaked}
+          Total $WRAP staked : {stacking.totalStaked.shiftedBy(-stacking.reward.decimals).toString(10)}
         </Total>
       </BoxTitle>
       <ContainBox>

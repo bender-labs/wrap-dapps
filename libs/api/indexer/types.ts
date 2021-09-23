@@ -95,11 +95,11 @@ export interface IndexerTezosNftPayload {
   result: Array<IndexerTezosNft>;
 }
 
-export interface IndexerFarmingConfigurationPayload {
-  contracts: IndexerFarmConfigurationPayload[];
+export interface IndexerFeesFarmingConfigurationPayload {
+  contracts: IndexerFeesFarmConfigurationPayload[];
 }
 
-export interface IndexerFarmConfigurationRewardsPayload {
+export interface IndexerFeesFarmConfigurationRewardsPayload {
   contract: string;
   startLevel: string;
   totalRewards: string;
@@ -107,8 +107,8 @@ export interface IndexerFarmConfigurationRewardsPayload {
   duration: string;
 }
 
-export interface IndexerFarmConfigurationPayload {
-  rewards: IndexerFarmConfigurationRewardsPayload | undefined;
+export interface IndexerFeesFarmConfigurationPayload {
+  rewards: IndexerFeesFarmConfigurationRewardsPayload | undefined;
   totalStaked: string | undefined;
   maxLevelProcessed: number;
   contract: string;
@@ -135,4 +135,28 @@ export interface IndexerContractBalance {
 
 export interface IndexerContractBalancesPayload {
   result: IndexerContractBalance[];
+}
+
+export interface IndexerWrapStackingPayload {
+  contracts: IndexerWrapStackingContractPayload[];
+}
+
+export interface IndexerWrapStackingContractPayload {
+  contract: string;
+  totalStaked: string;
+  fees: IndexerWrapStackingFeesLevelsPayload,
+  startLevel: string;
+  totalRewards: string;
+  startTimestamp: string;
+  duration: string;
+}
+
+export interface IndexerWrapStackingFeesLevelsPayload {
+  levels: IndexerWrapStackingFeesLevelPayload[];
+}
+
+export interface IndexerWrapStackingFeesLevelPayload {
+  cycle: number;
+  ratio: number;
+  blocksCount: number;
 }
