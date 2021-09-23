@@ -1,6 +1,5 @@
 import { Fees, FungibleToken, IndexerFeesFarmConfigurationRewardsPayload, NonFungibleToken } from '@wrap-dapps/api';
 import { NetworkType } from '@airgap/beacon-sdk';
-import BigNumber from 'bignumber.js';
 
 export enum Environment {
   TESTNET = 'TESTNET',
@@ -30,7 +29,7 @@ export interface StackingConfig {
   stackingContract: string;
   stackingContractLink: string;
   reward: FarmStakedToken;
-  totalStaked: BigNumber;
+  totalStaked: string;
 }
 
 export interface EthereumConfig {
@@ -89,7 +88,7 @@ export interface InitialConfig {
   tzktLink: string;
   farmInput: FarmStakedToken;
   etherscanLink: string;
-  programs: ProgramConfig[]
+  programs: ProgramConfig[];
 }
 
 export interface FarmConfig {

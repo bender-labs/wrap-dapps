@@ -4,6 +4,7 @@ import { TezosTokenIcon, useConfig, useTezosWalletContext } from '@wrap-dapps/co
 import { useHistory } from 'react-router';
 import { paths } from '../routes';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import BigNumber from 'bignumber.js';
 
 const BoxTitle = styled(Box)(() => ({
   justifyItems: 'center'
@@ -156,7 +157,8 @@ export default function WrapStackingList() {
       </TitleBox>
       <BoxTitle my={2}>
         <Total>
-          Total $WRAP staked : {stacking.totalStaked.shiftedBy(-stacking.reward.decimals).toString(10)}
+          Total $WRAP staked
+          : {stacking.totalStaked ? new BigNumber(stacking.totalStaked).shiftedBy(-stacking.reward.decimals).toString(10) : '0'}
         </Total>
       </BoxTitle>
       <ContainBox>

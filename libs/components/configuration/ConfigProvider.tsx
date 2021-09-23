@@ -205,10 +205,11 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
           stackingContractLink: initConfig.tzktLink + indexerConfig.tezosStackingContract + '/operations/',
           reward: initConfig.farmInput,
           totalStaked: wrapStackingConfiguration.contracts.map(c => c.totalStaked).reduce((acc, t) => {
-            return acc.plus(t);
-          }, new BigNumber(0))
+            return acc.plus(new BigNumber(t));
+          }, new BigNumber(0)).toString(10)
         }
       };
+
       localStorage.setItem(localConfigKey, JSON.stringify(config));
       setConfig(config);
       setConfigStatus(ConfigStatus.LOADED);
