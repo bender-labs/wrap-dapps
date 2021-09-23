@@ -15,7 +15,7 @@ export function WrapStackingContractInfo({ stacking, wrapStackingOwnerInfos }: W
             rel={'noreferrer'}
             href={`${stacking.stackingContractLink}`}
           >
-            ${stacking.stackingContract}
+            {stacking.stackingContract}
           </Link>
         }
       />
@@ -41,7 +41,7 @@ export function WrapStackingContractInfo({ stacking, wrapStackingOwnerInfos }: W
         emptyState={wrapStackingOwnerInfos.loading}
         emptyStatePlaceHolder={'Loading…'}
         decimals={stacking.reward.decimals}
-        symbol={'WRAP'}
+        symbol={'$WRAP'}
       />
     </PaperContent>
   );

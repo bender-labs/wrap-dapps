@@ -2,6 +2,7 @@ import { OpKind, TezosToolkit, WalletParamsWithKind } from '@taquito/taquito';
 import BigNumber from 'bignumber.js';
 import { StackingConfig } from '@wrap-dapps/components';
 import { tzip16 } from '@taquito/tzip16';
+import { WrapUnstakeInfo } from '../WrapStackingUnstake';
 
 export interface FeesLevel {
   maxLevel: number,
@@ -97,19 +98,39 @@ export class WrapStackingApi {
   }
 
   public async unstake(
-    amount: BigNumber,
     stacking: StackingConfig,
-    index: number
+    validWrapUnstakesInfos: WrapUnstakeInfo[]
   ): Promise<string> {
     try {
-      const wrapStackingContract = await this.library.wallet.at(stacking.stackingContract);
-      const opg = await wrapStackingContract.methods.withdraw(index, amount.toString(10)).send();
+      const unstakes = validWrapUnstakesInfos.map((wrapUnstakeInfos): WalletParamsWithKind => WrapStackingApi.unstakeOperation(stacking.stackingContract, wrapUnstakeInfos));
+      const opg = await this.library.wallet.batch()
+        .with(unstakes).send();
       await opg.receipt();
       return opg.opHash;
     } catch (err) {
       console.log(err);
       return '';
     }
+  }
+
+  private static unstakeOperation(stackingContractAddress: string, wrapUnstakeInfos: WrapUnstakeInfo): WalletParamsWithKind {
+    return {
+      kind: OpKind.TRANSACTION,
+      to: stackingContractAddress,
+      amount: 0,
+      mutez: false,
+      parameter: {
+        entrypoint: 'withdraw',
+        value: [
+          {
+            int: wrapUnstakeInfos.id.toString(10)
+          },
+          {
+            int: wrapUnstakeInfos.amount.toString(10)
+          }
+        ]
+      }
+    };
   }
 
   public async claim(stackingContractAddress: string): Promise<string> {
@@ -123,7 +144,7 @@ export class WrapStackingApi {
     stackingContractAddress: string,
     owner: string
   ): Promise<{ totalSupply: BigNumber; staked: BigNumber; reward: BigNumber, stakes: WrapStackingStakeInfo[] }> {
-    const wrapStackingContract = await this.library.wallet.at(stackingContractAddress, tzip16 );
+    const wrapStackingContract = await this.library.wallet.at(stackingContractAddress, tzip16);
     const views = await wrapStackingContract.tzip16().metadataViews();
     const [staked, reward, totalSupply, stakes] = await Promise.all([
       views.get_balance().executeView(owner),
@@ -133,27 +154,4 @@ export class WrapStackingApi {
     ]);
     return { totalSupply, staked, reward, stakes };
   }
-
-  // public async getWrapStackingFees(stackingContractAddress: string): Promise<WrapStackingFees> {
-  //   const storage = await this.getStorage(stackingContractAddress);
-  //   const feesLevel: FeesLevel[] = [];
-  //   const blocksPerCycle = new BigNumber(storage['fees']['blocks_per_cycle']);
-  //   storage['fees']['fees_per_cycles'].forEach((val: number, key: number) => {
-  //     feesLevel.push({
-  //       maxLevel: blocksPerCycle.multipliedBy(key).toNumber() - 1,
-  //       feesPercent: 100 / val
-  //     });
-  //   });
-  //   return {
-  //     default: 100 / storage['fees']['default_fees'],
-  //     levels: feesLevel
-  //   };
-  // }
-
-  // private async getStorage(
-  //   stackingContractAddress: string
-  // ): Promise<Record<string, any>> {
-  //   const stackingContract = await this.library.contract.at(stackingContractAddress);
-  //   return (await stackingContract.storage()) as Record<string, any>;
-  // }
 }

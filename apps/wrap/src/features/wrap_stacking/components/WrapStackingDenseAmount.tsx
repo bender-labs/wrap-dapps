@@ -3,32 +3,34 @@ import BigNumber from 'bignumber.js';
 import { styled, TextField } from '@mui/material';
 import { formatOptions } from '@wrap-dapps/components';
 import NumberFormat, { NumberFormatValues } from 'react-number-format';
-
+import { WrapUnstakeInfo } from '../WrapStackingUnstake';
 
 const StyledNumberFormat = styled(NumberFormat)(() => ({
-  // fontSize: 52,
-  textAlign: 'center'
+  textAlign: 'center',
+  padding: 0
 }));
 
 interface WrapStackingDenseAmountProps {
-  amount: BigNumber;
+  wrapUnstakeInfo: WrapUnstakeInfo;
   decimals: number;
   onChange: (v: string) => void;
 }
 
-export function WrapStackingDenseAmount({ amount, decimals, onChange }: WrapStackingDenseAmountProps) {
+export function WrapStackingDenseAmount({ wrapUnstakeInfo, decimals, onChange }: WrapStackingDenseAmountProps) {
 
   const handleOnChange = (e: NumberFormatValues) => {
-    onChange(e.value);
+    onChange(new BigNumber(e.value).shiftedBy(decimals).toString(10));
   };
 
   return <StyledNumberFormat
     displayType='input'
-    value={amount.toString(10)}
+    value={wrapUnstakeInfo.amount.shiftedBy(-decimals).toString(10)}
     decimalScale={decimals}
     customInput={TextField}
-    fullWidth
+    size='small'
+    label={'max ' + wrapUnstakeInfo.maxAmount.shiftedBy(-decimals).toString(10)}
     variant={'outlined'}
+    error={wrapUnstakeInfo.amount.isGreaterThan(wrapUnstakeInfo.maxAmount)}
     onValueChange={handleOnChange}
     {...formatOptions}
   />;

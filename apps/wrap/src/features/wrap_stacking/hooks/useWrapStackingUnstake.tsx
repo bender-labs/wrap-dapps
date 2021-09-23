@@ -8,6 +8,7 @@ import {
 } from '@wrap-dapps/components';
 import { useCallback, useEffect, useState } from 'react';
 import { WrapStackingApi } from '../api/WrapStackingApi';
+import { WrapUnstakeInfo } from '../WrapStackingUnstake';
 
 export enum WrapStackingUnstakeStatus {
   NOT_CONNECTED = 'NOT_CONNECTED',
@@ -23,11 +24,11 @@ const nextStatus = (balance: BigNumber, amount: BigNumber) => {
   return WrapStackingUnstakeStatus.NOT_READY;
 };
 
-export default function useWrapStackingUnstake(stacking: StackingConfig, balance: BigNumber) {
+export default function useWrapStackingUnstake(stacking: StackingConfig, balance: BigNumber, wrapUnstakesInfos: WrapUnstakeInfo[]) {
   const { state, tezosAccount, tezosLibrary } = useTezosWalletContext();
   const [unstakeStatus, setStatus] = useState(WrapStackingUnstakeStatus.NOT_CONNECTED);
   const connected = state.type === TezosStateType.CONNECTED && tezosAccount() !== undefined;
-  const [amount, setAmount] = useState(new BigNumber(''));
+  const [amount, setAmount] = useState(new BigNumber(0));
   const notify = useNotify();
 
   useEffect(() => {
@@ -48,19 +49,29 @@ export default function useWrapStackingUnstake(stacking: StackingConfig, balance
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [balance]);
 
-  const changeAmount = useCallback(
-    (amt: BigNumber) => {
-      setAmount(amt);
-      setStatus(nextStatus(balance, amt));
-    },
-    [balance]
-  );
+  const isValidWrapUnstakeInfos = (wrapUnstakesInfos: WrapUnstakeInfo): boolean => {
+    return wrapUnstakesInfos.mustUnstake && wrapUnstakesInfos.amount.isGreaterThan(0) && wrapUnstakesInfos.amount.isLessThanOrEqualTo(wrapUnstakesInfos.maxAmount);
+  };
+
+  useEffect(() => {
+    if (!connected) {
+      return;
+    }
+    const amount = wrapUnstakesInfos
+      .filter(wrapUnstakesInfos => isValidWrapUnstakeInfos(wrapUnstakesInfos))
+      .map(wrapUnstakeInfos => wrapUnstakeInfos.amount)
+      .reduce((acc, val) => {
+        return acc.plus(val);
+      }, new BigNumber(0));
+    setAmount(amount);
+    setStatus(nextStatus(balance, amount));
+  }, [balance, wrapUnstakesInfos]);
 
   const unstake = useCallback(async () => {
     const api = new WrapStackingApi(tezosLibrary()!);
     setStatus(WrapStackingUnstakeStatus.UNSTAKING);
     try {
-      await api.unstake(amount, stacking, 2);
+      await api.unstake(stacking, wrapUnstakesInfos.filter(wrapUnstakeInfos => isValidWrapUnstakeInfos(wrapUnstakeInfos)));
       setAmount(new BigNumber(''));
       setStatus(WrapStackingUnstakeStatus.NOT_READY);
       notify(NotificationLevel.SUCCESS, 'Unstaking done');
@@ -68,12 +79,11 @@ export default function useWrapStackingUnstake(stacking: StackingConfig, balance
       notify(NotificationLevel.ERROR, error.description);
       setStatus(WrapStackingUnstakeStatus.READY);
     }
-  }, [tezosLibrary, amount, notify]);
+  }, [tezosLibrary, amount, notify, wrapUnstakesInfos]);
 
   return {
     unstakeStatus,
     amount,
-    changeAmount,
     unstake
   };
 }
