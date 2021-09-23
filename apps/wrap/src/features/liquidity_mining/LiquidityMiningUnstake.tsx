@@ -20,7 +20,7 @@ const StyledTypography = styled(Typography)(() => ({
   fontSize: '10px'
 }));
 
-export function Unstake({
+export function LiquidityMiningUnstake({
                           program,
                           onApply,
                           contractBalances,

@@ -23,6 +23,8 @@ import OldAllFarms from './fees_farming/OldAllFarms';
 import LiquidityMiningPrograms from './liquidity_mining/LiquidityMiningPrograms';
 import { LiquidityMiningProgram } from './liquidity_mining/LiquidityMiningProgram';
 import React from 'react';
+import { WrapStackingPool } from './wrap_stacking/WrapStackingPool';
+import WrapStackingList from './wrap_stacking/WrapStackingList';
 
 
 const wrapNftPath = '/wrap-nft';
@@ -63,7 +65,10 @@ const UNWRAP_OPERATION = '/unwrap/:transactionHash';
 
 const TEZOS_TRANSFER = tezosTransferPath + '/:nftCollectionAddress/:tokenId';
 
-const WRAP_STACKING = '/wrap-stacking';
+const WRAP_STACKING_ROOT = '/wrap-stacking';
+const WRAP_STACKING_STAKE = WRAP_STACKING_ROOT + '/stake';
+const WRAP_STACKING_UNSTAKE = WRAP_STACKING_ROOT + '/unstake';
+const WRAP_STACKING_CLAIM = WRAP_STACKING_ROOT + '/claim';
 
 const LIQUIDITY_MINING_ROOT = '/liquidity-mining';
 const LIQUIDITY_MINING_STAKE = `${LIQUIDITY_MINING_ROOT}/op/:token/stake`;
@@ -96,11 +101,14 @@ export const paths = {
   TEZOS_TRANSFER,
   OLD_ALL_FARMS_CLAIM,
   OLD_ALL_FARMS_UNSTAKE,
-  WRAP_STACKING,
+  WRAP_STACKING: WRAP_STACKING_ROOT,
   LIQUIDITY_MINING_ROOT,
   LIQUIDITY_MINING_STAKE,
   LIQUIDITY_MINING_UNSTAKE,
-  LIQUIDITY_MINING_CLAIM
+  LIQUIDITY_MINING_CLAIM,
+  WRAP_STACKING_STAKE,
+  WRAP_STACKING_UNSTAKE,
+  WRAP_STACKING_CLAIM
 };
 
 export const nftWrapOperationPage = (op: Operation) => `${wrapNftPath}/${op.hash}`;
@@ -134,9 +142,9 @@ export const routes: AppRoute[] = [
     path: WRAP,
     navRoute: 2,
     activePaths: [WRAP, UNWRAP, WRAP_OPERATION, UNWRAP_OPERATION]
-  },{
+  }, {
     component: WrapOperationScreen,
-    path: WRAP_OPERATION,
+    path: WRAP_OPERATION
   }, {
     component: UnwrapScreen,
     path: UNWRAP
@@ -239,4 +247,19 @@ export const routes: AppRoute[] = [
   }, {
     component: LiquidityMiningProgram,
     path: LIQUIDITY_MINING_CLAIM
+  }, {
+    name: '$WRAP Stacking',
+    component: WrapStackingList,
+    path: WRAP_STACKING_ROOT,
+    navRoute: 2,
+    activePaths: [WRAP_STACKING_ROOT, WRAP_STACKING_STAKE, WRAP_STACKING_UNSTAKE, WRAP_STACKING_CLAIM]
+  }, {
+    component: WrapStackingPool,
+    path: WRAP_STACKING_STAKE
+  }, {
+    component: WrapStackingPool,
+    path: WRAP_STACKING_UNSTAKE
+  }, {
+    component: WrapStackingPool,
+    path: WRAP_STACKING_CLAIM
   }];

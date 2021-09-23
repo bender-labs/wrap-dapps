@@ -9,6 +9,7 @@ export interface WrapConfiguration {
   unwrapRequiredSignatures: number;
   tokens: Token[];
   fees: Fees;
+  tezosStackingContract: string;
 }
 
 export type Token = FungibleToken | NonFungibleToken;

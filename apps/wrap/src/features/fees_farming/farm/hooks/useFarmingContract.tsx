@@ -34,8 +34,8 @@ export default function useFarmingContract(farmingContractAddress: string) {
   }, [refresh, state, tezosAccount]);
 
   return {
-    farmLoading: loading,
-    refreshFarmingContract: refresh,
-    farmBalances: balances
+    wrapStackingContractLoading: loading,
+    refreshWrapStackingContract: refresh,
+    wrapStackingBalances: balances
   };
 }

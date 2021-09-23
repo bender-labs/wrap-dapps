@@ -9,8 +9,8 @@ import {
 import useUnstake, { UnstakeStatus } from './hook/useUnstake';
 import React, { useCallback } from 'react';
 import { FarmingContractActionsProps } from '../types';
-import FarmingContractInfo from '../../../components/fees_farming/FarmingContractInfo';
-import FarmingContractHeader from '../../../components/fees_farming/FarmingContractHeader';
+import FarmingContractInfo from '../components/FarmingContractInfo';
+import FarmingContractHeader from '../components/FarmingContractHeader';
 import { paths } from '../../../pages/routes';
 
 export function Unstake({ farm, onApply, farmBalances, inputBalance }: FarmingContractActionsProps) {

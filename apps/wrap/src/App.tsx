@@ -28,12 +28,15 @@ const App = () => {
   useEffect(() => {
     if (tezosState.type === TezosStateType.CONNECTED && tezosAccount()) {
       if (!balances.isDirty) {
-        setShowOldFarmModal(balances.balances.filter(b => new BigNumber(b.balance).isGreaterThan(0, 10)).reduce((total, currentBalance) => {
+        const mustShow = balances.balances.filter(b => new BigNumber(b.balance).isGreaterThan(0, 10)).reduce((total, currentBalance) => {
           if (oldFarms.findIndex(oldFarm => oldFarm.farmContractAddress === currentBalance.contract) !== -1) {
             total = total.plus(currentBalance.balance, 10);
           }
           return total;
-        }, new BigNumber(0, 10)).isGreaterThan(0, 10));
+        }, new BigNumber(0, 10)).isGreaterThan(0, 10);
+        if (mustShow !== showOldFarmModal) {
+          setShowOldFarmModal(mustShow);
+        }
       }
     }
   }, [tezosState, tezosAccount, balances, oldFarms]);

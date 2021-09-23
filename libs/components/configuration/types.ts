@@ -25,6 +25,12 @@ export interface ProgramConfig {
   farmingContract: string;
 }
 
+export interface StackingConfig {
+  stackingContract: string;
+  stackingContractLink: string;
+  reward: FarmStakedToken;
+}
+
 export interface EthereumConfig {
   rpcUrl: string;
   networkId: number;
@@ -59,6 +65,7 @@ export interface Config {
   oldFarms: FarmConfig[];
   etherscanLink: string;
   programs: ProgramConfig[];
+  stacking: StackingConfig;
 }
 
 export interface InitialConfig {

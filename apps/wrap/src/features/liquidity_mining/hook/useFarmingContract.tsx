@@ -35,7 +35,7 @@ export default function useFarmingContract(farmingContract: string) {
 
   return {
     contractLoading: loading,
-    refreshFarmingContract: refresh,
+    refreshWrapStackingContract: refresh,
     contractBalances: balances
   };
 }

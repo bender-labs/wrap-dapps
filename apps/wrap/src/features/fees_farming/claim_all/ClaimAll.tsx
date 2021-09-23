@@ -1,4 +1,4 @@
-import FarmingContractHeader from '../../../components/fees_farming/FarmingContractHeader';
+import FarmingContractHeader from '../components/FarmingContractHeader';
 import { paths } from '../../../pages/routes';
 import { Box, styled, Table, TableBody } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
@@ -9,9 +9,9 @@ import { FarmConfig, LoadableButton, PaperFooter, TezosConnectionButton, useConf
 import React from 'react';
 import IconSelect from '../../../pages/fees_farming/FarmToken';
 import useClaimAll, { ClaimAllStatus } from './hook/useClaimAll';
-import FarmingStyledTableCell from '../../../components/fees_farming/FarmingStyledCell';
-import FarmingStyledCellHead from '../../../components/fees_farming/FarmingStyledCellHead';
-import FarmingStyledTableRow from '../../../components/fees_farming/FarmingStyledTableRow';
+import FarmingStyledTableCell from '../components/FarmingStyledCell';
+import FarmingStyledCellHead from '../components/FarmingStyledCellHead';
+import FarmingStyledTableRow from '../components/FarmingStyledTableRow';
 import BigNumber from 'bignumber.js';
 import { Route } from 'react-router-dom';
 

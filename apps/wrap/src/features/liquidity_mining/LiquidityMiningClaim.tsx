@@ -5,7 +5,7 @@ import { FarmingContractActionsProps } from './types';
 import { LiquidityMiningContractInfo } from './components/LiquidityMiningContractInfo';
 import { LiquidityMiningContractHeader } from './components/LiquidityMiningContractHeader';
 
-export function Claim({
+export function LiquidityMiningClaim({
                         program,
                         contractBalances,
                         balance,

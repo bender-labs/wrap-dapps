@@ -1,4 +1,4 @@
-import FarmingContractHeader from '../../../components/fees_farming/FarmingContractHeader';
+import FarmingContractHeader from '../components/FarmingContractHeader';
 import { Box, styled, Table, TableBody } from '@mui/material';
 import { paths } from '../../../pages/routes';
 import TableContainer from '@mui/material/TableContainer';
@@ -10,9 +10,9 @@ import TableCell from '@mui/material/TableCell';
 import IconSelect from '../../../pages/fees_farming/FarmToken';
 import BigNumber from 'bignumber.js';
 import useUnstakeAll, { UnstakeAllStatus } from './hook/useUnstakeAll';
-import FarmingStyledTableCell from '../../../components/fees_farming/FarmingStyledCell';
-import FarmingStyledCellHead from '../../../components/fees_farming/FarmingStyledCellHead';
-import FarmingStyledTableRow from '../../../components/fees_farming/FarmingStyledTableRow';
+import FarmingStyledTableCell from '../components/FarmingStyledCell';
+import FarmingStyledCellHead from '../components/FarmingStyledCellHead';
+import FarmingStyledTableRow from '../components/FarmingStyledTableRow';
 import { changeBalances } from '../balance-actions';
 import { FarmAllProps } from '../../../pages/fees_farming/WithBalancesScreen';
 

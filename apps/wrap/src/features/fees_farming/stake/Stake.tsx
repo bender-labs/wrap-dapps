@@ -9,8 +9,8 @@ import {
 import useStake, { StakingStatus } from './hook/useStake';
 import React, { useCallback } from 'react';
 import { FarmingContractActionsProps } from '../types';
-import FarmingContractInfo from '../../../components/fees_farming/FarmingContractInfo';
-import FarmingContractHeader from '../../../components/fees_farming/FarmingContractHeader';
+import FarmingContractInfo from '../components/FarmingContractInfo';
+import FarmingContractHeader from '../components/FarmingContractHeader';
 import { paths } from '../../../pages/routes';
 
 export default function Stake({ farm, farmBalances, onApply, inputBalance }: FarmingContractActionsProps) {

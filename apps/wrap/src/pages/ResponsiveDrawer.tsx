@@ -125,13 +125,13 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
     return activePaths.findIndex(activePath => matchPath(path, activePath)) !== -1;
   };
 
-  const buildNavLinks = () => {
+  const buildNavLinks = (context: string) => {
     return routes.filter(route => route.navRoute).map((route) => {
       if (isActive(location.pathname, route.activePaths!)) {
         return (
           <StyledListItem
             button={true}
-            key={route.path}
+            key={context + route.name}
             component={RouterLink}
             to={route.path}
             exact
@@ -149,7 +149,7 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
         return (
           <StyledListItem
             button={true}
-            key={route.path}
+            key={context + route.name}
             component={RouterLink}
             to={route.path}
             exact
@@ -163,38 +163,38 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
         );
       }
     }).concat([
-      <StyledListItem button={true} key={'info-dapp'} sx={{
+      <StyledListItem button={true} key={context + 'info-dapp'} sx={{
         paddingLeft: theme.spacing(4),
         paddingTop: theme.spacing(0.5)
       }}>
         <StyledLink href={'https://info.tzwrap.com'} target={'_blank'} rel={'noreferrer'}>
-          <StyledItemListText primary={<>Statistics&nbsp;&nbsp;<StyledLaunchIcon/></>} />
+          <StyledItemListText primary={<>Statistics&nbsp;&nbsp;<StyledLaunchIcon /></>} />
         </StyledLink>
       </StyledListItem>
     ]);
   };
 
-  const header = (
-    <Box sx={{padding: 0, margin: 0}}>
+  const header = (context: string) => (
+    <Box sx={{ padding: 0, margin: 0 }}>
       <ToolbarTitle>
         <Logo src={logo} alt='Logo' /> WRAP protocol
       </ToolbarTitle>
       <List>
-        {buildNavLinks()}
+        {buildNavLinks(context)}
       </List>
     </Box>
   );
 
-  const footer = (
-    <Box sx={{padding: 0, margin: 0}}>
+  const footer = (context: string) => (
+    <Box sx={{ padding: 0, margin: 0 }}>
       <Links>
         <List sx={{ fontSize: '14px' }}>
-          <StyledListItem button={true} key={'tzwrap'}>
+          <StyledListItem button={true} key={context + 'tzwrap'}>
             <StyledLink href={'https://www.tzwrap.com'} target={'_blank'} rel={'noreferrer'}>
               tzwrap.com
             </StyledLink>
           </StyledListItem>
-          <StyledListItem button={true} key={'faq'}>
+          <StyledListItem button={true} key={context + 'faq'}>
             <StyledLink href={'https://www.tzwrap.com/docs/wrap-protocol'} target={'_blank'} rel={'noreferrer'}>
               FAQ
             </StyledLink>
@@ -218,16 +218,16 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
             keepMounted: true
           }}
         >
-          {header}
-          {footer}
+          {header('mobile')}
+          {footer('mobile')}
         </MobileDrawer>
       </Hidden>
       <Hidden smDown implementation='js'>
         <StyledDrawer variant='permanent' anchor={theme.direction === 'rtl' ? 'right' : 'left'} ModalProps={{
           keepMounted: true
         }}>
-          {header}
-          {footer}
+          {header('desktop')}
+          {footer('desktop')}
         </StyledDrawer>
       </Hidden>
       <Content>

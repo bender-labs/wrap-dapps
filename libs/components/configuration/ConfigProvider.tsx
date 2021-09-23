@@ -158,7 +158,6 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         return oldFarms;
       }, []);
 
-
       const config = {
         environmentName: initConfig.environmentName,
         indexerUrl: initConfig.indexerUrl,
@@ -198,7 +197,13 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         farms,
         farmInput: initConfig.farmInput,
         oldFarms,
-        programs: initConfig.programs
+        programs: initConfig.programs,
+        stacking: {
+          // stackingContract: indexerConfig.tezosStackingContract,
+          stackingContract: 'KT1HM6KycpPoeL6nCmqv9dZeaoX61tSEjcFK',
+          stackingContractLink: initConfig.tzktLink + indexerConfig.tezosStackingContract + '/operations/',
+          reward: initConfig.farmInput
+        }
       };
       localStorage.setItem(localConfigKey, JSON.stringify(config));
       setConfig(config);

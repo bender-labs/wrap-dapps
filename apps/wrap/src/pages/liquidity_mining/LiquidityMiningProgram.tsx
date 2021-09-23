@@ -9,8 +9,8 @@ import { useTokenBalance } from '@wrap-dapps/features';
 import { useProgram } from '../../features/liquidity_mining/hook/useProgram';
 import { FarmingContractActionsProps } from '../../features/liquidity_mining/types';
 import { LiquidityMiningStake } from '../../features/liquidity_mining/LiquidityMiningStake';
-import { Unstake } from '../../features/liquidity_mining/Unstake';
-import { Claim } from '../../features/liquidity_mining/Claim';
+import { LiquidityMiningUnstake } from '../../features/liquidity_mining/LiquidityMiningUnstake';
+import { LiquidityMiningClaim } from '../../features/liquidity_mining/LiquidityMiningClaim';
 import useFarmingContract from '../../features/liquidity_mining/hook/useFarmingContract';
 
 const MainContainer = styled(Container)(() => ({
@@ -118,7 +118,7 @@ export function LiquidityMiningProgram() {
               loading: contractLoading
             },
             { value: balance, loading },
-            Unstake
+            LiquidityMiningUnstake
           )}
         />
         <Route
@@ -132,7 +132,7 @@ export function LiquidityMiningProgram() {
               loading: contractLoading
             },
             { value: balance, loading },
-            Claim
+            LiquidityMiningClaim
           )}
         />
       </Switch>

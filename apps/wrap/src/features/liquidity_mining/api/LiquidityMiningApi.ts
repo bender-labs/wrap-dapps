@@ -127,8 +127,6 @@ export class LiquidityMiningApi {
     farmingContract: string,
     owner: string
   ): Promise<{ totalSupply: BigNumber; staked: BigNumber; reward: BigNumber }> {
-    console.log(farmingContract);
-    console.log(owner);
     const storage = await this.getStorage(farmingContract);
     const totalSupply = new BigNumber(storage['farmLpTokenBalance'] as number);
     const staked = await LiquidityMiningApi._balanceOf(storage, owner);

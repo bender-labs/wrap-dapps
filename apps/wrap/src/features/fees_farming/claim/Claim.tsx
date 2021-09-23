@@ -2,8 +2,8 @@ import { FarmingContractActionsProps } from '../types';
 import useClaim, { ClaimStatus } from './hook/useClaim';
 import React, { useCallback } from 'react';
 import { AssetSummary, LoadableButton, PaperFooter, TezosConnectionButton } from '@wrap-dapps/components';
-import FarmingContractInfo from '../../../components/fees_farming/FarmingContractInfo';
-import FarmingContractHeader from '../../../components/fees_farming/FarmingContractHeader';
+import FarmingContractInfo from '../components/FarmingContractInfo';
+import FarmingContractHeader from '../components/FarmingContractHeader';
 import { paths } from '../../../pages/routes';
 
 export default function Claim({ farm, farmBalances, inputBalance, onApply }: FarmingContractActionsProps) {

@@ -1,4 +1,4 @@
-import { FarmingContractInfoProps } from '../../features/fees_farming/types';
+import { FarmingContractInfoProps } from '../types';
 import { LabelAndAsset, LabelAndValue, PaperContent } from '@wrap-dapps/components';
 import { Link } from '@mui/material';
 import BigNumber from 'bignumber.js';
