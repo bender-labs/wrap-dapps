@@ -31,7 +31,7 @@ export function WrapStackingUnstake({
                                     }: WrapStackingContractActionProps) {
   const [wrapUnstakesInfos, setWrapUnstakesInfos] = useState<WrapUnstakeInfo[]>([]);
 
-  const { unstakeStatus, amount, unstake } = useWrapStackingUnstake(
+  const { unstakeStatus, amount, fees, unstake } = useWrapStackingUnstake(
     stacking,
     wrapStackingOwnerInfos.staked,
     wrapUnstakesInfos
@@ -88,22 +88,20 @@ export function WrapStackingUnstake({
     return currentWrapUnstakeInfos ? currentWrapUnstakeInfos.mustUnstake : false;
   };
 
-  return (
-    <>
-      <WrapStackingContractHeader path={paths.WRAP_STACKING} />
-      <PaperContent>
-        <TableContainer component={'div'}>
-          <Table size='small' aria-label='fees table'>
-            <TableHead>
-              <TableRow>
-                <StyledTableCell component='th' align='center'>Stake block</StyledTableCell>
-                <StyledTableCell component='th' align='center'>Fees</StyledTableCell>
-                <StyledTableCell component='th' align='center'>Amount</StyledTableCell>
-                <StyledTableCell component='th' align='center'>Use</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {wrapUnstakesInfos.map((wrapUnstakeInfo) => (
+  const feesTable = (wrapUnstakesInfos: WrapUnstakeInfo[]) => {
+    return (
+      <TableContainer component={'div'}>
+        <Table size='small' aria-label='fees table'>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell component='th' align='center'>Stake block</StyledTableCell>
+              <StyledTableCell component='th' align='center'>Fees</StyledTableCell>
+              <StyledTableCell component='th' align='center'>Amount</StyledTableCell>
+              <StyledTableCell component='th' align='center'>Use</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          {wrapUnstakesInfos.length > 0 ? wrapUnstakesInfos.map((wrapUnstakeInfo) => (
+              <TableBody>
                 <TableRow
                   key={'stake-' + wrapUnstakeInfo.id.toNumber()}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -126,11 +124,35 @@ export function WrapStackingUnstake({
                     />
                   </StyledTableCell>
                 </TableRow>
-              ))}
+              </TableBody>
+            ))
+            :
+            <TableBody>
+              <TableRow
+                key={'stake-loading'}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <StyledTableCell colSpan={4} align='center'>Loading ...</StyledTableCell>
+              </TableRow>
             </TableBody>
-          </Table>
-        </TableContainer>
+          }
+        </Table>
+      </TableContainer>
+    );
+  };
+
+  return (
+    <>
+      <WrapStackingContractHeader path={paths.WRAP_STACKING} />
+      <PaperContent>
+        {feesTable(wrapUnstakesInfos)}
       </PaperContent>
+      <AssetSummary
+        decimals={8}
+        symbol={'$WRAP'}
+        label={'Burned Fees'}
+        value={fees}
+      />
       <WrapStackingContractInfo
         wrapStackingOwnerInfos={wrapStackingOwnerInfos}
         stacking={stacking}
@@ -138,8 +160,8 @@ export function WrapStackingUnstake({
       <AssetSummary
         decimals={8}
         symbol={'$WRAP'}
-        label={'Your new share will be'}
-        value={wrapStackingOwnerInfos.staked.minus(amount)}
+        label={'You will receive'}
+        value={amount}
       />
       <PaperFooter>
         {unstakeStatus !== WrapStackingUnstakeStatus.NOT_CONNECTED && (

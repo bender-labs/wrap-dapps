@@ -9,11 +9,12 @@ const StyledTableCell = styled(TableCell)(() => ({
 
 export function WrapStackingFeesInfo({ fees }: { fees: IndexerWrapStackingFeesLevelsPayload | undefined }) {
 
-  const duration = (blocks) => {
+  const duration = (blocks: number, index: number, last: number): string => {
     const OneWeekInBlocks = 20160;
-    const weeks = blocks / OneWeekInBlocks;
-    return Math.floor(weeks);
-  }
+    const weeks = blocks / OneWeekInBlocks + 1;
+    const sign = index === last - 1 ? '>= ' : '< ';
+    return sign + Math.floor(weeks) + ' weeks';
+  };
 
   return (
     <PaperContent>
@@ -27,13 +28,13 @@ export function WrapStackingFeesInfo({ fees }: { fees: IndexerWrapStackingFeesLe
             </TableRow>
           </TableHead>
           <TableBody>
-            {fees?.levels.map((feeLevel) => (
+            {fees?.levels.map((feeLevel, feeLevelIndex) => (
               <TableRow
                 key={'fee-level-' + feeLevel.cycle}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <StyledTableCell align='center'>
-                  {duration(feeLevel.blocksCount) + ' weeks'}
+                  {duration(feeLevel.blocksCount, feeLevelIndex, fees.levels.length)}
                 </StyledTableCell>
                 <StyledTableCell align='center'>
                   {feeLevel.blocksCount}

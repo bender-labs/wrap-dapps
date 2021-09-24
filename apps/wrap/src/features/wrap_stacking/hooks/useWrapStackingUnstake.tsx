@@ -29,12 +29,14 @@ export default function useWrapStackingUnstake(stacking: StackingConfig, balance
   const [unstakeStatus, setStatus] = useState(WrapStackingUnstakeStatus.NOT_CONNECTED);
   const connected = state.type === TezosStateType.CONNECTED && tezosAccount() !== undefined;
   const [amount, setAmount] = useState(new BigNumber(0));
+  const [fees, setFees] = useState(new BigNumber(0));
   const notify = useNotify();
 
   useEffect(() => {
     if (!connected) {
       setStatus(WrapStackingUnstakeStatus.NOT_CONNECTED);
       setAmount(new BigNumber(''));
+      setFees(new BigNumber(''));
       return;
     }
     setStatus(nextStatus(balance, amount));
@@ -63,7 +65,13 @@ export default function useWrapStackingUnstake(stacking: StackingConfig, balance
       .reduce((acc, val) => {
         return acc.plus(val);
       }, new BigNumber(0));
+    const fees = wrapUnstakesInfos
+      .filter(wrapUnstakesInfos => isValidWrapUnstakeInfos(wrapUnstakesInfos))
+      .reduce((acc, val) => {
+        return acc.plus(val.amount.multipliedBy(val.fees).dividedBy(100));
+      }, new BigNumber(0));
     setAmount(amount);
+    setFees(fees);
     setStatus(nextStatus(balance, amount));
   }, [balance, wrapUnstakesInfos]);
 
@@ -84,6 +92,7 @@ export default function useWrapStackingUnstake(stacking: StackingConfig, balance
   return {
     unstakeStatus,
     amount,
+    fees,
     unstake
   };
 }
