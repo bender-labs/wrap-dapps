@@ -5,7 +5,7 @@ import { WrapStackingContractInfo } from './components/WrapStackingContractInfo'
 import { WrapStackingContractHeader } from './components/WrapStackingContractHeader';
 import { WrapStackingDenseAmount } from './components/WrapStackingDenseAmount';
 import useWrapStackingUnstake, { WrapStackingUnstakeStatus } from './hooks/useWrapStackingUnstake';
-import { Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Checkbox, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { paths } from '../../pages/routes';
 import { WrapStackingStakeInfo } from './api/WrapStackingApi';
 import BigNumber from 'bignumber.js';
@@ -18,6 +18,10 @@ export interface WrapUnstakeInfo {
   maxAmount: BigNumber;
   mustUnstake: boolean;
 }
+
+const StyledTableCell = styled(TableCell)(() => ({
+  borderBottomColor: 'rgb(196,196,196)'
+}));
 
 export function WrapStackingUnstake({
                                       stacking,
@@ -88,14 +92,14 @@ export function WrapStackingUnstake({
     <>
       <WrapStackingContractHeader path={paths.WRAP_STACKING} />
       <PaperContent>
-        <TableContainer component={Paper}>
+        <TableContainer component={'div'}>
           <Table size='small' aria-label='fees table'>
             <TableHead>
               <TableRow>
-                <TableCell>Stake block</TableCell>
-                <TableCell align='center'>Fees</TableCell>
-                <TableCell align='center'>Amount</TableCell>
-                <TableCell align='center'>Use</TableCell>
+                <StyledTableCell component='th' align='center'>Stake block</StyledTableCell>
+                <StyledTableCell component='th' align='center'>Fees</StyledTableCell>
+                <StyledTableCell component='th' align='center'>Amount</StyledTableCell>
+                <StyledTableCell component='th' align='center'>Use</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -104,21 +108,23 @@ export function WrapStackingUnstake({
                   key={'stake-' + wrapUnstakeInfo.id.toNumber()}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component='th' scope='row'>
+                  <StyledTableCell align='center'>
                     {wrapUnstakeInfo.level.toString(10)}
-                  </TableCell>
-                  <TableCell align='center'>
+                  </StyledTableCell>
+                  <StyledTableCell align='center'>
                     {wrapUnstakeInfo.fees}%
-                  </TableCell>
-                  <TableCell align='center'>
-                    <WrapStackingDenseAmount wrapUnstakeInfo={wrapUnstakeInfo} onChange={(newValue) => (changeAmount(wrapUnstakeInfo, newValue))} decimals={stacking.reward.decimals} />
-                  </TableCell>
-                  <TableCell align='center'>
+                  </StyledTableCell>
+                  <StyledTableCell align='center'>
+                    <WrapStackingDenseAmount wrapUnstakeInfo={wrapUnstakeInfo}
+                                             onChange={(newValue) => (changeAmount(wrapUnstakeInfo, newValue))}
+                                             decimals={stacking.reward.decimals} />
+                  </StyledTableCell>
+                  <StyledTableCell align='center'>
                     <Checkbox checked={wrapUnstakeInfo.mustUnstake}
                               onChange={() => activateUnstake(wrapUnstakeInfo)}
                               inputProps={{ 'aria-label': 'controlled' }}
                     />
-                  </TableCell>
+                  </StyledTableCell>
                 </TableRow>
               ))}
             </TableBody>
