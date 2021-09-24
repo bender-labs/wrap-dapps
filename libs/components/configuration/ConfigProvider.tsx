@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from 'react';
-import { Config, FarmConfig, InitialConfig } from './types';
+import { Config, FarmConfig, InitialConfig, StackingConfig } from './types';
 import {
   FungibleToken,
   IndexerApi,
@@ -9,7 +9,6 @@ import {
   TokenType
 } from '@wrap-dapps/api';
 import { LoadingScreen } from './LoadingScreen';
-import BigNumber from 'bignumber.js';
 
 type ContextValue = undefined | Config;
 const ConfigContext = React.createContext<ContextValue>(undefined);
@@ -99,7 +98,8 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
       const indexerConfig = await indexerApi.getConfiguration();
       const feesFarmingConfiguration = await indexerApi.fetchFeesFarmingConfiguration();
       const wrapStackingConfiguration = await indexerApi.fetchWrapStackingConfiguration();
-      const stakingApies = await statisticsApi.fetchStakingApy();
+      const feesStakingApies = await statisticsApi.fetchFeesStakingApy();
+      const wrapStackingApies = await statisticsApi.fetchWrapStackingApy();
 
       const farms = feesFarmingConfiguration.contracts.filter(contract => !contract.old).reduce(
         (validFarms: FarmConfig[], farmConfiguration) => {
@@ -110,7 +110,7 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
           );
           if (tokenInfos) {
             const tokenMedata = tokenInfos as FungibleToken;
-            const apy = stakingApies.find(s => s.farmingContract === farmConfiguration.contract);
+            const apy = feesStakingApies.find(s => s.farmingContract === farmConfiguration.contract);
             validFarms.push({
               maxTotalStakedLevelProcessed: farmConfiguration.maxLevelProcessed,
               farmContractAddress: farmConfiguration.contract,
@@ -160,6 +160,20 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         return oldFarms;
       }, []);
 
+      const validStackingContracts = wrapStackingConfiguration.contracts.reduce((validStackingContracts: StackingConfig[], wrapStackingContractConfiguration) => {
+        const apy = wrapStackingApies.find(s => s.farmingContract === wrapStackingContractConfiguration.contract);
+        validStackingContracts.push({
+          stackingContract: wrapStackingContractConfiguration.contract,
+          reward: initConfig.farmInput,
+          stackingContractLink: initConfig.tzktLink + wrapStackingContractConfiguration.contract + '/operations/',
+          totalStaked: wrapStackingContractConfiguration.totalStaked,
+          apy: apy ? parseFloat(apy.apy).toFixed(0) : undefined,
+          apr: apy ? parseFloat(apy.apr).toFixed(0) : undefined,
+          fees: wrapStackingContractConfiguration.fees
+        });
+        return validStackingContracts;
+      }, []);
+
       const config = {
         environmentName: initConfig.environmentName,
         indexerUrl: initConfig.indexerUrl,
@@ -200,14 +214,7 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         farmInput: initConfig.farmInput,
         oldFarms,
         programs: initConfig.programs,
-        stacking: {
-          stackingContract: indexerConfig.tezosStackingContract,
-          stackingContractLink: initConfig.tzktLink + indexerConfig.tezosStackingContract + '/operations/',
-          reward: initConfig.farmInput,
-          totalStaked: wrapStackingConfiguration.contracts.map(c => c.totalStaked).reduce((acc, t) => {
-            return acc.plus(new BigNumber(t));
-          }, new BigNumber(0)).toString(10)
-        }
+        stacking: validStackingContracts
       };
 
       localStorage.setItem(localConfigKey, JSON.stringify(config));

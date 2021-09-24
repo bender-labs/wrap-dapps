@@ -1,6 +1,6 @@
 import { Box, Container, Grid, IconButton, styled, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { TezosTokenIcon, useConfig, useTezosWalletContext } from '@wrap-dapps/components';
+import { StackingConfig, TezosTokenIcon, useConfig, useTezosWalletContext } from '@wrap-dapps/components';
 import { useHistory } from 'react-router';
 import { paths } from '../routes';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -91,8 +91,7 @@ const ApyTypography = styled(Typography)(() => ({
 
 export default function WrapStackingList() {
   const history = useHistory();
-  const { stacking } = useConfig();
-
+  const { stacking, farmInput } = useConfig();
   const [currentTezosLevel, setCurrentTezosLevel] = useState(0);
   const { tezosLibrary } = useTezosWalletContext();
 
@@ -107,23 +106,22 @@ export default function WrapStackingList() {
     loadCurrentTezosLevel();
   }, [tezosLibrary]);
 
-  const totalStaked = 0;
-
-  function FarmSelector({ currentTezosLevel, onClick }: {
+  function WrapStackingSelector({ currentTezosLevel, onClick, wrapStackingConfiguration }: {
     currentTezosLevel: number;
     onClick: () => void;
+    wrapStackingConfiguration: StackingConfig
   }) {
     return (
       <>
         <GridItem container justify={'space-between'} alignItems={'center'} onClick={onClick}>
           <GridImages item>
-            <TezosTokenIcon url={stacking.reward.thumbnailUri ?? 'ipfs://'} width={60} height={60} />
+            <TezosTokenIcon url={wrapStackingConfiguration.reward.thumbnailUri ?? 'ipfs://'} width={60} height={60} />
           </GridImages>
           <LeftGridItem item>
             <OptionTypography>
               $WRAP Stacking farm
             </OptionTypography>
-            <Rewards currentTezosLevel={currentTezosLevel} />
+            <Rewards currentTezosLevel={currentTezosLevel} wrapStackingConfiguration={wrapStackingConfiguration} />
           </LeftGridItem>
           <Grid item>
             <IconButton>
@@ -135,41 +133,58 @@ export default function WrapStackingList() {
     );
   }
 
-  function Rewards({ currentTezosLevel }: {
+  function Rewards({ currentTezosLevel, wrapStackingConfiguration }: {
     currentTezosLevel: number;
+    wrapStackingConfiguration: StackingConfig
   }) {
     if (currentTezosLevel > 0) {
-
       return (
         <>
-
+          {wrapStackingConfiguration.apy && <ApyTypography>
+            APY: <span>{wrapStackingConfiguration.apy}%</span>{'  '}APR: <span>{wrapStackingConfiguration.apr}%</span>
+          </ApyTypography>
+          }
+          <RewardsTypography>
+            Total ${wrapStackingConfiguration.reward.symbol} staked:{' '}
+            <span>{new BigNumber(wrapStackingConfiguration.totalStaked).shiftedBy(-wrapStackingConfiguration.reward.decimals).toString(10)}</span>
+          </RewardsTypography>
         </>
       );
     }
     return <></>;
   }
 
+  const allContractsStacked = (): string => {
+    if (stacking.length > 0) {
+      return stacking.reduce((acc, t) => {
+        return acc.plus(new BigNumber(t.totalStaked));
+      }, new BigNumber(0)).shiftedBy(-farmInput.decimals).toString(10);
+    }
+    return '0';
+  };
+
   return (
     <Container maxWidth={'sm'}>
       <TitleBox>
         <TitleTypography>$WRAP Stacking</TitleTypography>
-        <SubtitleTypography>Stake your $WRAP tokens to earn more $WRAP</SubtitleTypography>
+        <SubtitleTypography>Stake your $WRAP to earn more $WRAP</SubtitleTypography>
       </TitleBox>
       <BoxTitle my={2}>
         <Total>
-          Total $WRAP staked
-          : {stacking.totalStaked ? new BigNumber(stacking.totalStaked).shiftedBy(-stacking.reward.decimals).toString(10) : '0'}
+          Total $WRAP staked : {allContractsStacked()}
         </Total>
       </BoxTitle>
       <ContainBox>
         <Grid container spacing={2} direction={'column'}>
-          <Grid item key={stacking.stackingContract}>
-            <MainPaperContent p={2}>
-              <FarmSelector currentTezosLevel={currentTezosLevel} onClick={() => {
-                history.push(paths.WRAP_STACKING_STAKE);
-              }} />
-            </MainPaperContent>
-          </Grid>
+          {stacking && stacking.length > 0 && stacking.map((stackingContractConfiguration) => {
+            return (<Grid item key={stackingContractConfiguration.stackingContract}>
+              <MainPaperContent p={2}>
+                <WrapStackingSelector currentTezosLevel={currentTezosLevel} onClick={() => {
+                  history.push(paths.WRAP_STACKING_STAKE);
+                }} wrapStackingConfiguration={stackingContractConfiguration} />
+              </MainPaperContent>
+            </Grid>);
+          })}
         </Grid>
       </ContainBox>
     </Container>

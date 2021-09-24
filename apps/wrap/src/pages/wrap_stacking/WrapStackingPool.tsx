@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Container, styled, Tab, Tabs } from '@mui/material';
 import { paths } from '../routes';
 import { Route, Switch, useHistory } from 'react-router-dom';
@@ -26,7 +26,7 @@ const StyledTab = styled(Tab)(() => ({
 
 
 export function WrapStackingPool() {
-  const { stacking } = useConfig();
+  const { stacking, farmInput } = useConfig();
   const { path } = useRouteMatch();
   const history = useHistory();
 
@@ -34,13 +34,13 @@ export function WrapStackingPool() {
     wrapStackingContractLoading,
     refreshWrapStackingContract,
     wrapStackingOwnerInfos
-  } = useWrapStackingContract(stacking.stackingContract);
+  } = useWrapStackingContract(stacking[0].stackingContract);
 
   const {
     balance,
     loading,
     refresh
-  } = useTokenBalance(stacking.reward.contractAddress, stacking.reward.tokenId);
+  } = useTokenBalance(farmInput.contractAddress, farmInput.tokenId);
 
   const onTabChange = useCallback(
     (event: React.ChangeEvent<{}>, newPath: string) => {
@@ -56,8 +56,12 @@ export function WrapStackingPool() {
     refresh();
   };
 
+  const getStackingConf = useMemo(() => {
+    return stacking[0];
+  }, [stacking]);
+
   function WithStacking(
-    stacking: StackingConfig,
+    stacking: StackingConfig[],
     onApply: () => void,
     wrapStackingOwnerInfos: {
       totalSupply: BigNumber;
@@ -72,7 +76,7 @@ export function WrapStackingPool() {
     return () => (
       <Comp
         onApply={onApply}
-        stacking={stacking}
+        stacking={getStackingConf}
         balance={inputBalance}
         wrapStackingOwnerInfos={wrapStackingOwnerInfos}
       />

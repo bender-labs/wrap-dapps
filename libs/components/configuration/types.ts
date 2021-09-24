@@ -1,4 +1,10 @@
-import { Fees, FungibleToken, IndexerFeesFarmConfigurationRewardsPayload, NonFungibleToken } from '@wrap-dapps/api';
+import {
+  Fees,
+  FungibleToken,
+  IndexerFeesFarmConfigurationRewardsPayload,
+  IndexerWrapStackingFeesLevelsPayload,
+  NonFungibleToken
+} from '@wrap-dapps/api';
 import { NetworkType } from '@airgap/beacon-sdk';
 
 export enum Environment {
@@ -30,6 +36,9 @@ export interface StackingConfig {
   stackingContractLink: string;
   reward: FarmStakedToken;
   totalStaked: string;
+  apy?: string;
+  apr?: string;
+  fees: IndexerWrapStackingFeesLevelsPayload
 }
 
 export interface EthereumConfig {
@@ -66,7 +75,7 @@ export interface Config {
   oldFarms: FarmConfig[];
   etherscanLink: string;
   programs: ProgramConfig[];
-  stacking: StackingConfig;
+  stacking: StackingConfig[];
 }
 
 export interface InitialConfig {

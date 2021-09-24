@@ -36,8 +36,12 @@ export class StatisticsApi {
     this.client = axios.create({ baseURL, timeout: 3000 });
   }
 
-  public fetchStakingApy(): Promise<StakingApy[]> {
+  public fetchFeesStakingApy(): Promise<StakingApy[]> {
     return this.client.get('/staking/apy').then(({ data }: { data: Array<StakingApy> }) => data);
+  }
+
+  public fetchWrapStackingApy(): Promise<StakingApy[]> {
+    return this.client.get('/stacking/apy').then(({ data }: { data: Array<StakingApy> }) => data).catch(err => ([]));
   }
 
   public fetchLiquidityMiningApy(): Promise<Array<LiquidityMiningApy>> {

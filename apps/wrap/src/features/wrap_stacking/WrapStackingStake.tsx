@@ -11,7 +11,6 @@ import {
 import { WrapStackingContractActionProps } from './types';
 import { WrapStackingContractInfo } from './components/WrapStackingContractInfo';
 import { WrapStackingContractHeader } from './components/WrapStackingContractHeader';
-import useWrapStackingContract from './hooks/useWrapStackingContract';
 import { paths } from '../../pages/routes';
 
 export function WrapStackingStake({
@@ -20,7 +19,6 @@ export function WrapStackingStake({
                                     balance,
                                     onApply
                                   }: WrapStackingContractActionProps) {
-  const { fees } = useWrapStackingContract(stacking.stackingContract);
   const { amount, changeAmount, stakingStatus, stake } = useWrapStackingStake(
     stacking,
     balance.value
