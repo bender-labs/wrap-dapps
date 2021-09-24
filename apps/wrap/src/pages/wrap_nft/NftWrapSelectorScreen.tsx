@@ -41,7 +41,7 @@ export const NftWrapSelectorScreen = () => {
             <CircularProgress color='primary' />
           </Container>
           :
-          <Gallery nftQuery={nftQuery} direction={GalleryDirection.WRAP}/>
+          <Gallery nftQuery={nftQuery} direction={GalleryDirection.WRAP} />
         }
         {!nftQuery.loading && nftQuery.totalTokens > pagination.limitPerPage ?
           <Container maxWidth='lg' sx={{
@@ -88,8 +88,15 @@ export const NftWrapSelectorScreen = () => {
       {ethereumState.type === EthereumStateType.CONNECTED ?
         renderNftQuery(nftQuery) :
         <Container maxWidth='lg'
-                   sx={{ display: 'flex', padding: 10, justifyContent: 'center', alignItems: 'center', paddingTop: 20 }}>
-          <Typography variant='h5' sx={{ color: 'white', display: 'flex' }}>Please connect your Ethereum wallet</Typography>
+                   sx={{
+                     display: 'flex',
+                     padding: 10,
+                     justifyContent: 'center',
+                     alignItems: 'center',
+                     paddingTop: 20
+                   }}>
+          <Typography variant='h5' sx={{ color: 'white', display: 'flex' }}>Please connect your Ethereum
+            wallet</Typography>
         </Container>
       }
     </>

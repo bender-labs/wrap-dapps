@@ -5,30 +5,10 @@ import { useHistory } from 'react-router';
 import { paths } from '../routes';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import BigNumber from 'bignumber.js';
+import { HeaderPage } from '../HeaderPage';
 
 const BoxTitle = styled(Box)(() => ({
   justifyItems: 'center'
-}));
-
-const TitleBox = styled(Box)(({ theme }) => ({
-  justifyItems: 'center',
-  borderBottom: '3px solid #ffd000',
-  marginBottom: theme.spacing(2),
-  paddingBottom: theme.spacing(2)
-}));
-
-const TitleTypography = styled(Typography)(() => ({
-  color: 'white',
-  textAlign: 'center',
-  fontSize: '30px'
-}));
-
-const SubtitleTypography = styled(Typography)(({ theme }) => ({
-  color: 'white',
-  textAlign: 'center',
-  fontSize: '16px',
-  fontWeight: 500,
-  padding: theme.spacing(1)
 }));
 
 const Total = styled(Typography)(() => ({
@@ -165,10 +145,7 @@ export default function WrapStackingList() {
 
   return (
     <Container maxWidth={'sm'}>
-      <TitleBox>
-        <TitleTypography>$WRAP Stacking</TitleTypography>
-        <SubtitleTypography>Stake your $WRAP to earn more $WRAP</SubtitleTypography>
-      </TitleBox>
+      <HeaderPage title='$WRAP Stacking' subtitle='Stake your $WRAP to earn more $WRAP' />
       <BoxTitle my={2}>
         <Total>
           Total $WRAP staked : {allContractsStacked()}

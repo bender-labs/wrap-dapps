@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { CardContent, Container, Typography } from '@mui/material';
 import {
-  EthereumStateType,
   SupportedBlockchain,
   TezosStateType,
   useEthereumWalletContext,
@@ -94,7 +93,8 @@ export const NftUnwrapSelectorScreen = () => {
                      alignItems: 'center',
                      paddingTop: 20
                    }}>
-          <Typography variant='h5' sx={{ color: 'white', display: 'flex' }}>Please connect your Tezos wallet</Typography>
+          <Typography variant='h5' sx={{ color: 'white', display: 'flex' }}>Please connect your Tezos
+            wallet</Typography>
         </Container>
       }
     </>

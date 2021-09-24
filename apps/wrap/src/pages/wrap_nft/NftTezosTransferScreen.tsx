@@ -25,7 +25,6 @@ import { NftInstance } from '../../features/nft/api/types';
 import BigNumber from 'bignumber.js';
 import { useHistory } from 'react-router';
 import { paths } from '../routes';
-import { estimateFees } from '@wrap-dapps/features/unwrap/hooks/actions';
 
 const Description = styled(Typography)(() => ({
   paddingLeft: '20px',
@@ -87,7 +86,7 @@ export function NftTezosTransferScreen() {
     const estimateNetworkFees = async () => {
       const networkFees = await state.tezosNftTransferApi?.estimateTransferNft(state.tezosRecipientAddress);
       setState({ ...state, networkFees: new BigNumber(networkFees!.totalCost) });
-    }
+    };
 
     if (state.ready) {
       estimateNetworkFees();

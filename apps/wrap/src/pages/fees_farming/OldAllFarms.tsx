@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import { Alert, AlertTitle, Box, Container, Link, styled, Tab, Tabs } from '@mui/material';
+import { Alert, AlertTitle, Box, Container, styled, Tab, Tabs } from '@mui/material';
 import { Route, Switch } from 'react-router-dom';
-import { farmStakePageRoute, paths } from '../routes';
+import { paths } from '../routes';
 import ClaimAll from '../../features/fees_farming/claim_all/ClaimAll';
 import { useHistory, useRouteMatch } from 'react-router';
 import WithBalancesScreen from './WithBalancesScreen';
@@ -29,7 +29,7 @@ function OldAllFarms() {
   );
 
   return (
-    <Container maxWidth='md' sx={{paddingBottom: 10}}>
+    <Container maxWidth='md' sx={{ paddingBottom: 10 }}>
       <Box marginBottom={2} marginTop={2}>
         <Alert severity='info'>
           <AlertTitle>Old farms management</AlertTitle>

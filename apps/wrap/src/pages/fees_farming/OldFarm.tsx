@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import { useHistory, useParams, useRouteMatch } from 'react-router';
-import { Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import { Alert, AlertTitle, Box, Container, styled, Tab, Tabs } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { paths, farmStakePageRoute } from '../routes';
+import { farmStakePageRoute, paths } from '../routes';
 import BigNumber from 'bignumber.js';
 import { FarmConfig, useConfig } from '@wrap-dapps/components';
 import { FarmingContractActionsProps } from '../../features/fees_farming/types';
@@ -24,7 +23,7 @@ const StyledTab = styled(Tab)(() => ({
   fontWeight: 900
 }));
 
-const StyledLink = styled(Link)(({theme}) => ({
+const StyledLink = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }));
 
@@ -86,8 +85,9 @@ export default function OldFarm() {
           <AlertTitle>This is a deactivated farm!</AlertTitle>
           <p>You can still unstake your $WRAP tokens and claim your rewards.</p>
           {newFarm ?
-            <p>you can find the new {farm.rewardTokenSymbol} farm <StyledLink to={farmStakePageRoute(newFarm.farmContractAddress)}>here</StyledLink></p>
-            :null
+            <p>you can find the new {farm.rewardTokenSymbol} farm <StyledLink
+              to={farmStakePageRoute(newFarm.farmContractAddress)}>here</StyledLink></p>
+            : null
           }
         </Alert>
       </Box>

@@ -29,7 +29,7 @@ function AllFarms() {
   );
 
   return (
-    <Container maxWidth='md' sx={{paddingBottom: 10}}>
+    <Container maxWidth='md' sx={{ paddingBottom: 10 }}>
       <StyledTabs value={path} onChange={onTabChange} indicatorColor='primary'
                   variant='fullWidth'>
         <StyledTab label='Stake on all farms' value={paths.ALL_FARMS_STAKE} />

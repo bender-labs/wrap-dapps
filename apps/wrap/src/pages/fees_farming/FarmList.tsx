@@ -128,7 +128,7 @@ function FarmSelector({ currentTezosLevel, farmConfig, onClick }: {
     <>
       <GridItem container justify={'space-between'} alignItems={'center'} onClick={onClick}>
         <GridImages item>
-          <TezosTokenIcon url={farmConfig.rewardTokenThumbnailUri ?? 'ipfs://'} width={60} height={60}/>
+          <TezosTokenIcon url={farmConfig.rewardTokenThumbnailUri ?? 'ipfs://'} width={60} height={60} />
         </GridImages>
         <LeftGridItem item>
           <OptionTypography>

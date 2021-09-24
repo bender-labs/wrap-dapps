@@ -8,7 +8,7 @@ import { useConfig } from '@wrap-dapps/components';
 import { useHistory } from 'react-router';
 import { farmStakePageRoute, paths } from '../routes';
 import BigNumber from 'bignumber.js';
-
+import { HeaderPage } from '../HeaderPage';
 
 const StyledPaperContent = styled(Box)(() => ({
   borderRadius: '10px 10px 10px 10px',
@@ -32,27 +32,6 @@ const GridImages = styled(Grid)(() => ({
 
 const BoxTitle = styled(Box)(() => ({
   justifyItems: 'center'
-}));
-
-const TitleBox = styled(Box)(({ theme }) => ({
-  justifyItems: 'center',
-  borderBottom: '3px solid #ffd000',
-  marginBottom: theme.spacing(2),
-  paddingBottom: theme.spacing(2)
-}));
-
-const TitleTypography = styled(Typography)(() => ({
-  color: 'white',
-  textAlign: 'center',
-  fontSize: '30px'
-}));
-
-const SubtitleTypography = styled(Typography)(({ theme }) => ({
-  color: 'white',
-  textAlign: 'center',
-  fontSize: '16px',
-  fontWeight: 500,
-  padding: theme.spacing(1)
 }));
 
 const Total = styled(Typography)(() => ({
@@ -166,10 +145,7 @@ export default function FarmChoice() {
 
   return (
     <Container maxWidth={'sm'}>
-      <TitleBox>
-        <TitleTypography>Fees farming</TitleTypography>
-        <SubtitleTypography>Stake your $WRAP tokens to earn wTokens collected through fees</SubtitleTypography>
-      </TitleBox>
+      <HeaderPage title='Fees farming' subtitle='Stake your $WRAP tokens to earn wTokens collected through fees' />
       <BoxTitle my={2}>
         <Total>
           Total $WRAP staked : {totalStaked}
