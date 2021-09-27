@@ -185,7 +185,7 @@ export function WrapStackingUnstake({
         decimals={8}
         symbol={'$WRAP'}
         label={'You will receive'}
-        value={amount}
+        value={amount.minus(fees)}
       />
       <PaperFooter>
         {unstakeStatus !== WrapStackingUnstakeStatus.NOT_CONNECTED && (
