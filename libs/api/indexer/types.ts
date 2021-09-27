@@ -153,6 +153,7 @@ export interface IndexerWrapStackingContractPayload {
 
 export interface IndexerWrapStackingFeesLevelsPayload {
   levels: IndexerWrapStackingFeesLevelPayload[];
+  default: string;
 }
 
 export interface IndexerWrapStackingFeesLevelPayload {

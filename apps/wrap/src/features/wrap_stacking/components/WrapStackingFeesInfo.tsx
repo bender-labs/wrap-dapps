@@ -9,11 +9,27 @@ const StyledTableCell = styled(TableCell)(() => ({
 
 export function WrapStackingFeesInfo({ fees }: { fees: IndexerWrapStackingFeesLevelsPayload | undefined }) {
 
-  const duration = (blocks: number, index: number, last: number): string => {
+  const getWeeks = (blockCount: number): number => {
     const OneWeekInBlocks = 20160;
-    const weeks = blocks / OneWeekInBlocks + 1;
-    const sign = index === last - 1 ? '>= ' : '< ';
-    return sign + Math.floor(weeks) + ' weeks';
+    return blockCount / OneWeekInBlocks;
+  };
+
+  const duration = (blocks: number): string => {
+    const weeks = getWeeks(blocks);
+    return '< ' + Math.floor(weeks) + ' weeks';
+  };
+
+  const defaultDuration = (fees: IndexerWrapStackingFeesLevelsPayload): string => {
+    const weeks = getWeeks(fees.levels[fees.levels.length - 1].blocksCount);
+    return '>= ' + Math.floor(weeks) + ' weeks';
+  };
+
+  const defaultBlocksCount = (fees: IndexerWrapStackingFeesLevelsPayload): number => {
+    return fees.levels[fees.levels.length - 1].blocksCount;
+  };
+
+  const defaultRatio = (fees: IndexerWrapStackingFeesLevelsPayload): string => {
+    return fees?.default ?? '1';
   };
 
   return (
@@ -28,13 +44,13 @@ export function WrapStackingFeesInfo({ fees }: { fees: IndexerWrapStackingFeesLe
             </TableRow>
           </TableHead>
           <TableBody>
-            {fees?.levels.map((feeLevel, feeLevelIndex) => (
+            {fees?.levels.map((feeLevel) => (
               <TableRow
                 key={'fee-level-' + feeLevel.cycle}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <StyledTableCell align='center'>
-                  {duration(feeLevel.blocksCount, feeLevelIndex, fees.levels.length)}
+                  {duration(feeLevel.blocksCount)}
                 </StyledTableCell>
                 <StyledTableCell align='center'>
                   {feeLevel.blocksCount}
@@ -44,6 +60,22 @@ export function WrapStackingFeesInfo({ fees }: { fees: IndexerWrapStackingFeesLe
                 </StyledTableCell>
               </TableRow>
             ))}
+            {fees?.levels &&
+            <TableRow
+              key={'fee-level-default'}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <StyledTableCell align='center'>
+                {defaultDuration(fees)}
+              </StyledTableCell>
+              <StyledTableCell align='center'>
+                {defaultBlocksCount(fees)}
+              </StyledTableCell>
+              <StyledTableCell align='center'>
+                {100 / defaultRatio(fees)}%
+              </StyledTableCell>
+            </TableRow>
+            }
           </TableBody>
         </Table>
       </TableContainer>
