@@ -35,7 +35,7 @@ export function WrapStackingContractInfo({ stacking, wrapStackingOwnerInfos }: W
         </DialogTitle>
         <DialogContent sx={{ backgroundColor: '#E5E5E5' }}>
           <DialogContentText>
-            <Typography sx={{ fontSize: 14, paddingTop: 2 }}>Fees level are determined from the stake's block number. Each stake can be
+            <Typography sx={{ fontSize: 14, paddingTop: 2 }} component='span'>Fees level are determined from the stake's block number. Each stake can be
               withdrawn separatly and/or partially.</Typography>
           </DialogContentText>
           <WrapStackingFeesInfo fees={stacking.fees} />
