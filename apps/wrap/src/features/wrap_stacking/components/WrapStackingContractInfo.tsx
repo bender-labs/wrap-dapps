@@ -93,7 +93,7 @@ export function WrapStackingContractInfo({ stacking, wrapStackingOwnerInfos }: W
       <LabelAndValue
         label={'Fees'}
         value={
-          <Link color={'textSecondary'} onClick={() => setShowFeesModal(true)} sx={{ cursor: 'pointer' }}>show fees
+          <Link color={'textSecondary'} onClick={() => setShowFeesModal(true)} sx={{ cursor: 'pointer' }}>show fee
             details</Link>
         }
       />
