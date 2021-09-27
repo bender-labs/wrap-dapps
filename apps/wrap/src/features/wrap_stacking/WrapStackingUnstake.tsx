@@ -89,8 +89,9 @@ export function WrapStackingUnstake({
   };
 
   const feesTable = (wrapUnstakesInfos: WrapUnstakeInfo[]) => {
-    return (
-      <TableContainer component={'div'}>
+    if (wrapStackingOwnerInfos.loading) {
+      return (
+        <TableContainer component={'div'}>
         <Table size='small' aria-label='fees table'>
           <TableHead>
             <TableRow>
@@ -100,45 +101,68 @@ export function WrapStackingUnstake({
               <StyledTableCell component='th' align='center'>Use</StyledTableCell>
             </TableRow>
           </TableHead>
-          {wrapUnstakesInfos.length > 0 ? wrapUnstakesInfos.map((wrapUnstakeInfo) => (
-              <TableBody>
-                <TableRow
-                  key={'stake-' + wrapUnstakeInfo.id.toNumber()}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <StyledTableCell align='center'>
-                    {wrapUnstakeInfo.level.toString(10)}
-                  </StyledTableCell>
-                  <StyledTableCell align='center'>
-                    {wrapUnstakeInfo.fees}%
-                  </StyledTableCell>
-                  <StyledTableCell align='center'>
-                    <WrapStackingDenseAmount wrapUnstakeInfo={wrapUnstakeInfo}
-                                             onChange={(newValue) => (changeAmount(wrapUnstakeInfo, newValue))}
-                                             decimals={stacking.reward.decimals} />
-                  </StyledTableCell>
-                  <StyledTableCell align='center'>
-                    <Checkbox checked={wrapUnstakeInfo.mustUnstake}
-                              onChange={() => activateUnstake(wrapUnstakeInfo)}
-                              inputProps={{ 'aria-label': 'controlled' }}
-                    />
-                  </StyledTableCell>
-                </TableRow>
-              </TableBody>
-            ))
-            :
-            <TableBody>
-              <TableRow
-                key={'stake-loading'}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <StyledTableCell colSpan={4} align='center'>Loading ...</StyledTableCell>
-              </TableRow>
-            </TableBody>
-          }
+          <TableBody>
+            <TableRow
+              key={'stake-loading'}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <StyledTableCell colSpan={4} align='center'>Loading ...</StyledTableCell>
+            </TableRow>
+          </TableBody>
         </Table>
       </TableContainer>
-    );
+      );
+    } else {
+      return (
+        <TableContainer component={'div'}>
+          <Table size='small' aria-label='fees table'>
+            <TableHead>
+              <TableRow>
+                <StyledTableCell component='th' align='center'>Stake block</StyledTableCell>
+                <StyledTableCell component='th' align='center'>Fees</StyledTableCell>
+                <StyledTableCell component='th' align='center'>Amount</StyledTableCell>
+                <StyledTableCell component='th' align='center'>Use</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            {wrapUnstakesInfos.length > 0 ? wrapUnstakesInfos.map((wrapUnstakeInfo) => (
+                <TableBody key={'stake-' + wrapUnstakeInfo.id.toNumber()}>
+                  <TableRow
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <StyledTableCell align='center'>
+                      {wrapUnstakeInfo.level.toString(10)}
+                    </StyledTableCell>
+                    <StyledTableCell align='center'>
+                      {wrapUnstakeInfo.fees}%
+                    </StyledTableCell>
+                    <StyledTableCell align='center'>
+                      <WrapStackingDenseAmount wrapUnstakeInfo={wrapUnstakeInfo}
+                                               onChange={(newValue) => (changeAmount(wrapUnstakeInfo, newValue))}
+                                               decimals={stacking.reward.decimals} />
+                    </StyledTableCell>
+                    <StyledTableCell align='center'>
+                      <Checkbox checked={wrapUnstakeInfo.mustUnstake}
+                                onChange={() => activateUnstake(wrapUnstakeInfo)}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                      />
+                    </StyledTableCell>
+                  </TableRow>
+                </TableBody>
+              ))
+              :
+              <TableBody>
+                <TableRow
+                  key={'stake-loading'}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <StyledTableCell colSpan={4} align='center'>No stakes found</StyledTableCell>
+                </TableRow>
+              </TableBody>
+            }
+          </Table>
+        </TableContainer>
+      );
+    }
   };
 
   return (
