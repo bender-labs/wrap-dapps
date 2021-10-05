@@ -1,5 +1,4 @@
-import { Alert, AlertTitle, Box, Container, Grid, IconButton, styled, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Box, Container, Grid, IconButton, styled, Typography } from '@mui/material';
 import React from 'react';
 import FarmList, { FarmStyle } from './FarmList';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -57,10 +56,6 @@ const SecondSubtitle = styled(Typography)(() => ({
   textAlign: 'center',
   marginBottom: '20px',
   paddingTop: '20px'
-}));
-
-const StyledLink = styled(Link)(({ theme }) => ({
-  color: theme.palette.background.default
 }));
 
 export default function FarmChoice() {
@@ -150,14 +145,6 @@ export default function FarmChoice() {
         <Total>
           Total $WRAP staked : {totalStaked}
         </Total>
-      </BoxTitle>
-      <BoxTitle my={6}>
-        <Alert severity='warning'>
-          <AlertTitle>New farms warning</AlertTitle>
-          <p>New farms have been deployed on 2021-09-15</p>
-          <p>You will still be able to unstake and claim from old farms through our <StyledLink
-            to={paths.OLD_ALL_FARMS_UNSTAKE}>dedicated interface</StyledLink></p>
-        </Alert>
       </BoxTitle>
       <ContainBox>
         <StakeAllButton />
