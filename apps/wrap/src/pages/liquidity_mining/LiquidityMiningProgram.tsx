@@ -88,12 +88,12 @@ export function LiquidityMiningProgram() {
         indicatorColor='primary'
         variant='fullWidth'
       >
-        <StyledTab label='Stake' value={paths.LIQUIDITY_MINING_STAKE} />
+        {!program.old && <StyledTab label='Stake' value={paths.LIQUIDITY_MINING_STAKE} /> }
         <StyledTab label='Unstake' value={paths.LIQUIDITY_MINING_UNSTAKE} />
         <StyledTab label='Claim' value={paths.LIQUIDITY_MINING_CLAIM} />
       </StyledTabs>
       <Switch>
-        <Route
+        {!program.old && <Route
           path={paths.LIQUIDITY_MINING_STAKE}
           exact
           component={WithProgram(
@@ -106,7 +106,7 @@ export function LiquidityMiningProgram() {
             { value: balance, loading },
             LiquidityMiningStake
           )}
-        />
+        /> }
         <Route
           path={paths.LIQUIDITY_MINING_UNSTAKE}
           exact

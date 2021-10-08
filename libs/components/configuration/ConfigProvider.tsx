@@ -213,7 +213,8 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         farms,
         farmInput: initConfig.farmInput,
         oldFarms,
-        programs: initConfig.programs,
+        liquidityMiningPrograms: initConfig.liquidityMiningPrograms,
+        oldLiquidityMiningPrograms: initConfig.oldLiquidityMiningPrograms,
         stacking: validStackingContracts
       };
 

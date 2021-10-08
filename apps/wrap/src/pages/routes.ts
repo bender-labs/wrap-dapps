@@ -120,6 +120,7 @@ export const wrapOperationPage = (op: Operation) => `/wrap/${op.hash}`;
 export const unwrapOperationPage = (op: Operation) => `/unwrap/${op.hash}`;
 export const tezosTransfer = (nftInstance: NftInstance) => `${tezosTransferPath}/${nftInstance.nftCollection.ethereumContractAddress}/${nftInstance.id}`;
 export const liquidityMiningOperationPage = (v: string) => LIQUIDITY_MINING_STAKE.replace(':token', v);
+export const oldLiquidityMiningOperationPage = (v: string) => LIQUIDITY_MINING_UNSTAKE.replace(':token', v);
 
 export type AppRoute = {
   name?: string;

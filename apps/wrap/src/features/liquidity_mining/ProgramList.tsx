@@ -9,6 +9,7 @@ export type ProgramListProps = {
   programs: ProgramConfig[];
   onProgramSelect: (farm: string) => void;
   liquidityMiningApys: Array<LiquidityMiningApy> | undefined;
+  old: boolean;
 };
 
 const StyledGridContainer = styled(Grid)(() => ({
@@ -55,10 +56,11 @@ function showDuration(running: boolean, seconds: number): string {
   return duration.toFormat("d 'days' hh 'hours'");
 }
 
-function Program({ program, apy, onClick }: {
+function Program({ program, apy, onClick, old }: {
   program: ProgramConfig;
   apy: LiquidityMiningApy | undefined;
   onClick: () => void;
+  old: boolean;
 }) {
   const {
     pool: {
@@ -67,7 +69,7 @@ function Program({ program, apy, onClick }: {
     }
   } = program;
   return (
-    <StyledBox p={2} sx={(!apy || apy.running) ? {} : { backgroundColor: '#C1C1C1' }}>
+    <StyledBox p={2} sx={(!old && (!apy || apy.running)) ? {} : { backgroundColor: '#C1C1C1' }}>
       <StyledGridContainer container justifyContent={'space-between'} alignItems={'center'} onClick={onClick}>
         <StyledGridItem item>
           <TezosTokenIcon url={thumbnailUri} width={60} height={60} />
@@ -98,13 +100,15 @@ function Program({ program, apy, onClick }: {
 export default function ProgramList({
                                       programs,
                                       onProgramSelect,
-                                      liquidityMiningApys
+                                      liquidityMiningApys,
+                                      old,
                                     }: ProgramListProps) {
   return (
     <Grid container spacing={2} direction={'column'}>
       {programs.map((t) => (
         <Grid item key={t.farmingContract}>
           <Program
+            old={old}
             program={t}
             onClick={() => onProgramSelect(t.farmingContract)}
             apy={liquidityMiningApys ? liquidityMiningApys.find(l => l.farmingContract === t.farmingContract) : undefined}

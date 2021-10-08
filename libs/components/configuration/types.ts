@@ -29,6 +29,7 @@ export interface ProgramConfig {
   };
   reward: FarmStakedToken;
   farmingContract: string;
+  old: boolean;
 }
 
 export interface StackingConfig {
@@ -74,7 +75,8 @@ export interface Config {
   farmInput: FarmStakedToken;
   oldFarms: FarmConfig[];
   etherscanLink: string;
-  programs: ProgramConfig[];
+  liquidityMiningPrograms: ProgramConfig[];
+  oldLiquidityMiningPrograms: ProgramConfig[];
   stacking: StackingConfig[];
 }
 
@@ -97,7 +99,8 @@ export interface InitialConfig {
   tzktLink: string;
   farmInput: FarmStakedToken;
   etherscanLink: string;
-  programs: ProgramConfig[];
+  liquidityMiningPrograms: ProgramConfig[];
+  oldLiquidityMiningPrograms: ProgramConfig[];
 }
 
 export interface FarmConfig {

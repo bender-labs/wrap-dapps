@@ -3,11 +3,11 @@ import { useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router';
 
 export function useProgram(address: string) {
-  const { programs } = useConfig();
+  const { liquidityMiningPrograms, oldLiquidityMiningPrograms } = useConfig();
   const history = useHistory();
   const program = useMemo(() => {
-    return programs.find((t) => t.farmingContract === address);
-  }, [address, programs]);
+    return liquidityMiningPrograms.concat(oldLiquidityMiningPrograms).find((t) => t.farmingContract === address);
+  }, [address, liquidityMiningPrograms, oldLiquidityMiningPrograms]);
 
   useEffect(() => {
     if (!program) {

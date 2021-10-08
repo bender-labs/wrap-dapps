@@ -1,7 +1,7 @@
 import { Environment, ProgramConfig } from './types';
 import { WRAP_TOKEN_GRANADA_TESTNET, WRAP_TOKEN_MAINNET } from './WrapTokens';
 
-export const programs: { [key in Environment]: ProgramConfig[] } = {
+export const liquidityMiningPrograms: { [key in Environment]: ProgramConfig[] } = {
   MAINNET: [
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -10,7 +10,8 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
         contract: 'KT1FG63hhFtMEEEtmBSX2vuFmP87t9E7Ab4t',
         base: WRAP_TOKEN_MAINNET,
         quote: 'xtz'
-      }
+      },
+      old: false
     },
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -27,7 +28,8 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 18
         },
         quote: 'xtz'
-      }
+      },
+      old: false
     },
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -44,7 +46,8 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 18
         },
         quote: 'xtz'
-      }
+      },
+      old: false
     },
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -61,7 +64,8 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 18
         },
         quote: 'xtz'
-      }
+      },
+      old: false
     },
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -78,7 +82,8 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 18
         },
         quote: 'xtz'
-      }
+      },
+      old: false
     },
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -95,7 +100,8 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 18
         },
         quote: 'xtz'
-      }
+      },
+      old: false
     },
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -112,7 +118,8 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 18
         },
         quote: 'xtz'
-      }
+      },
+      old: false
     },
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -129,7 +136,8 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 18
         },
         quote: 'xtz'
-      }
+      },
+      old: false
     },
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -146,7 +154,8 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 6
         },
         quote: 'xtz'
-      }
+      },
+      old: false
     },
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -163,7 +172,8 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 6
         },
         quote: 'xtz'
-      }
+      },
+      old: false
     },
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -180,7 +190,8 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 8
         },
         quote: 'xtz'
-      }
+      },
+      old: false
     },
     {
       reward: WRAP_TOKEN_MAINNET,
@@ -197,19 +208,11 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 18
         },
         quote: 'xtz'
-      }
+      },
+      old: false
     }
   ],
   TESTNET: [
-    {
-      reward: WRAP_TOKEN_GRANADA_TESTNET,
-      farmingContract: 'KT1Tgn7wYwmjhTuSot5DPZ8U1hPn7cPzhnea',
-      pool: {
-        contract: 'KT1Srr8aWcxPTptoCNrWoXGQdrrNWN6Zx58X',
-        base: WRAP_TOKEN_GRANADA_TESTNET,
-        quote: 'xtz'
-      }
-    },
     {
       reward: WRAP_TOKEN_GRANADA_TESTNET,
       farmingContract: 'KT1SHNTj8icDmdXhaTuqe2AF5pE4mzMt6BXk',
@@ -225,7 +228,24 @@ export const programs: { [key in Environment]: ProgramConfig[] } = {
           decimals: 18
         },
         quote: 'xtz'
-      }
+      },
+      old: false
+    }
+  ]
+};
+
+export const oldLiquidityMiningPrograms: { [key in Environment]: ProgramConfig[] } = {
+  MAINNET: [],
+  TESTNET: [
+    {
+      reward: WRAP_TOKEN_GRANADA_TESTNET,
+      farmingContract: 'KT1Tgn7wYwmjhTuSot5DPZ8U1hPn7cPzhnea',
+      pool: {
+        contract: 'KT1Srr8aWcxPTptoCNrWoXGQdrrNWN6Zx58X',
+        base: WRAP_TOKEN_GRANADA_TESTNET,
+        quote: 'xtz'
+      },
+      old: true
     }
   ]
 };
