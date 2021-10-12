@@ -1,6 +1,7 @@
 import { AnyAction } from 'typescript-fsa';
 import { Dispatch } from 'react';
 import { TezosToolkit, WalletProvider } from '@taquito/taquito';
+import { RpcClient, RpcClientCache } from '@taquito/rpc';
 import { RequestPermissionInput } from '@airgap/beacon-sdk';
 import { connectAction, disconnectAction } from './state';
 import { Tzip16Module } from '@taquito/tzip16';
@@ -48,7 +49,8 @@ const toolkit = (
   provider: WalletProvider,
   account: TezosAccount
 ) => {
-  const result = new TezosToolkit(rpcUrl);
+  const rpcClient = new RpcClient(rpcUrl);
+  const result = new TezosToolkit(new RpcClientCache(rpcClient, 5000));
   result.setWalletProvider(provider);
   result.addExtension(new Tzip16Module());
   result.setSignerProvider(fakeSigner(account.address, account.publicKey));
