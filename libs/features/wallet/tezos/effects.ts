@@ -2,10 +2,12 @@ import { AnyAction } from 'typescript-fsa';
 import { Dispatch } from 'react';
 import { TezosToolkit, WalletProvider } from '@taquito/taquito';
 import { RpcClient, RpcClientCache } from '@taquito/rpc';
+import { ContractsLibrary } from '@taquito/contracts-library';
 import { RequestPermissionInput } from '@airgap/beacon-sdk';
 import { connectAction, disconnectAction } from './state';
 import { Tzip16Module } from '@taquito/tzip16';
 import { NotificationLevel, Notify } from '@wrap-dapps/components/notification/types';
+import contractsCache from './contractsCache';
 
 // noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols,ES6ShorthandObjectProperty
 const fakeSigner = (account: string, publicKey: string) => ({
@@ -50,9 +52,12 @@ const toolkit = (
   account: TezosAccount
 ) => {
   const rpcClient = new RpcClient(rpcUrl);
-  const result = new TezosToolkit(new RpcClientCache(rpcClient, 5000));
+  const result = new TezosToolkit(new RpcClientCache(rpcClient, 10000));
   result.setWalletProvider(provider);
   result.addExtension(new Tzip16Module());
+  const contractsLibrary = new ContractsLibrary();
+  contractsLibrary.addContract(contractsCache);
+  result.addExtension(contractsLibrary);
   result.setSignerProvider(fakeSigner(account.address, account.publicKey));
   return result;
 };
