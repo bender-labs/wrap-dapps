@@ -7,7 +7,7 @@ import { RequestPermissionInput } from '@airgap/beacon-sdk';
 import { connectAction, disconnectAction } from './state';
 import { Tzip16Module } from '@taquito/tzip16';
 import { NotificationLevel, Notify } from '@wrap-dapps/components/notification/types';
-import contractsCache from './contractsCache';
+import contractsCache from './contracts';
 
 // noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols,ES6ShorthandObjectProperty
 const fakeSigner = (account: string, publicKey: string) => ({

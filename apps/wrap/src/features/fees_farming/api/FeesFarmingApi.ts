@@ -116,7 +116,10 @@ export default class FeesFarmingApi {
   }
 
   public async claimBalances(farms: FarmConfig[], owner: string): Promise<FarmConfigWithClaimBalances[]> {
-    return await Promise.all(farms.map(async (farm): Promise<FarmConfigWithClaimBalances> => {
+    function delay(ms: number) {
+      return new Promise( resolve => setTimeout(resolve, ms) );
+    }
+    const claims = farms.map((farm): () => Promise<FarmConfigWithClaimBalances> => async () => {
       const farmContract = await this.library.contract.at(
         farm.farmContractAddress,
         tzip16
@@ -124,7 +127,13 @@ export default class FeesFarmingApi {
       const views = await farmContract.tzip16().metadataViews();
       const earned = await views.get_earned().executeView(owner);
       return Object.assign({}, farm, { earned: earned });
-    }));
+    });
+    const result: Promise<FarmConfigWithClaimBalances>[] = [];
+    for (const claim of claims) {
+      result.push(claim());
+      await delay(200);
+    }
+    return Promise.all(result);
   }
 
   private static updateOperatorTransaction(farmStakedToken: string, owner: string, stakingContract: string): WalletParamsWithKind {

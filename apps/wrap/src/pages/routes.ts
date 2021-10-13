@@ -191,7 +191,7 @@ export const routes: AppRoute[] = [
   }, {
     component: HistoryNftUnwrapOperationsScreen,
     path: HISTORY_UNWRAP_NFT
-  }, {
+  },{
     name: 'Farming',
     component: FarmChoice,
     path: FARMING_ROOT,
