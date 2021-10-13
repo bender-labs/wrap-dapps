@@ -145,23 +145,22 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
             </ActiveRoute>
           </StyledListItem>
         );
-      } else {
-        return (
-          <StyledListItem
-            button={true}
-            key={context + route.name}
-            component={RouterLink}
-            to={route.path}
-            exact
-            sx={{
-              paddingLeft: route.navRoute === 1 ? theme.spacing(4) : theme.spacing(6),
-              paddingTop: route.navRoute === 1 ? theme.spacing(0.5) : 0
-            }}
-          >
-            <StyledItemListText primary={route.name} />
-          </StyledListItem>
-        );
       }
+      return (
+        <StyledListItem
+          button={true}
+          key={context + route.name}
+          component={RouterLink}
+          to={route.path}
+          exact
+          sx={{
+            paddingLeft: route.navRoute === 1 ? theme.spacing(4) : theme.spacing(6),
+            paddingTop: route.navRoute === 1 ? theme.spacing(0.5) : 0
+          }}
+        >
+          <StyledItemListText primary={route.name} />
+        </StyledListItem>
+      );
     }).concat([
       <StyledListItem button={true} key={context + 'info-dapp'} sx={{
         paddingLeft: theme.spacing(4),

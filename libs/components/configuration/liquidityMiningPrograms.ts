@@ -15,24 +15,6 @@ export const liquidityMiningPrograms: { [key in Environment]: ProgramConfig[] } 
     },
     {
       reward: WRAP_TOKEN_MAINNET,
-      farmingContract: 'KT1NvQJYeMCdEtzF45bs3UNpMmjfY97u2qW2',
-      pool: {
-        contract: 'KT1Lvtxpg4MiT2Bs38XGxwh3LGi5MkCENp4v',
-        base: {
-          symbol: 'wAAVE',
-          name: 'Wrapped AAVE',
-          tokenId: 0,
-          contractAddress: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
-          thumbnailUri:
-            'ipfs://QmVUVanUUjHmgkjnUC6TVzG7pPz6iy7C8tnAoXNNpofYPg',
-          decimals: 18
-        },
-        quote: 'xtz'
-      },
-      old: false
-    },
-    {
-      reward: WRAP_TOKEN_MAINNET,
       farmingContract: 'KT1D3fEH94HkKkNdr5Wi5FaXB9k5AHHGjhuj',
       pool: {
         contract: 'KT1UMAE2PBskeQayP5f2ZbGiVYF7h8bZ2gyp',
@@ -61,78 +43,6 @@ export const liquidityMiningPrograms: { [key in Environment]: ProgramConfig[] } 
           contractAddress: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
           thumbnailUri:
             'ipfs://QmVov6RtfRNzuQGvGKmhnABUsfCiDKvn31amg8DUxzowtM',
-          decimals: 18
-        },
-        quote: 'xtz'
-      },
-      old: false
-    },
-    {
-      reward: WRAP_TOKEN_MAINNET,
-      farmingContract: 'KT1T9zQKY259fbCt6tKHFnrMHEePgmsWAJYW',
-      pool: {
-        contract: 'KT1Lpysr4nzcFegC9ci9kjoqVidwoanEmJWt',
-        base: {
-          symbol: 'wLINK',
-          name: 'Wrapped LINK',
-          tokenId: 10,
-          contractAddress: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
-          thumbnailUri:
-            'ipfs://QmeaRuB578Xgy8jxbTxqmQ9s5wyioAEP85V7qbJFnn2uT8',
-          decimals: 18
-        },
-        quote: 'xtz'
-      },
-      old: false
-    },
-    {
-      reward: WRAP_TOKEN_MAINNET,
-      farmingContract: 'KT1NodPMkSmMvLcaggUCGh5nx6aqYcYtyz5j',
-      pool: {
-        contract: 'KT1RsfuBee5o7GtYrdB7bzQ1M6oVgyBnxY4S',
-        base: {
-          symbol: 'wMATIC',
-          name: 'Wrapped MATIC',
-          tokenId: 11,
-          contractAddress: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
-          thumbnailUri:
-            'ipfs://QmchBnjRjpweznHes7bVKHwgzd8D6Q7Yzwf6KmA4KS6Dgi',
-          decimals: 18
-        },
-        quote: 'xtz'
-      },
-      old: false
-    },
-    {
-      reward: WRAP_TOKEN_MAINNET,
-      farmingContract: 'KT1Tni1sb5kVgCg2qMWJ2YPyUpDLFVg8RCbF',
-      pool: {
-        contract: 'KT1Ca5FGSeFLH3ugstc5p56gJDMPeraBcDqE',
-        base: {
-          symbol: 'wPAX',
-          name: 'Wrapped PAX',
-          tokenId: 14,
-          contractAddress: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
-          thumbnailUri:
-            'ipfs://QmZD5QDAeAUyyLYKiMmxD4vfWpVeYHctcbTkPmo4NudDHt',
-          decimals: 18
-        },
-        quote: 'xtz'
-      },
-      old: false
-    },
-    {
-      reward: WRAP_TOKEN_MAINNET,
-      farmingContract: 'KT1HjYtzsDHvN59hhTrFVZb9Ugg3xMPaWg33',
-      pool: {
-        contract: 'KT1Ti3nJT85vNn81Dy5VyNzgufkAorUoZ96q',
-        base: {
-          symbol: 'wUNI',
-          name: 'Wrapped UNI',
-          tokenId: 16,
-          contractAddress: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
-          thumbnailUri:
-            'ipfs://QmQBezdVvotCGnFHgQNKduLdxEJhfgruSEqtwnWY7mESb2',
           decimals: 18
         },
         quote: 'xtz'
@@ -235,7 +145,95 @@ export const liquidityMiningPrograms: { [key in Environment]: ProgramConfig[] } 
 };
 
 export const oldLiquidityMiningPrograms: { [key in Environment]: ProgramConfig[] } = {
-  MAINNET: [],
+  MAINNET: [{
+    reward: WRAP_TOKEN_MAINNET,
+    farmingContract: 'KT1NvQJYeMCdEtzF45bs3UNpMmjfY97u2qW2',
+    pool: {
+      contract: 'KT1Lvtxpg4MiT2Bs38XGxwh3LGi5MkCENp4v',
+      base: {
+        symbol: 'wAAVE',
+        name: 'Wrapped AAVE',
+        tokenId: 0,
+        contractAddress: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
+        thumbnailUri:
+          'ipfs://QmVUVanUUjHmgkjnUC6TVzG7pPz6iy7C8tnAoXNNpofYPg',
+        decimals: 18
+      },
+      quote: 'xtz'
+    },
+    old: true
+  }, {
+    reward: WRAP_TOKEN_MAINNET,
+    farmingContract: 'KT1T9zQKY259fbCt6tKHFnrMHEePgmsWAJYW',
+    pool: {
+      contract: 'KT1Lpysr4nzcFegC9ci9kjoqVidwoanEmJWt',
+      base: {
+        symbol: 'wLINK',
+        name: 'Wrapped LINK',
+        tokenId: 10,
+        contractAddress: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
+        thumbnailUri:
+          'ipfs://QmeaRuB578Xgy8jxbTxqmQ9s5wyioAEP85V7qbJFnn2uT8',
+        decimals: 18
+      },
+      quote: 'xtz'
+    },
+    old: true
+  },
+    {
+      reward: WRAP_TOKEN_MAINNET,
+      farmingContract: 'KT1NodPMkSmMvLcaggUCGh5nx6aqYcYtyz5j',
+      pool: {
+        contract: 'KT1RsfuBee5o7GtYrdB7bzQ1M6oVgyBnxY4S',
+        base: {
+          symbol: 'wMATIC',
+          name: 'Wrapped MATIC',
+          tokenId: 11,
+          contractAddress: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
+          thumbnailUri:
+            'ipfs://QmchBnjRjpweznHes7bVKHwgzd8D6Q7Yzwf6KmA4KS6Dgi',
+          decimals: 18
+        },
+        quote: 'xtz'
+      },
+      old: true
+    },
+    {
+      reward: WRAP_TOKEN_MAINNET,
+      farmingContract: 'KT1Tni1sb5kVgCg2qMWJ2YPyUpDLFVg8RCbF',
+      pool: {
+        contract: 'KT1Ca5FGSeFLH3ugstc5p56gJDMPeraBcDqE',
+        base: {
+          symbol: 'wPAX',
+          name: 'Wrapped PAX',
+          tokenId: 14,
+          contractAddress: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
+          thumbnailUri:
+            'ipfs://QmZD5QDAeAUyyLYKiMmxD4vfWpVeYHctcbTkPmo4NudDHt',
+          decimals: 18
+        },
+        quote: 'xtz'
+      },
+      old: true
+    },
+    {
+      reward: WRAP_TOKEN_MAINNET,
+      farmingContract: 'KT1HjYtzsDHvN59hhTrFVZb9Ugg3xMPaWg33',
+      pool: {
+        contract: 'KT1Ti3nJT85vNn81Dy5VyNzgufkAorUoZ96q',
+        base: {
+          symbol: 'wUNI',
+          name: 'Wrapped UNI',
+          tokenId: 16,
+          contractAddress: 'KT18fp5rcTW7mbWDmzFwjLDUhs5MeJmagDSZ',
+          thumbnailUri:
+            'ipfs://QmQBezdVvotCGnFHgQNKduLdxEJhfgruSEqtwnWY7mESb2',
+          decimals: 18
+        },
+        quote: 'xtz'
+      },
+      old: true
+    }],
   TESTNET: [
     {
       reward: WRAP_TOKEN_GRANADA_TESTNET,

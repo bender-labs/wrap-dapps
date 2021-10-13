@@ -79,11 +79,11 @@ function Program({ program, apy, onClick, old }: {
           <OptionTypography>
             Quipuswap {symbol}/{quote.toUpperCase()}
           </OptionTypography>
-          {apy && <ApyTypography>
+          {!old && apy && <ApyTypography>
             APY: <span>{parseFloat(apy.apy).toFixed(0)}%</span>
             {' '}APR: <span>{parseFloat(apy.apr).toFixed(0)}%</span>
           </ApyTypography>}
-          { apy && <EndsinTypography>
+          {!old && apy && <EndsinTypography>
             Ends in (est.): {showDuration(apy.running, apy.remainingSeconds)}
           </EndsinTypography>}
         </Grid>
