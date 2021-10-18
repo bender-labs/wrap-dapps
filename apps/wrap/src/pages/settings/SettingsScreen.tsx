@@ -21,13 +21,12 @@ const ContainBox = styled(Box)(() => ({
 
 const FirstSubtitle = styled(Typography)(() => ({
   color: '#000000',
-  textAlign: 'center',
   marginBottom: '20px'
 }));
 
 const StyledPaperContent = styled(Box)(() => ({
   borderRadius: '0 0 10px 10px',
-  padding: '20px',
+  padding: '0 20px 20px 20px',
   backgroundColor: 'white'
 }));
 
@@ -69,8 +68,8 @@ export default function SettingsScreen() {
     <Container maxWidth={'sm'}>
       <HeaderPage title='Settings' subtitle='' />
       <ContainBox>
+        <FirstSubtitle variant={'subtitle1'}>Choose your default Tezos RPC Node:</FirstSubtitle>
         <StyledPaperContent>
-          <FirstSubtitle variant={'subtitle1'}>Choose your default Tezos RPC Node:</FirstSubtitle>
           <FormControl component='fieldset'>
             <RadioGroup
               aria-label='node'
