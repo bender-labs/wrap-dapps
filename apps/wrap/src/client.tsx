@@ -12,6 +12,7 @@ import {
   EthereumWalletProvider,
   InitialConfig,
   liquidityMiningPrograms, oldLiquidityMiningPrograms,
+  rpcNodes,
   TezosWalletProvider,
   ThemeProvider,
   WRAP_TOKEN_GRANADA_TESTNET,
@@ -54,7 +55,8 @@ const initConfig: InitialConfig = {
   farmInput: process.env.RAZZLE_FARM_INPUT! === WRAP_TOKEN_GRANADA_TESTNET.contractAddress ? WRAP_TOKEN_GRANADA_TESTNET : WRAP_TOKEN_MAINNET,
   etherscanLink: process.env.RAZZLE_ETHERSCAN_LINK!,
   liquidityMiningPrograms: liquidityMiningPrograms[env],
-  oldLiquidityMiningPrograms: oldLiquidityMiningPrograms[env]
+  oldLiquidityMiningPrograms: oldLiquidityMiningPrograms[env],
+  rpcNodes: rpcNodes[env]
 };
 
 render(

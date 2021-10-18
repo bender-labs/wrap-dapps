@@ -25,6 +25,7 @@ import { LiquidityMiningProgram } from './liquidity_mining/LiquidityMiningProgra
 import React from 'react';
 import { WrapStackingPool } from './wrap_stacking/WrapStackingPool';
 import WrapStackingList from './wrap_stacking/WrapStackingList';
+import SettingsScreen from './settings/SettingsScreen';
 
 
 const wrapNftPath = '/wrap-nft';
@@ -75,6 +76,8 @@ const LIQUIDITY_MINING_STAKE = `${LIQUIDITY_MINING_ROOT}/op/:token/stake`;
 const LIQUIDITY_MINING_UNSTAKE = `${LIQUIDITY_MINING_ROOT}/op/:token/unstake`;
 const LIQUIDITY_MINING_CLAIM = `${LIQUIDITY_MINING_ROOT}/op/:token/claim`;
 
+const SETTINGS = '/settings';
+
 export const paths = {
   CONFIRM_NFT_WRAP,
   NFT_WRAP_OPERATION,
@@ -108,7 +111,8 @@ export const paths = {
   LIQUIDITY_MINING_CLAIM,
   WRAP_STACKING_STAKE,
   WRAP_STACKING_UNSTAKE,
-  WRAP_STACKING_CLAIM
+  WRAP_STACKING_CLAIM,
+  SETTINGS
 };
 
 export const nftWrapOperationPage = (op: Operation) => `${wrapNftPath}/${op.hash}`;
@@ -263,4 +267,10 @@ export const routes: AppRoute[] = [
   }, {
     component: WrapStackingPool,
     path: WRAP_STACKING_CLAIM
+  },{
+    name: 'Settings',
+    component: SettingsScreen,
+    path: SETTINGS,
+    navRoute: 1,
+    activePaths: [SETTINGS]
   }];

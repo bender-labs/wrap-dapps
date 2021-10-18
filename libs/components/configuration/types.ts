@@ -32,6 +32,11 @@ export interface ProgramConfig {
   old: boolean;
 }
 
+export interface RPCNode {
+  name: string;
+  url: string;
+}
+
 export interface StackingConfig {
   stackingContract: string;
   stackingContractLink: string;
@@ -78,6 +83,8 @@ export interface Config {
   liquidityMiningPrograms: ProgramConfig[];
   oldLiquidityMiningPrograms: ProgramConfig[];
   stacking: StackingConfig[];
+  rpcNodes?: RPCNode[];
+  currentRpcNodeUrl?: string;
 }
 
 export interface InitialConfig {
@@ -92,7 +99,6 @@ export interface InitialConfig {
     portisDAppId: string;
   };
   tezos: {
-    rpcUrl: string;
     networkId: NetworkType;
     networkName: string;
   };
@@ -101,6 +107,7 @@ export interface InitialConfig {
   etherscanLink: string;
   liquidityMiningPrograms: ProgramConfig[];
   oldLiquidityMiningPrograms: ProgramConfig[];
+  rpcNodes: RPCNode[];
 }
 
 export interface FarmConfig {

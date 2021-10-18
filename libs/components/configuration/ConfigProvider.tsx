@@ -10,14 +10,23 @@ import {
 } from '@wrap-dapps/api';
 import { LoadingScreen } from './LoadingScreen';
 
+type UpdateRpc = (url: string) => void;
 type ContextValue = undefined | Config;
-const ConfigContext = React.createContext<ContextValue>(undefined);
+type UpdateRpcValue = undefined | UpdateRpc;
+const ConfigContext = React.createContext<{config: ContextValue, updateRpcNode: UpdateRpcValue}>({ config: undefined, updateRpcNode: undefined  } );
 
 export function useConfig() {
-  const config = React.useContext(ConfigContext);
+  const { config } = React.useContext(ConfigContext);
   if (config == null)
     throw new Error('config consumer must be used within a config provider');
   return config;
+}
+
+export function useRpcNodeUpdate() {
+  const { updateRpcNode }  = React.useContext(ConfigContext);
+  if (updateRpcNode == null)
+    throw new Error('config consumer must be used within a config provider');
+  return updateRpcNode;
 }
 
 export function useTezosConfig() {
@@ -80,14 +89,35 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
   );
   const [config, setConfig] = useState<ContextValue>();
   const [retryTime, setRetryTime] = useState<number>(0);
+  const localConfigKey = `wrap-config-${initConfig.environmentName}`;
+
+  const updateRpcNode = (url: string) => {
+    const newConfig: Config = {
+      ...config!,
+      tezos: {
+        rpcUrl: url,
+        networkId: config?.tezos.networkId,
+        networkName: config?.tezos.networkName,
+        minterContractAddress: config?.tezos.minterContractAddress,
+        quorumContractAddress: config?.tezos.quorumContractAddress
+      }
+    };
+    setConfig(newConfig);
+    localStorage.setItem(localConfigKey, JSON.stringify(newConfig));
+  };
 
   useEffect(() => {
     setConfigStatus(ConfigStatus.LOADING);
-    const localConfigKey = `wrap-config-${initConfig.environmentName}`;
     const localConfig = localStorage.getItem(localConfigKey);
+    let loadedConfig: Config;
 
     if (localConfig != null) {
-      setConfig(JSON.parse(localConfig));
+      loadedConfig = JSON.parse(localConfig);
+      if (!loadedConfig.rpcNodes) {
+        loadedConfig.rpcNodes = initConfig.rpcNodes;
+        loadedConfig.tezos.rpcUrl = initConfig.rpcNodes[0].url;
+      }
+      setConfig(loadedConfig);
       setConfigStatus(ConfigStatus.LOADED);
     }
 
@@ -173,12 +203,12 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         });
         return validStackingContracts;
       }, []);
-
       const config = {
         environmentName: initConfig.environmentName,
         indexerUrl: initConfig.indexerUrl,
         statisticsUrl: initConfig.statisticsUrl,
         tzktLink: initConfig.tzktLink,
+        rpcNodes: initConfig.rpcNodes,
         etherscanLink: initConfig.etherscanLink,
         ethereum: {
           ...initConfig.ethereum,
@@ -186,6 +216,7 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
         },
         tezos: {
           ...initConfig.tezos,
+          rpcUrl: loadedConfig ? loadedConfig.tezos.rpcUrl : initConfig.rpcNodes[0].url,
           minterContractAddress: indexerConfig.tezosMinterContract,
           quorumContractAddress: indexerConfig.tezosQuorumContract
         },
@@ -246,7 +277,7 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
       {configStatus !== ConfigStatus.LOADED ? (
         <LoadingScreen retryTime={retryTime} />
       ) : (
-        <ConfigContext.Provider value={config}>
+        <ConfigContext.Provider value={{config, updateRpcNode}}>
           {children}
         </ConfigContext.Provider>
       )}

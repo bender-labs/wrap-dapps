@@ -29,7 +29,7 @@ function useTezosWallet({ name }: Props) {
 
   useEffect(() => {
     initialize(dispatch, beaconWallet, notify)(request);
-  }, []);
+  }, [tezosConfig]);
 
   const tezosAccount = useCallback(() => {
     if (state.type === TezosStateType.CONNECTED) {
