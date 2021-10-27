@@ -198,6 +198,11 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
               FAQ
             </StyledLink>
           </StyledListItem>
+          <StyledListItem button={true} key={context + 'github'}>
+            <StyledLink href={'https://github.com/bender-labs/wrap-dapps'} target={'_blank'} rel={'noreferrer'}>
+              Github
+            </StyledLink>
+          </StyledListItem>
         </List>
       </Links>
       <DisplayEnvironment />
