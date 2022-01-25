@@ -121,7 +121,7 @@ export default function WrapStackingList() {
       return (
         <>
           {wrapStackingConfiguration.apy && <ApyTypography>
-            APY: <span>{wrapStackingConfiguration.apy}%</span>{'  '}APR: <span>{wrapStackingConfiguration.apr}%</span>
+            APY: <span>{"0"/*wrapStackingConfiguration.apy*/}%</span>{'  '}APR: <span>{"0"/*wrapStackingConfiguration.apr*/}%</span>
           </ApyTypography>
           }
           <RewardsTypography>
