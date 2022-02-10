@@ -45,7 +45,7 @@ export function WrapStackingUnstake({
         amount: wrapStackingOwnerInfo.amount,
         maxAmount: wrapStackingOwnerInfo.amount,
         level: wrapStackingOwnerInfo.level,
-        fees: 100 / wrapStackingOwnerInfo.fees_ratio.toNumber(),
+        fees: wrapStackingOwnerInfo.fees_ratio.toNumber() === 0 ? 0 : 100 / wrapStackingOwnerInfo.fees_ratio.toNumber(),
         mustUnstake: false
       })));
     }
