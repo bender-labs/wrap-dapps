@@ -29,7 +29,7 @@ export function WrapStackingFeesInfo({ fees }: { fees: IndexerWrapStackingFeesLe
   };
 
   const defaultRatio = (fees: IndexerWrapStackingFeesLevelsPayload): string => {
-    return fees?.default ?? '1';
+    return '0';
   };
 
   return (
@@ -56,7 +56,7 @@ export function WrapStackingFeesInfo({ fees }: { fees: IndexerWrapStackingFeesLe
                   {feeLevel.blocksCount}
                 </StyledTableCell>
                 <StyledTableCell align='center'>
-                  {100 / feeLevel.ratio}%
+                  {feeLevel.ratio === 0 ? 0 : 100 / feeLevel.ratio}%
                 </StyledTableCell>
               </TableRow>
             ))}
@@ -72,7 +72,7 @@ export function WrapStackingFeesInfo({ fees }: { fees: IndexerWrapStackingFeesLe
                 {defaultBlocksCount(fees)}
               </StyledTableCell>
               <StyledTableCell align='center'>
-                {100 / defaultRatio(fees)}%
+                {defaultRatio(fees)}%
               </StyledTableCell>
             </TableRow>
             }
