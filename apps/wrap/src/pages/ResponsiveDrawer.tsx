@@ -280,7 +280,7 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
         </AppBar>
         {children}
         <StyledAnnouncementBar position='fixed'>
-          <div>WRAP Protocol bridge will be integrated into the <a target="_blank" rel={'noreferrer'} href="https://www.plentydefi.com/">Plenty</a> platform in the next few weeks. Read the <a target="_blank" rel={'noreferrer'} href="https://medium.com/plenty-defi/bridge-update-wrapped-assets-migration-plan-d9814d727cff">announcement</a>.</div>
+          <div>WRAP Protocol bridge will be integrated into the <a target="_blank" rel={'noreferrer'} href="https://www.plentydefi.com/">Plenty</a> platform in the next few weeks. Read the <a target="_blank" rel={'noreferrer'} href="https://medium.com/plenty-defi/bridge-update-wrapped-assets-migration-plan-d9814d727cff">migration plan</a>.</div>
         </StyledAnnouncementBar>
       </Content>
     </Root>
