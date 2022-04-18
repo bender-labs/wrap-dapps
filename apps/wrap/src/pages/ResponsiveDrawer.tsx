@@ -109,6 +109,20 @@ const StyledLaunchIcon = styled(LaunchIcon)(() => ({
   fontSize: '0.8rem'
 }));
 
+const StyledAnnouncementBar = styled(AppBar)(() => ({
+  fontSize: '0.9rem',
+  bottom: 0,
+  top: "auto",
+  marginBottom: 0,
+  padding: 5,
+  textAlign: 'center',
+  backgroundColor: '#6202ef',
+  color: 'white',
+  '& a': {
+    color: 'white'
+  }
+}));
+
 export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -265,6 +279,9 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
           </Toolbar>
         </AppBar>
         {children}
+        <StyledAnnouncementBar position='fixed'>
+          <div>WRAP Protocol bridge will be integrated into the <a target="_blank" rel={'noreferrer'} href="https://www.plentydefi.com/">Plenty</a> platform in the next few weeks. Read the <a target="_blank" rel={'noreferrer'} href="https://medium.com/plenty-defi/bridge-update-wrapped-assets-migration-plan-d9814d727cff">announcement</a>.</div>
+        </StyledAnnouncementBar>
       </Content>
     </Root>
   );
