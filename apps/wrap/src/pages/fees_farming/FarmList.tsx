@@ -97,22 +97,10 @@ function Rewards({ currentTezosLevel, farmConfig }: {
 
     return (
       <>
-        {farmConfig.apy && <ApyTypography>
-          APY: <span>{farmConfig.apy}%</span>{'  '}APR: <span>{farmConfig.apr}%</span>
-        </ApyTypography>
-        }
-        <RewardsTypography>
-          {farmConfig.rewardTokenSymbol} rewards:{' '}
-          <span>{currentTotalRewards}</span>
-        </RewardsTypography>
         <RewardsTypography>
           Total ${farmConfig.farmStakedToken.symbol} staked:{' '}
           <span>{currentStakedTotens}</span>
         </RewardsTypography>
-        <RewardsTypography>
-          Period progress: <span>{currentPeriodProgress.toFixed(1)}%</span>
-        </RewardsTypography>
-        <RewardsTypography>{nextRewardLabel}</RewardsTypography>
       </>
     );
   }
