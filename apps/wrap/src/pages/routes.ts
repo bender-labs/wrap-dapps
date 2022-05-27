@@ -159,9 +159,9 @@ export const routes: AppRoute[] = [
   }, {
     name: 'NFTs',
     component: NftWrapSelectorScreen,
-    path: UNWRAP_NFT,
+    path: WRAP_NFT,
     navRoute: 2,
-    activePaths: [UNWRAP_NFT, CONFIRM_NFT_UNWRAP, TEZOS_TRANSFER, NFT_UNWRAP_OPERATION]
+    activePaths: [WRAP_NFT, UNWRAP_NFT, CONFIRM_NFT_UNWRAP, CONFIRM_NFT_WRAP, TEZOS_TRANSFER, NFT_WRAP_OPERATION, NFT_UNWRAP_OPERATION]
   }, {
     component: NftUnwrapSelectorScreen,
     path: UNWRAP_NFT
