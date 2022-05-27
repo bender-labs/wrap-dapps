@@ -27,7 +27,6 @@ export const NftSwapDirectionTab: React.FC<TabsProps> = () => {
 
   return (
     <StyledTabs value={path} onChange={onTabChange} indicatorColor='primary' variant='fullWidth'>
-      <StyledTab label={path === paths.WRAP_NFT ? 'wrapping' : 'wrap'} value={paths.WRAP_NFT}/>
       <StyledTab label={path === paths.UNWRAP_NFT ? 'unwrapping' : 'unwrap'} value={paths.UNWRAP_NFT}/>
     </StyledTabs>
   );
