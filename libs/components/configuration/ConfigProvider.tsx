@@ -122,14 +122,14 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
     }
 
     const indexerApi = new IndexerApi(initConfig.indexerUrl);
-    const statisticsApi = new StatisticsApi(initConfig.statisticsUrl);
+    //const statisticsApi = new StatisticsApi(initConfig.statisticsUrl);
 
     const loadConfig = async () => {
       const indexerConfig = await indexerApi.getConfiguration();
       const feesFarmingConfiguration = await indexerApi.fetchFeesFarmingConfiguration();
       const wrapStackingConfiguration = await indexerApi.fetchWrapStackingConfiguration();
-      const feesStakingApies = await statisticsApi.fetchFeesStakingApy();
-      const wrapStackingApies = await statisticsApi.fetchWrapStackingApy();
+      //const feesStakingApies = await statisticsApi.fetchFeesStakingApy();
+      //const wrapStackingApies = await statisticsApi.fetchWrapStackingApy();
       const farmTokens = indexerConfig.tokens.concat([
         {
           'type': TokenType.ERC20,
@@ -238,7 +238,7 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
           );
           if (tokenInfos) {
             const tokenMedata = tokenInfos as FungibleToken;
-            const apy = feesStakingApies.find(s => s.farmingContract === farmConfiguration.contract);
+            const apy = undefined;//feesStakingApies.find(s => s.farmingContract === farmConfiguration.contract);
             validFarms.push({
               maxTotalStakedLevelProcessed: farmConfiguration.maxLevelProcessed,
               farmContractAddress: farmConfiguration.contract,
@@ -289,7 +289,7 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
       }, []);
 
       const validStackingContracts = wrapStackingConfiguration.contracts.reduce((validStackingContracts: StackingConfig[], wrapStackingContractConfiguration) => {
-        const apy = wrapStackingApies.find(s => s.farmingContract === wrapStackingContractConfiguration.contract);
+        const apy = undefined;//wrapStackingApies.find(s => s.farmingContract === wrapStackingContractConfiguration.contract);
         validStackingContracts.push({
           stackingContract: wrapStackingContractConfiguration.contract,
           reward: initConfig.farmInput,

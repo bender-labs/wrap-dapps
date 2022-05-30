@@ -131,6 +131,7 @@ export type AppRoute = {
   component: React.ComponentType<any>;
   path: string;
   navRoute?: number;
+  hidden?: boolean;
   activePaths?: string[];
 }
 
@@ -140,60 +141,76 @@ export const routes: AppRoute[] = [
     component: WrapScreen,
     path: WRAP,
     navRoute: 1,
+    hidden: true,
     activePaths: [WRAP, UNWRAP, WRAP_OPERATION, UNWRAP_OPERATION, WRAP_NFT, UNWRAP_NFT, CONFIRM_NFT_UNWRAP, CONFIRM_NFT_WRAP, TEZOS_TRANSFER, NFT_WRAP_OPERATION, NFT_UNWRAP_OPERATION, HISTORY_WRAP, HISTORY_UNWRAP, HISTORY_WRAP_NFT, HISTORY_UNWRAP_NFT]
   }, {
     name: 'Tokens',
     component: WrapScreen,
     path: WRAP,
     navRoute: 2,
+    hidden: true,
     activePaths: [WRAP, UNWRAP, WRAP_OPERATION, UNWRAP_OPERATION]
   }, {
     component: WrapOperationScreen,
+    hidden: true,
     path: WRAP_OPERATION
   }, {
     component: UnwrapScreen,
+    hidden: true,
     path: UNWRAP
   }, {
     component: UnwrapOperationScreen,
+    hidden: true,
     path: UNWRAP_OPERATION
   }, {
     name: 'NFTs',
     component: NftWrapSelectorScreen,
     path: WRAP_NFT,
     navRoute: 2,
+    hidden: true,
     activePaths: [WRAP_NFT, UNWRAP_NFT, CONFIRM_NFT_UNWRAP, CONFIRM_NFT_WRAP, TEZOS_TRANSFER, NFT_WRAP_OPERATION, NFT_UNWRAP_OPERATION]
   }, {
     component: NftUnwrapSelectorScreen,
+    hidden: true,
     path: UNWRAP_NFT
   }, {
     component: NftWrapOperationScreen,
+    hidden: true,
     path: NFT_WRAP_OPERATION
   }, {
     component: NftUnwrapOperationScreen,
+    hidden: true,
     path: NFT_UNWRAP_OPERATION
   }, {
     component: NftWrapConfirmScreen,
+    hidden: true,
     path: CONFIRM_NFT_WRAP
   }, {
     component: NftUnwrapConfirmScreen,
+    hidden: true,
     path: CONFIRM_NFT_UNWRAP
   }, {
     component: NftTezosTransferScreen,
+    hidden: true,
     path: TEZOS_TRANSFER
   }, {
     name: 'My history',
     component: HistoryWrapOperationsScreen,
     path: HISTORY_WRAP,
     navRoute: 2,
+    hidden: true,
     activePaths: [HISTORY_WRAP, HISTORY_UNWRAP, HISTORY_WRAP_NFT, HISTORY_UNWRAP_NFT]
   }, {
     component: HistoryUnwrapOperationsScreen,
+    hidden: true,
     path: HISTORY_UNWRAP
   }, {
     component: HistoryNftWrapOperationsScreen,
+    hidden: true,
     path: HISTORY_WRAP_NFT
   }, {
     component: HistoryNftUnwrapOperationsScreen,
+    hidden: true,
     path: HISTORY_UNWRAP_NFT
   },{
     name: 'Farming',
