@@ -111,8 +111,7 @@ const StyledLaunchIcon = styled(LaunchIcon)(() => ({
 
 const StyledAnnouncementBar = styled(AppBar)(() => ({
   fontSize: '0.9rem',
-  bottom: 0,
-  top: "auto",
+  top: 0,
   marginBottom: 0,
   padding: 5,
   textAlign: 'center',
@@ -258,7 +257,7 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
               <MenuIcon />
             </IconButton>
             <Grid container direction='row' justifyContent='flex-end' alignItems='center'
-                  sx={{ display: { xs: 'none', sm: 'inherit' } }}>
+                  sx={{ display: { xs: 'none', sm: 'inherit' }, paddingTop: 3 }}>
               <Grid item>
                 <OperationHistoryDialog />
               </Grid>
@@ -277,7 +276,7 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
         </AppBar>
         {children}
         <StyledAnnouncementBar position='fixed'>
-          <div>WRAP Protocol bridge will be integrated into the <a target="_blank" rel={'noreferrer'} href="https://www.plentydefi.com/">Plenty</a> platform in the next few weeks. Read the <a target="_blank" rel={'noreferrer'} href="https://medium.com/plenty-defi/bridge-update-wrapped-assets-migration-plan-d9814d727cff">migration plan</a>.</div>
+          <div>WRAP Protocol bridge is now integrated into the <a target="_blank" rel={'noreferrer'} href="https://www.plentydefi.com/">Plenty</a> platform. Read the <a target="_blank" rel={'noreferrer'} href="https://medium.com/plenty-defi/bridge-update-wrapped-assets-migration-plan-d9814d727cff">migration plan</a>.</div>
         </StyledAnnouncementBar>
       </Content>
     </Root>
