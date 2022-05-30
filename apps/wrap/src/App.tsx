@@ -51,7 +51,7 @@ const App = () => {
           <Redirect to={FARMING_ROOT} />
         </Route>
         <Route path='*'>
-          <Redirect to='/wrap' />
+          <Redirect to='/fees-farming' />
         </Route>
       </Switch>
       <Dialog

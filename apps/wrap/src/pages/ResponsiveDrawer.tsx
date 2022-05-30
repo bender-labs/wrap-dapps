@@ -140,7 +140,7 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
   };
 
   const buildNavLinks = (context: string) => {
-    return routes.filter(route => route.navRoute).map((route) => {
+    return routes.filter(route => route.navRoute && !route.hidden).map((route) => {
       if (isActive(location.pathname, route.activePaths!)) {
         return (
           <StyledListItem
@@ -180,9 +180,6 @@ export function ResponsiveDrawer({ children }: PropsWithChildren<{}>) {
         paddingLeft: theme.spacing(4),
         paddingTop: theme.spacing(0.5)
       }}>
-        <StyledLink href={'https://info.tzwrap.com'} target={'_blank'} rel={'noreferrer'}>
-          <StyledItemListText primary={<>Statistics&nbsp;&nbsp;<StyledLaunchIcon /></>} />
-        </StyledLink>
       </StyledListItem>
     ]);
   };
