@@ -32,7 +32,6 @@ export const SwapDirectionTab: React.FC<TabsProps> = () => {
       indicatorColor='primary'
       variant='fullWidth'
     >
-      <StyledTab label={path === paths.WRAP ? 'wrapping' : 'wrap'} value={paths.WRAP} />
       <StyledTab label={path === paths.UNWRAP ? 'unwrapping' : 'unwrap'} value={paths.UNWRAP} />
     </StyledTabs>
   );

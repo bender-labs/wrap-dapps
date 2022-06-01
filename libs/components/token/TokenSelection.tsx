@@ -67,7 +67,7 @@ export function TokenSelection({
         }}
         label='choose'
       >
-        {tokenList.map(([key, token]) => (
+        {tokenList.filter(([_, token]) => !token.tezosSymbol.endsWith('.e') && token.tezosSymbol !== 'WRAP').map(([key, token]) => (
           <MenuItem value={key} key={key}>
             {itemIcon(blockchainTarget, token)}
             {itemLabel(blockchainTarget, token)}

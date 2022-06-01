@@ -138,10 +138,10 @@ export type AppRoute = {
 export const routes: AppRoute[] = [
   {
     name: 'Wrap',
-    component: WrapScreen,
-    path: WRAP,
+    component: UnwrapScreen,
+    path: UNWRAP,
     navRoute: 1,
-    hidden: true,
+    hidden: false,
     activePaths: [WRAP, UNWRAP, WRAP_OPERATION, UNWRAP_OPERATION, WRAP_NFT, UNWRAP_NFT, CONFIRM_NFT_UNWRAP, CONFIRM_NFT_WRAP, TEZOS_TRANSFER, NFT_WRAP_OPERATION, NFT_UNWRAP_OPERATION, HISTORY_WRAP, HISTORY_UNWRAP, HISTORY_WRAP_NFT, HISTORY_UNWRAP_NFT]
   }, {
     name: 'Tokens',
@@ -156,11 +156,11 @@ export const routes: AppRoute[] = [
     path: WRAP_OPERATION
   }, {
     component: UnwrapScreen,
-    hidden: true,
+    hidden: false,
     path: UNWRAP
   }, {
     component: UnwrapOperationScreen,
-    hidden: true,
+    hidden: false,
     path: UNWRAP_OPERATION
   }, {
     name: 'NFTs',
