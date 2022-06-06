@@ -136,7 +136,7 @@ export type AppRoute = {
 }
 
 export const routes: AppRoute[] = [
-  {
+  /*{
     name: 'Wrap',
     component: UnwrapScreen,
     path: UNWRAP,
@@ -162,7 +162,7 @@ export const routes: AppRoute[] = [
     component: UnwrapOperationScreen,
     hidden: false,
     path: UNWRAP_OPERATION
-  }, {
+  },*/ {
     name: 'NFTs',
     component: NftWrapSelectorScreen,
     path: WRAP_NFT,
