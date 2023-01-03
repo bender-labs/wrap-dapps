@@ -21,9 +21,6 @@ export const unwrapPage = (op: Operation) => `/unwrap/${op.hash}`;
 export const unwrapNftPage = (op: Operation) => `/unwrap-nft/${op.hash}`;
 
 type OperationsHistoryState = {
-  mints: WrapErc20Operation[];
-  nftMints: WrapERC721Operation[];
-  burns: UnwrapErc20Operation[];
   nftBurns: UnwrapERC721Operation[];
 };
 
@@ -37,40 +34,19 @@ export const usePendingOperationsHistory = () => {
   const [canFetch, setCanFetch] = useState(false);
 
   const [operations, setOperations] = useState<OperationsHistoryState>({
-    mints: [],
-    nftMints: [],
-    burns: [],
     nftBurns: []
   });
 
   useEffect(() => {
     const loadPendingWrap = async () => {
       if (!ethereumAccount() && !tezosAccount()) {
-        setOperations({ burns: [], nftMints: [], mints: [], nftBurns: [] });
+        setOperations({ nftBurns: [] });
         return;
       }
 
-      const [pendingWrap, pendingNftWrap, pendingUnwrap, pendingNftUnwrap] = await Promise.all([
-        indexerApi.fetchPendingWraps(ethereumAccount(), tezosAccount()),
-        indexerApi.fetchPendingNftWraps(ethereumAccount(), tezosAccount()),
-        indexerApi.fetchPendingUnwraps(ethereumAccount(), tezosAccount()),
+      const [pendingNftUnwrap] = await Promise.all([
         indexerApi.fetchPendingNftUnwraps(ethereumAccount(), tezosAccount())
       ]);
-      const mintsFromIndexer = wrapsToOperations(
-        fees,
-        wrapSignatureThreshold,
-        pendingWrap
-      );
-      const nftMintsFromIndexer = nftwrapsToOperations(
-        fees,
-        wrapSignatureThreshold,
-        pendingNftWrap
-      );
-      const burnsFromIndexer = unwrapToOperations(
-        fees,
-        wrapSignatureThreshold,
-        pendingUnwrap
-      );
       const nftBurnsFromIndexer = nftUnwrapToOperations(
         fees,
         wrapSignatureThreshold,
@@ -78,9 +54,6 @@ export const usePendingOperationsHistory = () => {
       );
 
       setOperations({
-        mints: mintsFromIndexer,
-        nftMints: nftMintsFromIndexer,
-        burns: burnsFromIndexer,
         nftBurns: nftBurnsFromIndexer
       });
     };
@@ -111,7 +84,7 @@ export const usePendingOperationsHistory = () => {
     [history]
   );
 
-  useEffect(() => setCount(operations.burns.length + operations.mints.length + operations.nftBurns.length + operations.nftMints.length), [
+  useEffect(() => setCount(operations.nftBurns.length), [
     operations
   ]);
 

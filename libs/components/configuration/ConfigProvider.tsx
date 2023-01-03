@@ -230,7 +230,6 @@ export function ConfigProvider({ children, initConfig }: PropsWithChildren<Props
       ]);
       const farms = feesFarmingConfiguration.contracts.filter(contract => !contract.old).reduce(
         (validFarms: FarmConfig[], farmConfiguration) => {
-          console.log(farmConfiguration);
           const tokenInfos = farmTokens.find(
             (t) =>
               t.tezosWrappingContract === farmConfiguration.token &&

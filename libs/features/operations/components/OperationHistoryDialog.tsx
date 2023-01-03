@@ -349,39 +349,6 @@ export default function OperationHistoryDialog() {
         {canFetch && (
           <List style={{ padding: '0px' }}>
             <StyledListSubheader>
-              Minting operations
-            </StyledListSubheader>
-            {operations.mints.map((o, i) =>
-              renderMint(o, i === operations.mints.length - 1)
-            )}
-            {operations.mints.length === 0 && (
-              <StyledListItem>
-                <ListItemText>No pending minting operation</ListItemText>
-              </StyledListItem>
-            )}
-            <StyledListSubheader>
-              NFT Minting operations
-            </StyledListSubheader>
-            {operations.nftMints.map((o, i) =>
-              renderNftMint(o, i === operations.nftMints.length - 1)
-            )}
-            {operations.nftMints.length === 0 && (
-              <StyledListItem>
-                <ListItemText>No pending NFT minting operation</ListItemText>
-              </StyledListItem>
-            )}
-            <StyledListSubheader>
-              Release operations
-            </StyledListSubheader>
-            {operations.burns.map((o, i) =>
-              renderBurn(o, i === operations.burns.length - 1)
-            )}
-            {operations.burns.length === 0 && (
-              <StyledListItem>
-                <ListItemText>No pending release operation</ListItemText>
-              </StyledListItem>
-            )}
-            <StyledListSubheader>
               NFT Release operations
             </StyledListSubheader>
             {operations.nftBurns.map((o, i) =>
